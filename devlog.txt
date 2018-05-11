@@ -29,3 +29,6 @@ LESSONS LEARNED
 
 firstL -- TIMESTAMP\n
 <all the wonderful things and the not so wonderful bugs you discovered>
+terryG -- 2018-05-10 20:44:05
+added brief description and outline to design doc
+
