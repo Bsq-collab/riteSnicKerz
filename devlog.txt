@@ -32,3 +32,6 @@ firstL -- TIMESTAMP\n
 terryG -- 2018-05-10 20:44:05
 added brief description and outline to design doc
 
+terryG, yuyangZ, brianL, bayanB -- 2018-05-14 21:06:55
+collectively worked on the design doc: Terry: added database schema and component map; Bayan: added outline; Yuyang and Brian: finished site map
+
