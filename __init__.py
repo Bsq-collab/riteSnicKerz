@@ -5,14 +5,17 @@ from flask import Flask, session, render_template, request, redirect, url_for, f
 app = Flask(__name__)
 
 @app.route("/")
-def landing:
-	pass
+def home():
+	return redirect(url_for("login"))
 
-@app.route("/registration")
+@app.route("/login")
+def login():
+	return render_template("guess_base.html")
+
+'''
 @app.route("/about")
 
-
-# <int:student_id> 
+# <int:student_id>
 #the student dashboard
 @app.route("/<int:student_id>")
 @app.route("/<int:student_id>/pchange")
@@ -31,8 +34,7 @@ def landing:
 @app.route("/<int:admin_id>/adminpw")
 @app.route("/<int:admin_id>/admindata")
 @app.route("/<int:admin_id>/admininbox")
-
+'''
 
 if __name__ == "__main__":
-    app.debug = True
     app.run()
