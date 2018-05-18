@@ -38,3 +38,6 @@ collectively worked on the design doc: Terry: added database schema and componen
 leungB -- 2018-05-17 13:19:14
 Made initial flask app stuffs
 
+terryG -- 2018-05-18 01:12:53
+obtained droplet and deployed deploytest. Updated Readme with link to server
+
