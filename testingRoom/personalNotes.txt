@@ -18,3 +18,22 @@ user = User.query.get(5)
 user.name = 'New Name'
 db.session.commit()
 
+
+Student Needed Data:
+id - int
+OSIS - int
+Fname - String
+Lname - String
+email - String
+SCHEDULE - Stringy JSON
+*ClassSelections - Stringy JSON - get data from frontend + priority order
+FilledPreReqs - "{Science:["bio","chem","phys"]}" - Stringy JSON
+FilledGradRequirements -  will be dealt with by py fxn?
+Overall Average - float
+Subject Averages - Stringy JSON
+
+Background info:
+Birthday - String
+Religion - String
+
+
