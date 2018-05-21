@@ -1,20 +1,20 @@
-$ sudo apt-get install python-pip
-$ sudo pip install SQLAlchemy
+https://www.tutorialspoint.com/flask/flask_sqlalchemy.htm
 
-With the pip Python package manager, we install SQLAlchemy.
+USE THIS:
+$ pip install flask-sqlalchemy
 
-$ sudo apt-get install python-psycopg2
-$ sudo apt-get install python-mysqldb
+db.session.add(model object) − inserts a record into mapped table
 
-We install the DBAPI drivers for PostgreSQL and MySQL. SQLAlchemy depends on these modules. The sqlite module is distributed with Python.
+db.session.delete(model object) − deletes record from table
 
-$ sudo apt-get install mysql-server
+model.query.all() - Select all
 
-The above command install MySQL server. For additional installation instructions, you can check the MySQL Python tutorial.
+HOW TO CHANGE A DATA POINT THING:
+admin = User.query.filter_by(username='admin').first()
+admin.email = 'my_new_email@example.com'
+db.session.commit()
 
-$ sudo apt-get install postgresql
-
-The above command install PostgreSQL server. For additional instructions, you can check the PostgreSQL Python tutorial.
-
-$ sudo apt-get install sqlite3
+user = User.query.get(5)
+user.name = 'New Name'
+db.session.commit()
 

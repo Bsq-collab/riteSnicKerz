@@ -41,3 +41,6 @@ Made initial flask app stuffs
 terryG -- 2018-05-18 01:12:53
 obtained droplet and deployed deploytest. Updated Readme with link to server
 
+leungb -- 2018-05-21 12:32:25
+Made some initial test code for Flask-SQLAlchemy in testingRoom/
+
