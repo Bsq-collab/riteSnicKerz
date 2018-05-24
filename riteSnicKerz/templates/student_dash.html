@@ -6,11 +6,8 @@ Home
 
 {% block content %}
 
-<<<<<<< HEAD
-<!--
-=======
 
->>>>>>> bd532eec575eb40f1d4b68c61bd2882476cd8049
+<!--
 <script language = "javascript" type = "text/javascript">
 xmlhttp = new XMLHttpRequest();
 function getScores(){
@@ -33,22 +30,13 @@ xmlhttp.onreadystatechange = function(){
 xmlhttp.open("GET", "/trasncript.html", true);
 xmlhttp.send();
 </script>
-<<<<<<< HEAD
 -->
 <div class = "row">
 <div class="col-sm-12 text-left"  id="grad1" >
 <h1> Welcome {{name}}. </h1>
 
-   <div class = "column" style= "padding: 5cm 5cm 15cm 5cm;">
-=======
-
-<div class="col-sm-12 text-left"  id="grad1" >
-
-   <div class = "column" style= "padding: 5cm 5cm 5cm 5cm;">
->>>>>>> bd532eec575eb40f1d4b68c61bd2882476cd8049
-
+<div class = "column" style= "padding: 5cm 5cm 15cm 5cm;">
 <center>
-
 <button type="button" class="btn-lg btn-light">Transcript</button>
 <br>
 <br>
@@ -59,28 +47,32 @@ xmlhttp.send();
 <br>
 <br>
 <button type="button" class="btn-lg btn-light">Course Directory</button>
-
 </center>
-
 </div>
 
-<div id = "column" style= "padding: 5cm 5cm 15cm 5cm;">
+<div id = "demo" style= "padding: 5cm 5cm 15cm 5cm;">
 <center>
-<<<<<<< HEAD
 <h1>AJAX ya feel</h1>
-=======
-  <button type = "button" class="btn-lg btn-light" onclick = "getScores()">Work </button>
->>>>>>> bd532eec575eb40f1d4b68c61bd2882476cd8049
+<!--  <button type = "button" class="btn-lg btn-light" onclick = "getScores()">Work </button> -->
+
+
 </center>
 </div>
 
 
 </div>
 
-<<<<<<< HEAD
+
 </div>
 
-=======
+<script>
+var electives = ["Soft Dev", "Human Reasoning"];
+
+var myJSON = JSON.stringify(electives);
+
+document.getElementById("demo").innerHTML = myJSON;
+</script>
+
 <script>
 function loadDoc() {
   var xhttp = new XMLHttpRequest();
@@ -94,7 +86,7 @@ function loadDoc() {
   xhttp.send();
 }
 </script>
->>>>>>> bd532eec575eb40f1d4b68c61bd2882476cd8049
+
 
 
 {% endblock %}
