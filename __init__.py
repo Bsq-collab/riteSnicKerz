@@ -4,11 +4,16 @@ from flask import Flask, session, render_template, request, redirect, url_for, f
 
 app = Flask(__name__)
 
+
+
 @app.route("/")
 def home():
 	return render_template("home.html")
+	username = session["username"]
 
-
+@app.route("/student")
+def student_dash():
+	return render_template("student_dash.html")
 
 	'''
 	@app.route("/about")
