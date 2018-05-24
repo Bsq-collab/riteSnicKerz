@@ -38,9 +38,29 @@ collectively worked on the design doc: Terry: added database schema and componen
 leungB -- 2018-05-17 13:19:14
 Made initial flask app stuffs
 
+zhangY -- 2018-05-17 10:00:00
+Created home HTML files.
+  - Created a base file all others files to inherit.
+  - Currently has home page up.
+
+
+zhangY -- 2018-05-18 10:00:00
+Updated home HTML files.
+  - Updated to fit the project of Janus.
+  - Fixed CSS and divs.
+
 terryG -- 2018-05-18 01:12:53
 obtained droplet and deployed deploytest. Updated Readme with link to server
 
-leungb -- 2018-05-21 12:32:25
+leungB -- 2018-05-21 12:32:25
 Made some initial test code for Flask-SQLAlchemy in testingRoom/
 
+zhangY -- 2018-05-21 10:00:00
+Attempted AJAX.
+  - Created 2 divs.
+    - Left div will always hold the buttons.
+    - Right div will refresh and update when buttons are clicked.
+
+zhangY -- 2018-05-22 10:00:00
+Created mockups of student dashboard and student related pages on keys.
+Will share mockups to group ASAP.
