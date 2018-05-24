@@ -39,6 +39,10 @@ def student_dash():
 	@app.route("/<int:admin_id>/admininbox")
 	'''
 
+@app.route("/select_courses")
+def choose_courses():
+        return render_template("course_selection.html")
+
 if __name__ == "__main__":
 	app.debug = True
 	app.run()

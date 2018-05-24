@@ -64,3 +64,6 @@ Attempted AJAX.
 zhangY -- 2018-05-22 10:00:00
 Created mockups of student dashboard and student related pages on keys.
 Will share mockups to group ASAP.
+bayanB -- 2018-05-24 13:14:59
+Created the select courses route
+
