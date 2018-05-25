@@ -1,9 +1,15 @@
 #!usr/bin/python
 
 from flask import Flask, session, render_template, request, redirect, url_for, flash
+from flask_sqlalchemy import SQLAlchemy
+
 
 app = Flask(__name__)
 
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data/school.sqlite3'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(app)
 
 
 @app.route("/")
@@ -46,4 +52,6 @@ def choose_courses():
 
 if __name__ == "__main__":
 	app.debug = True
+	db.create_all()
+
 	app.run()

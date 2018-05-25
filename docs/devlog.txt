@@ -67,3 +67,6 @@ Will share mockups to group ASAP.
 bayanB -- 2018-05-24 13:14:59
 Created the select courses route
 
+leungB -- 2018-05-25 12:58:55
+added some database creation code to the __init__
+
