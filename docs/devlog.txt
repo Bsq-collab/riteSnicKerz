@@ -70,3 +70,6 @@ Created the select courses route
 leungB -- 2018-05-25 12:58:55
 added some database creation code to the __init__
 
+leungB -- 2018-05-26 18:24:44
+I fiddled around with the flask-sqlalchemy row duplication bug some more and it isn't cooperating. I can either use a unique tag and try-catch statements, or have a constant watchdog for duplicates.
+

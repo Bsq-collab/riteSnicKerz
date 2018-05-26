@@ -9,7 +9,7 @@ db = SQLAlchemy(app)
 
 class students(db.Model):
 	id = db.Column('student_id',db.Integer,primary_key=True)
-	osis = db.Column(db.Integer)
+	osis = db.Column(db.Integer,unique=True)
 	fname = db.Column(db.String(20))
 	lname = db.Column(db.String(20))
 	'''
@@ -25,7 +25,7 @@ class students(db.Model):
 
 class teachers(db.Model):
  	id = db.Column('student_id',db.Integer,primary_key=True)
-	teacherID = db.Column(db.Integer)
+	teacherID = db.Column(db.Integer,unique=True)
 
 	def __init__(self,ood):
 		self.teacherID = ood 
