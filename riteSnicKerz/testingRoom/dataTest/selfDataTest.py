@@ -17,10 +17,14 @@ class students(db.Model):
 	SCHEDULE = db.Column(db.String(1000))
 	O_average = db.Column(db.Float)
 	S_average = db.Column(db.String(200))
+	
 	def __init__(self, osis, fname, lname):
 		self.osis = osis
 		self.fname = fname
 		self.lname = lname
+
+	def getStudent(self,od):
+		return self.query.filter_by(osis=od).first()
 
 class teachers(db.Model):
  	id = db.Column('student_id',db.Integer,primary_key=True)
@@ -37,6 +41,8 @@ if __name__ == '__main__':
 	db.session.add(newstudent)
 	newteacher = teachers(202020)
 	db.session.add(newteacher)
+	stud = newstudent.getStudent(207268863)
+	print stud.fname
 	print "DONE"
 	db.session.commit()
 	app.run(debug = True, use_reloader=False)
