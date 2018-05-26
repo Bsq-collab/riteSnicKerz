@@ -31,10 +31,12 @@ class teachers(db.Model):
 		self.teacherID = ood 
 
 if __name__ == '__main__':
+	app.run(debug = True)
 	db.create_all()
-	newstudent = Students(207268863,'Brian','Leung')
+	newstudent = students(207268863,'Brian','Leung')
+	db.session.add(newstudent)
+	newstudent = students(31415,"J","DW")
+	db.session.add(newstudent)
 	newteacher = teachers(202020)
 	db.session.add(newteacher)
-	db.session.add(newstudent)
 	db.session.commit()
-	app.run(debug = True)
