@@ -51,7 +51,6 @@ def choose_courses():
         return render_template("course_selection.html")
 
 if __name__ == "__main__":
-	app.debug = True
 	db.create_all()
-
+	app.debug = True
 	app.run()
