@@ -17,7 +17,8 @@ class students(db.Model):
 	SCHEDULE = db.Column(db.String(1000))
 	O_average = db.Column(db.Float)
 	S_average = db.Column(db.String(200))
-	
+	pw = db.Column(db.String(100))
+
 	def __init__(self, osis, fname, lname):
 		self.osis = osis
 		self.fname = fname
@@ -25,6 +26,12 @@ class students(db.Model):
 
 	def getStudent(self,od):
 		return self.query.filter_by(osis=od).first()
+
+	#PW FXNS
+	def checkPW(self,unhash):
+		return self.pw == String(hash(unhash)) 
+	def modPW(self,unhash):
+		self.pw = String(hash(unhash))
 
 class teachers(db.Model):
  	id = db.Column('student_id',db.Integer,primary_key=True)
@@ -35,14 +42,20 @@ class teachers(db.Model):
 
 if __name__ == '__main__':
 	db.create_all()
+	
 	newstudent = students(207268863,'Brian','Leung')
 	db.session.add(newstudent)
+	
 	newstudent = students(31415,"J","DW")
 	db.session.add(newstudent)
+	
 	newteacher = teachers(202020)
 	db.session.add(newteacher)
-	stud = newstudent.getStudent(207268863)
-	print stud.fname
+	
+	newstudent = newstudent.getStudent(207268863)
+	print newstudent
+	
 	print "DONE"
+	
 	db.session.commit()
 	app.run(debug = True, use_reloader=False)
