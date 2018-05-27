@@ -1,0 +1,33 @@
+HOW TO: flask-sqlalchemy
+Keep the "selfDataTest.py" or "__init__.py" open next to you and read along.
+
+How do I start?
+
+1. 	create an instance of the student.
+	The initializer arguments: [OSIS,Fname,Lname,password="thisisadefaultpassword"]
+
+$ A = students(1234,"21","Savage")
+
+
+How do I access a variable?
+
+Getting a student by OSIS:
+1. It's a function built into the instance you just made above:
+
+$ B = A.getStudent(1111)
+
+2. This will put the instance of the found student in "B"
+
+
+How do I change a variable?
+
+$ B.fname = "somerandomnamehere"
+
+
+What about the password functions you promised?
+
+checkPW --> will check a password --> args: [passwordToCheck]
+$ print (B.checkPW("isthispasswordright?")) --> False
+
+modPW --> will change a password --> args: [newPassword]
+$ B.modPW("changedPassword")
