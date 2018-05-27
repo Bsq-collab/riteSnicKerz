@@ -13,10 +13,6 @@ class students(db.Model):
 	osis = db.Column(db.Integer)
 	fname = db.Column(db.String(20))
 	lname = db.Column(db.String(20))
-	email = db.Column(db.String(30))
-	SCHEDULE = db.Column(db.String(200))
-	O_average = db.Column(db.Float)
-	S_average = db.Column(db.String(100))
 	pw = db.Column(db.String(20))
 
 	def __init__(self, osis, fname, lname):
@@ -29,9 +25,9 @@ class students(db.Model):
 
 	#PW FXNS
 	def checkPW(self,unhash):
-		return self.pw == String(hash(unhash)) 
+		return self.pw == str(hash(unhash)) 
 	def modPW(self,unhash):
-		self.pw = String(hash(unhash))
+		self.pw = str(hash(unhash))
 
 class teachers(db.Model):
  	id = db.Column('student_id',db.Integer,primary_key=True)
@@ -47,15 +43,13 @@ if __name__ == '__main__':
 	db.create_all()
 	
 	newstudent = students(1234,'Brian','Leung')
-	db.session.add(newstudent)
-		
-	newteacher = teachers(202020)
-	db.session.add(newteacher)
+	if (newstudent.getStudent(1234) is not None):
+		print newstudent
+		print "Student already exists"
+	else:
+		db.session.add(newstudent)	
+		db.session.commit()
+
+	print "DONE"	
 	
-	newstudent = newstudent.getStudent(1234)
-	print newstudent
-	
-	print "DONE"
-	
-	db.session.commit()
 	app.run(debug = True, use_reloader=False)

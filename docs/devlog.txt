@@ -76,3 +76,6 @@ I fiddled around with the flask-sqlalchemy row duplication bug some more and it 
 leungB -- 2018-05-26 19:10:48
 Resolved row duplication bug, apparently flask runs twice when initializing in debug mode. setting use_reloader==False solves it.
 
+leungB -- 2018-05-27 12:05:16
+started moving working stuff from dataTest to the __init__
+
