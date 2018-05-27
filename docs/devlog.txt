@@ -79,3 +79,6 @@ Resolved row duplication bug, apparently flask runs twice when initializing in d
 leungB -- 2018-05-27 12:05:16
 started moving working stuff from dataTest to the __init__
 
+terryG -- 2018-05-27 19:00:23
+cleaned up code and integrated js, flask, and db to have login work
+

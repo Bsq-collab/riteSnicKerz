@@ -62,7 +62,7 @@ def auth():
 		return render_template("student_dash.html")
 	else:
 		print "failed login"
-		flash("Login failed")
+		flash("Login failed") #does not yet flash
         return redirect(url_for("home"))
 
 @app.route("/student")
