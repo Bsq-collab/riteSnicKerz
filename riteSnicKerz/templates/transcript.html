@@ -1,39 +1,89 @@
 {% extends "guess_base.html" %}
 
 {% block title %}
-Home
+Transcript
 {% endblock %}
 
 {% block content %}
 
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td colspan="2">Larry the Bird</td>
-      <td>@twitter</td>
-    </tr>
-  </tbody>
-</table>
+
+<div class = "row">
+<div class="col-sm-12 text-left"  id="grad1" >
+<h1> Welcome {{name}}. </h1>
+
+<div style= "padding: 1cm 5cm 15cm 5cm;">
+  <h3>Science</h3>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">Course</th>
+        <th scope="col">Year</th>
+        <th scope="col">Semester</th>
+        <th scope="col">Grade</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">Biology</th>
+        <td>2014</td>
+        <td>1</td>
+        <td>100</td>
+      </tr>
+      <tr>
+        <th scope="row">Biology</th>
+        <td>2014</td>
+        <td>2</td>
+        <td>85</td>
+      </tr>
+      <tr>
+        <th scope="row">Chemistry</th>
+        <td colspan="1">2014</td>
+        <td>1</td>
+        <td>65</td>
+      </tr>
+    </tbody>
+  </table>
+  <br>
+  <h3>Math</h3>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">Course</th>
+        <th scope="col">Year</th>
+        <th scope="col">Semester</th>
+        <th scope="col">Grade</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">Geometry</th>
+        <td>2014</td>
+        <td>1</td>
+        <td>100</td>
+      </tr>
+      <tr>
+        <th scope="row">Trigonometry</th>
+        <td>2015</td>
+        <td>1</td>
+        <td>55</td>
+      </tr>
+      <tr>
+        <th scope="row">Pre-Calculus</th>
+        <td colspan="1">2016</td>
+        <td>1</td>
+        <td>99</td>
+      </tr>
+    </tbody>
+  </table>
+  <br>
+  <button type="button" class="btn btn-light">Return to Dashboard</button>
+</div>
+
+</div>
+
+
+</div>
+
+
 
 {% endblock %}
