@@ -95,7 +95,7 @@ def student_dash():
 
 @app.route("/select_courses")
 def choose_courses():
-    return render_template("courses.html")
+    return render_template("course_selection.html")
 
 # @app.route("/logout")
 # def logout():
@@ -103,9 +103,19 @@ def choose_courses():
 # 	return render_template("home.html")
 
 
-@app.route("/trasncript")
+@app.route("/transcript")
 def show_grades():
     return render_template("transcript.html")
+
+
+@app.route("/all_courses")
+def show_courses():
+    return render_template("courses.html")
+
+@app.route("/student_settings")
+def student_settings():
+    return render_template("student_settings.html")
+
 # ============================END OF ROUTING=============================
 
 if __name__ == "__main__":
