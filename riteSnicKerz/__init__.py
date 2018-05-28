@@ -45,7 +45,7 @@ def getStudent(osis):
 # ============================START OF ROUTING=============================
 @app.route("/")
 def home():
-	if osis in session["osis"]:
+	if 'username' in session:
 		return render_template("student_dash.html")
 	else:
 		return render_template("home.html")
@@ -95,12 +95,12 @@ def student_dash():
 
 @app.route("/select_courses")
 def choose_courses():
-        return render_template("course_selection.html")
+    return render_template("course_selection.html")
 
-@app.route("/logout")
-def logout():
-	    session.pop("username")
-		return render_template("home.html")
+# @app.route("/logout")
+# def logout():
+#     session.pop("username")
+# 	return render_template("home.html")
 # ============================END OF ROUTING=============================
 
 if __name__ == "__main__":
