@@ -95,7 +95,7 @@ def student_dash():
 
 @app.route("/select_courses")
 def choose_courses():
-    return render_template("transcript.html")
+    return render_template("courses.html")
 
 # @app.route("/logout")
 # def logout():

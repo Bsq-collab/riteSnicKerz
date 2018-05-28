@@ -1,0 +1,92 @@
+{% extends "transcript_base.html" %}
+
+{% block title %}
+Courses
+{% endblock %}
+
+{% block content %}
+
+<div class = "row">
+<div class="col-sm-12 text-left"  id="grad1" >
+<h1> Welcome {{name}}. </h1>
+
+<div style= "padding: 0cm 0cm 15cm 0cm;">
+
+<div class = "column" style= "padding: 1cm 1cm 1cm 1cm;">
+  <table class="table table-dark">
+    <thead>
+      <tr>
+        <th scope="col"><h3>Classes</h3></th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">  <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#demo">Biology</button></th>
+
+      </tr>
+      <tr>
+        <th scope="row">  <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#demo2">Chemistry</button></th>
+
+      </tr>
+      <tr>
+        <th scope="row"><button type="button" class="btn btn-link" data-toggle="collapse" data-target="#demo3">English</button></th>
+
+      </tr>
+    </tbody>
+  </table>
+
+
+
+  </div>
+  <div class = "column" style= "padding: 1cm 1cm 1cm 1cm;">
+
+    <div id="demo" class="collapse">
+
+      I love biology.I love biology.I love biology.I love biology.I love biology.I love biology.I love biology.
+    </div>
+    <div id="demo2" class="collapse">
+    I love chemistry.I love chemistry.I love chemistry.I love chemistry.I love chemistry.I love chemistry.
+    </div>
+    <div id="demo3" class="collapse">
+      I love English.I love English.I love English.I love English.I love English.I love English.I love English.
+    </div>
+</div>
+
+</div>
+</div>
+</div>
+
+{% endblock %}
+
+<h3>Science</h3>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">Course</th>
+      <th scope="col">Year</th>
+      <th scope="col">Semester</th>
+      <th scope="col">Grade</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">Biology</th>
+      <td>2014</td>
+      <td>1</td>
+      <td>100</td>
+    </tr>
+    <tr>
+      <th scope="row">Biology</th>
+      <td>2014</td>
+      <td>2</td>
+      <td>85</td>
+    </tr>
+    <tr>
+      <th scope="row">Chemistry</th>
+      <td colspan="1">2014</td>
+      <td>1</td>
+      <td>65</td>
+    </tr>
+  </tbody>
+</table>
