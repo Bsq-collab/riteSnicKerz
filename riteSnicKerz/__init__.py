@@ -101,6 +101,11 @@ def choose_courses():
 # def logout():
 #     session.pop("username")
 # 	return render_template("home.html")
+
+
+@app.route("/trasncript")
+def show_grades():
+    return render_template("transcript.html")
 # ============================END OF ROUTING=============================
 
 if __name__ == "__main__":
