@@ -13,6 +13,9 @@
 }
 
 
+.row{
+  padding: 0cm 0cm 0cm 2cm;
+}
 div.slide-left {
     width:100%;
     overflow:hidden;
@@ -33,6 +36,7 @@ div.slide-left h1 {
     }
 }
 
+
 .navbar {
     background-color: #DEECF4;
     margin-bottom: 0;
@@ -44,7 +48,7 @@ div.slide-left h1 {
 
 #grad1 {
     background: #619DCF; /* For browsers that do not support gradients */
-    background: linear-gradient(to bottom right, #619DCF, white); /* Standard syntax (must be last) */
+    background: linear-gradient(to bottom, #619DCF, white); /* Standard syntax (must be last) */
 }
 
 h1 {
