@@ -1,4 +1,4 @@
-{% extends "guess_base.html" %}
+{% extends "student_base.html" %}
 
 {% block title %}
 Course Selections
@@ -6,10 +6,13 @@ Course Selections
 
 {% block content %}
 
+<div class = "row">
+<div class="col-sm-12 text-left"  id="grad1" >
+<h1> Welcome {{name}}. </h1>
 
-<div  style= "padding: 5cm 5cm 5cm 5cm;">
-  First Elective Choice: <br>
-  <select name="elective1" class="elective" size="1">
+<div style= "padding: 1cm 5cm 15cm 5cm;">
+  <h3> First Elective Choice </h3>
+  <select class="form-control form-control-sm" name="elective1">
     <option>Human Diseases</option>
     <option>Forensics</option>
     <option>Nutritional Science</option>
@@ -18,8 +21,8 @@ Course Selections
     <option>Human Reasoning</option>
   </select>
   <br>
-  <br>Second Elective Choice: <br>
-  <select name="elective2" class="elective" size="1">
+  <h3> Second Elective Choice </h3>
+  <select class="form-control form-control-sm" name="elective2">
     <option>Human Diseases</option>
     <option>Forensics</option>
     <option>Nutritional Science</option>
@@ -27,9 +30,9 @@ Course Selections
     <option>Geology</option>
     <option>Human Reasoning</option>
   </select>
-
-  <br>Third Elective Choice: <br>
-  <select name="elective3" class="elective" size="1">
+  <br>
+  <h3> Third Elective Choice </h3>
+  <select class="form-control form-control-sm" name="elective3">
     <option>Human Diseases</option>
     <option>Forensics</option>
     <option>Nutritional Science</option>
@@ -40,8 +43,17 @@ Course Selections
 
   <br><br>
   <button type="submit" onclick="get_electives()" class="btn btn-primary">Submit</button>
+<br>
+<br>
+  <a href="student"><button type="button" class="btn-sm btn-light">Return to Dashboard</button></a>
+</div>
 
 </div>
+
+
+</div>
+
+
 
 <script src="/static/electives.js"></script>
 
