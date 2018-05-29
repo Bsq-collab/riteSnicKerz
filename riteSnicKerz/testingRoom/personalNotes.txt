@@ -37,3 +37,7 @@ Birthday - String
 Religion - String
 
 
+Class Needed Data:
+Course Code
+Section Numbers: Periods corresponding to those sections
+Maximum Class Size

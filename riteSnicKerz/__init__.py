@@ -40,6 +40,17 @@ def getStudent(osis):
 # ============================END OF ACCESSOR & MUTATORS FOR STUDENT CLASS=============================
 # ============================END OF SQLALCHEMY STUDENT CLASS DEFINITION=============================
 
+# UNFINISHED
+# ============================START OF SQLALCHEMY COURSE CLASS DEFINITION=============================
+class classes(db.Model):
+	course_code = db.Column(db.String(20))
+	course_name = db.Column(db.String(20))
+	sections = 	db.Column(db.String(1000))
+	#Organization of sections data: {*section#*: {teacher:---, room:---, roster:[---]}, ...}
+	max_students = db.Column(db.Integer())
+# ============================END OF SQLALCHEMY COURSE CLASS DEFINITION=============================
+# UNFINISHED
+
 
 
 # ============================START OF ROUTING=============================
