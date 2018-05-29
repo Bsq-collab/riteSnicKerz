@@ -64,8 +64,14 @@ Attempted AJAX.
 zhangY -- 2018-05-22 10:00:00
 Created mockups of student dashboard and student related pages on keys.
 Will share mockups to group ASAP.
+
 bayanB -- 2018-05-24 13:14:59
 Created the select courses route
+
+zhangY —- 2018-05-24 23:00:00
+Fixed forms.
+	- Form inputs are no longer super small.
+Attempted to connect JS lists to JSON. 
 
 leungB -- 2018-05-25 12:58:55
 added some database creation code to the __init__
@@ -76,9 +82,17 @@ I fiddled around with the flask-sqlalchemy row duplication bug some more and it 
 leungB -- 2018-05-26 19:10:48
 Resolved row duplication bug, apparently flask runs twice when initializing in debug mode. setting use_reloader==False solves it.
 
+zhangY —- 2018-05-26 23:00:00
+Created templates for files.
+	Did not push.
+
 leungB -- 2018-05-27 12:05:16
 started moving working stuff from dataTest to the __init__
 
 terryG -- 2018-05-27 19:00:23
 cleaned up code and integrated js, flask, and db to have login work
+
+zhangY —- 2018-05-28 20:00:00
+Finished creating templates for transcript, course directory, setting and updated course selection.
+	Connected all these pages together.
 
