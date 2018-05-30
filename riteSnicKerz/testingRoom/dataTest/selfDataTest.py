@@ -30,6 +30,7 @@ class students(db.Model):
 		self.pw = str(hash(unhash))
 
 class classes(db.Model):
+	id = db.Column('classID',db.Integer,primary_key=True)
 	course_code = db.Column(db.String(20))
 	course_name = db.Column(db.String(20))
 	sections = 	db.Column(db.String(1000))
@@ -40,18 +41,22 @@ class classes(db.Model):
 		self.course_code = code
 		self.course_name = name
 		self.max_students = studn
+		self.sections = '{}'
 
 	def add_section(self,num,techer,rom,roost):
-		
+		temp = json.loads(self.sections)
+		temp[str(num)] = {"teacher":techer,"room":rom,"roster":roost}
+		print temp
+		self.sections = json.dumps(temp)
 
-
+'''
 class teachers(db.Model):
  	id = db.Column('student_id',db.Integer,primary_key=True)
 	teacherID = db.Column(db.Integer)
 
 	def __init__(self,ood):
 		self.teacherID = ood 
-
+'''
 def StoL(listring):
 	return json.loads(listring)
 
@@ -65,7 +70,10 @@ if __name__ == '__main__':
 	else:
 		db.session.add(newstudent)	
 		db.session.commit()
-
+	newcourse = classes('MKS22-',"Calculus AB",31)
+	newcourse.add_section(1,"Dr. Ku",1114,["Yuyang","Terry","Lil Pump"])
+	db.session.add(newcourse)
+	db.session.commit()
 	print "DONE"	
 	
 	app.run(debug = True, use_reloader=False)
