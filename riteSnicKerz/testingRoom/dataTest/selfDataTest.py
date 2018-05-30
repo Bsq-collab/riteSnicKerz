@@ -36,6 +36,15 @@ class classes(db.Model):
 	#Organization of sections data: {*section#*: {teacher:---, room:---, roster:[---]}, ...}
 	max_students = db.Column(db.Integer())
 
+	def __init__(self,code,name,studn):
+		self.course_code = code
+		self.course_name = name
+		self.max_students = studn
+
+	def add_section(self,num,techer,rom,roost):
+		
+
+
 class teachers(db.Model):
  	id = db.Column('student_id',db.Integer,primary_key=True)
 	teacherID = db.Column(db.Integer)

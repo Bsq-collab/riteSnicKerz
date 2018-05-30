@@ -52,7 +52,6 @@ class classes(db.Model):
 # UNFINISHED
 
 
-
 # ============================START OF ROUTING=============================
 @app.route("/")
 def home():
