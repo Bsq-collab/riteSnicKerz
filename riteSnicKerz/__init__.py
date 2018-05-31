@@ -61,6 +61,7 @@ class classes(db.Model):
 		temp[str(num)] = {"teacher":techer,"room":rom,"roster":roost}
 		print temp
 		self.sections = json.dumps(temp)
+
 # ============================END OF SQLALCHEMY COURSE CLASS DEFINITION=============================
 # UNFINISHED
 

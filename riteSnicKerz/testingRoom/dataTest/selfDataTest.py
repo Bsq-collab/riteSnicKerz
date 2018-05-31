@@ -49,6 +49,15 @@ class classes(db.Model):
 		print temp
 		self.sections = json.dumps(temp)
 
+	def add_student(self,sect,osiss):
+		temp = json.loads(self.sections)
+		temp[str(sect)]["roster"].append(osiss)
+		self.sections = json.dumps(temp)
+		'''
+	def edit_section(self,num,techer='',rom='',roost=''):
+		temp = json.loads(self.sections)
+		print temp[str(num)]
+'''
 '''
 class teachers(db.Model):
  	id = db.Column('student_id',db.Integer,primary_key=True)
@@ -72,6 +81,7 @@ if __name__ == '__main__':
 		db.session.commit()
 	newcourse = classes('MKS22-',"Calculus AB",31)
 	newcourse.add_section(1,"Dr. Ku",1114,["Yuyang","Terry","Lil Pump"])
+	newcourse.add_student(1,"Thanos")
 	db.session.add(newcourse)
 	db.session.commit()
 	print "DONE"	
