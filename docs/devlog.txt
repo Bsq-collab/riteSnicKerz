@@ -96,3 +96,6 @@ zhangY —- 2018-05-28 20:00:00
 Finished creating templates for transcript, course directory, setting and updated course selection.
 	Connected all these pages together.
 
+leungB -- 2018-06-01 12:45:44
+added csv of classList
+

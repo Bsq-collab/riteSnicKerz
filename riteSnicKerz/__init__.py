@@ -140,6 +140,14 @@ def show_courses():
 def student_settings():
     return render_template("student_settings.html")
 
+@app.route("/admin")
+def admin_dash():
+	return render_template("admin_base.html")
+
+@app.route("/student_selections")
+def student_selections():
+	return render_template("student_selections.html")
+
 # ============================END OF ROUTING=============================
 
 if __name__ == "__main__":
