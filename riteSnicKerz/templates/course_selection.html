@@ -7,9 +7,10 @@ Course Selections
 {% block content %}
 
 <div class = "row" style = "padding: 0cm 0cm 0cm 2cm;">
-<h1> Welcome {{name}}. </h1>
+<h1> Welcome {{name}} </h1>
 </div>
 <div style= "padding: 1cm 5cm 15cm 5cm;">
+  <!-- use jinja2 to cycle through a list/dictionary and put in as options -->
   <h3> First Elective Choice </h3>
   <select class="form-control form-control-sm" name="elective1">
     <option>Human Diseases</option>
