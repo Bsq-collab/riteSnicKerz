@@ -99,3 +99,6 @@ Finished creating templates for transcript, course directory, setting and update
 leungB -- 2018-06-01 12:45:44
 added csv of classList
 
+bayanB -- 2018-06-01 12:48:25
+Procured a csv from the guidance office that contains class names, sections, teachers, and course code
+
