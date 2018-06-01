@@ -1,0 +1,88 @@
+{% extends "admin_base.html" %}
+
+{% block title %}
+Student Selections
+{% endblock %}
+
+{% block content %}
+
+
+<div class = "row">
+<h1> Welcome {{name}}. </h1>
+</div>
+
+<div style= "padding: 1cm 5cm 15cm 5cm;">
+  <h3>John Doe</h3>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">Course</th>
+        <th scope="col">Code</th>
+        <th scope="col">Transcript</th>
+        <th scope="col">Confirm?</th>
+        <th scope="col">Reject?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">Human Reasoning</th>
+        <td>D3JI123</td>
+          <a href="avheuifhsujij"><button type="button" class="btn-sm btn-light">Show Transcript</button></a>
+        <td>1</td>
+        <td>100</td>
+      </tr>
+      <tr>
+        <th scope="row">Software Devlopment</th>
+        <td>D3JI0D23</td>
+        <a href="avheuifhsujij"><button type="button" class="btn-sm btn-light">Show Transcript</button></a>
+        <td>2</td>
+        <td>85</td>
+      </tr>
+      <tr>
+        <th scope="row">Ceramics</th>
+        <td colspan="1">D3230I123</td>
+        <a href="avheuifhsujij"><button type="button" class="btn-sm btn-light">Show Transcript</button></a>
+        <td>1</td>
+        <td>65</td>
+      </tr>
+    </tbody>
+  </table>
+  <br>
+  <h3>Jane Doe</h3>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">Course</th>
+        <th scope="col">Year</th>
+        <th scope="col">Semester</th>
+        <th scope="col">Grade</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">Geometry</th>
+        <td>2014</td>
+        <td>1</td>
+        <td>100</td>
+      </tr>
+      <tr>
+        <th scope="row">Trigonometry</th>
+        <td>2015</td>
+        <td>1</td>
+        <td>55</td>
+      </tr>
+      <tr>
+        <th scope="row">Pre-Calculus</th>
+        <td colspan="1">2016</td>
+        <td>1</td>
+        <td>99</td>
+      </tr>
+    </tbody>
+  </table>
+  <br>
+  <a href="admin"><button type="button" class="btn-sm btn-light">Return to Dashboard</button></a>
+</div>
+
+
+
+{% endblock %}
