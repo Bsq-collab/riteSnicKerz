@@ -36,7 +36,9 @@ class classes(db.Model):
 	course_code = db.Column(db.String(20))
 	course_name = db.Column(db.String(20))
 	sections = 	db.Column(db.String(1000))
+	
 	#Organization of sections data: {*section#*: {teacher:---, room:---, roster:[---]}, ...}
+	
 	max_students = db.Column(db.Integer())
 
 	def __init__(self,code,name,studn):
@@ -52,7 +54,7 @@ class classes(db.Model):
 		self.sections = json.dumps(temp)
 	#relationship()
 	#foreign key()
-	
+
 	def add_student(self,sect,osiss):
 		temp = json.loads(self.sections)
 		temp[str(sect)]["roster"].append(osiss)
