@@ -18,6 +18,10 @@ class User(db.Model):
 	user_id = db.Column(db.Integer,primary_key=True)
 	name = db.Column(db.String(20))
 	subscriptions = db.relationship('Channel',secondary=subs,backref=db.backref('subscribers',lazy = 'dynamic'))
+	#Note on secondary
+	#Tells helper table - hey use this table for things and yeah
+	#Note on backref
+	#Its basically saying: Hey Channel youre gonna have another variable and its gonna be called subscribers
 
 class Channel(db.Model):
 	channel_id = db.Column(db.Integer, primary_key = True)
