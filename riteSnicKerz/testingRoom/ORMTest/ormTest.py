@@ -3,31 +3,26 @@ from flask import Flask, session, render_template, request, redirect, url_for, f
 from flask_sqlalchemy import SQLAlchemy
 
 
-player_day_assoc = db.Table(
-    'Player Dates',
-    db.Column('player_id', db.Integer, db.ForeignKey('player.id')),
-    db.Column('day_id', db.Integer, db.ForeignKey('day.id'))
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///school.sqlite3'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(app)
+
+subs = db.Table('subs',
+	db.Column('user_id',db.Integer,db.ForeignKey('user.user_id')),
+	db.Column('channel_id',db.Integer,db.ForeignKey('channel.channel_id'))
 )
 
-class Player(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    person = db.Column(db.String(128))
-    email = db.Column(db.String(128))
-    days = relationship(Day, secondary=player_day_assoc, backref='players')
+class User(db.Model):
+	user_id = db.Column(db.Integer,primary_key=True)
+	name = db.Column(db.String(20))
+	subscriptions = db.relationship('Channel',secondary=subs,backref=db.backref('subscribers',lazy = 'dynamic'))
 
+class Channel(db.Model):
+	channel_id = db.Column(db.Integer, primary_key = True)
+	channel_name = db.Column(db.String(20))
 
-class Day(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    daystamp = db.Column(db.Date, unique=True)
+#example command:
 
-'''
-day.players.all()
-player.days.all()
-
-To create new models and link them up, you'll have to do something like this:
-
-player = Player()
-day = Day()
-
-player.days.append(day)
-'''
+#$ *channel*.subscribers.append(*user*)
