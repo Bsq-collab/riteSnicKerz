@@ -105,3 +105,6 @@ Procured a csv from the guidance office that contains class names, sections, tea
 terryG -- 2018-06-03 09:16:04
 preliminary algorithm created
 
+leungB -- 2018-06-03 10:49:27
+added a csv parser function for the ClassList. It works.
+

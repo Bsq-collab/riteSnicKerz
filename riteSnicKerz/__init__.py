@@ -1,6 +1,7 @@
-import os
+import os,csv, json
 from flask import Flask, session, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
+
 
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
@@ -50,11 +51,11 @@ class classes(db.Model):
 	#Organization of sections data: {*section#*: {teacher:---, room:---, roster:[---]}, ...}
 	max_students = db.Column(db.Integer())
 
-	def __init__(self,code,name,studn):
+	def __init__(self,code,name,studn,sekshuns={}):
 		self.course_code = code
 		self.course_name = name
 		self.max_students = studn
-		self.sections = '{}'
+		self.sections = str(sekshuns)
 
 	def add_section(self,num,techer,rom,roost):
 		temp = json.loads(self.sections)
@@ -64,8 +65,30 @@ class classes(db.Model):
 
 # ============================END OF SQLALCHEMY COURSE CLASS DEFINITION=============================
 # UNFINISHED
+def getClass(courseCode):
+	return classes.query.filter_by(course_code=courseCode).first()
 
-
+def csvEater():
+	with open("data/Class-List1.csv") as csvfile:
+		reader = csv.reader(csvfile)
+		prevClass = ''
+		sectionHolder = {}
+		newClass = classes('','',1)
+		for row in reader:
+			if row[0] == 'Course Code':
+				pass
+			else:
+				if prevClass != row[0]:
+					newClass.sections = json.dumps(sectionHolder)
+					db.session.add(newClass)
+					sectionHolder = {}
+					newClass = classes(row[0],row[2],31)
+					prevClass = row[0]
+				else:
+					sectionHolder[row[1]] = {"teacher":row[3],"room":'',"roster":[]}
+		newClass.sections = json.dumps(sectionHolder)
+		db.session.add(newClass)
+		db.session.commit()
 # ============================START OF ROUTING=============================
 @app.route("/")
 def home():
@@ -169,5 +192,5 @@ if __name__ == "__main__":
 		db.session.commit()
 
 	print "Done."
-
+	csvEater()
 	app.run(debug = True, use_reloader=False)
