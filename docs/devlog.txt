@@ -102,3 +102,6 @@ added csv of classList
 bayanB -- 2018-06-01 12:48:25
 Procured a csv from the guidance office that contains class names, sections, teachers, and course code
 
+terryG -- 2018-06-03 09:16:04
+preliminary algorithm created
+
