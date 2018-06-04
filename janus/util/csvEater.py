@@ -1,11 +1,13 @@
-import csv, sqlite3
+import csv
 
-f = "../data/school.sqlite3"
-db = sqlite3.connect(f) #open if f exists, otherwise create
-c = db.cursor()    #facilitate db ops
-command= "CREATE TABLE (username TEXT, password TEXT)"
-c.execute(command)
-    
-with open(filename) as csvfile:
-        reader = csv.reader(csvfile)
+fin = "../data/Class-List1.csv"
+fout = "../data/Class-ListOut.csv"  
+allcopy = []
+with open(fout) as csvout:
+    with open(fin) as csvin:
+        reader = csv.reader(csvin)
+        writer = csv.writer(csvout)
         for row in reader:
+            allcopy.append(row)
+            
+print allcopy
