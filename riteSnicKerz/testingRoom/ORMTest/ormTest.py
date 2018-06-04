@@ -17,7 +17,7 @@ subs = db.Table('subs',
 class User(db.Model):
 	user_id = db.Column(db.Integer,primary_key=True)
 	name = db.Column(db.String(20))
-	subscriptions = db.relationship('Channel',secondary=subs,backref=db.backref('subscribers',lazy = 'dynamic'))
+	subscriptions = db.relationship('Channel',secondary=subs,backref=db.backref('subscribers'))
 	#Note on secondary
 	#Tells helper table - hey use this table for connecting to the Channel so you can do stuff to it. 
 	#Note on backref
