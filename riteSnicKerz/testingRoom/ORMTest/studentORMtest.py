@@ -25,6 +25,7 @@ class students(db.Model):
 		self.fname = fname
 		self.lname = lname
 		self.pw = str(hash(pow))
+#Uhh.... new plan? make a classes db and sections db and then relate the two.
 
 class classes(db.Model):
 	id = db.Column('classID',db.Integer,primary_key=True)
@@ -45,3 +46,4 @@ class classes(db.Model):
 		temp[str(num)] = {"teacher":techer,"room":rom,"roster":roost}
 		print temp
 		self.sections = json.dumps(temp)
+
