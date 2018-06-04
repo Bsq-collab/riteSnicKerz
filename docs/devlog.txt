@@ -19,13 +19,13 @@ LESSONS LEARNED
 
 ||||||||||||||||||||||||||||||||||||||||||
 
- ______   ______   __   __   __       ______   _______     
-/_____/\ /_____/\ /_/\ /_/\ /_/\     /_____/\ /______/\    
-\:::_ \ \\::::_\/_\:\ \\ \ \\:\ \    \:::_ \ \\::::__\/__  
- \:\ \ \ \\:\/___/\\:\ \\ \ \\:\ \    \:\ \ \ \\:\ /____/\ 
-  \:\ \ \ \\::___\/_\:\_/.:\ \\:\ \____\:\ \ \ \\:\\_  _\/ 
-   \:\/.:| |\:\____/\\ ..::/ / \:\/___/\\:\_\ \ \\:\_\ \ \ 
-    \____/_/ \_____\/ \___/_(   \_____\/ \_____\/ \_____\/ 
+ ______   ______   __   __   __       ______   _______
+/_____/\ /_____/\ /_/\ /_/\ /_/\     /_____/\ /______/\
+\:::_ \ \\::::_\/_\:\ \\ \ \\:\ \    \:::_ \ \\::::__\/__
+ \:\ \ \ \\:\/___/\\:\ \\ \ \\:\ \    \:\ \ \ \\:\ /____/\
+  \:\ \ \ \\::___\/_\:\_/.:\ \\:\ \____\:\ \ \ \\:\\_  _\/
+   \:\/.:| |\:\____/\\ ..::/ / \:\/___/\\:\_\ \ \\:\_\ \ \
+    \____/_/ \_____\/ \___/_(   \_____\/ \_____\/ \_____\/
 
 firstL -- TIMESTAMP\n
 <all the wonderful things and the not so wonderful bugs you discovered>
@@ -71,7 +71,7 @@ Created the select courses route
 zhangY —- 2018-05-24 23:00:00
 Fixed forms.
 	- Form inputs are no longer super small.
-Attempted to connect JS lists to JSON. 
+Attempted to connect JS lists to JSON.
 
 leungB -- 2018-05-25 12:58:55
 added some database creation code to the __init__
@@ -96,11 +96,22 @@ zhangY —- 2018-05-28 20:00:00
 Finished creating templates for transcript, course directory, setting and updated course selection.
 	Connected all these pages together.
 
+zhangY -- 2018-05-28 20:00:00
+Updated divs to fit gradients.
+  Divs now work as containers.
+
+zhangY -- 2018-05-30 20:00:00
+Updated settings for students.
+
 leungB -- 2018-06-01 12:45:44
 added csv of classList
 
 bayanB -- 2018-06-01 12:48:25
 Procured a csv from the guidance office that contains class names, sections, teachers, and course code
+
+zhangY -- 2018-06-01 12:50:00
+Created pages for admin.
+Fixed navbar.
 
 terryG -- 2018-06-03 09:16:04
 preliminary algorithm created
@@ -108,3 +119,5 @@ preliminary algorithm created
 leungB -- 2018-06-03 10:49:27
 added a csv parser function for the ClassList. It works.
 
+zhangY -- 2018-06-03 10:50:00
+Created more templates for history and appeal.
