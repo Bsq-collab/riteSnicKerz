@@ -1,0 +1,84 @@
+{% extends "student_base.html" %}
+
+{% block title %}
+Transcript
+{% endblock %}
+
+{% block content %}
+
+
+<div class = "row">
+<h1> Welcome {{name}}. </h1>
+</div>
+
+<div style= "padding: 1cm 5cm 15cm 5cm;">
+  <h3>Science</h3>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">Course</th>
+        <th scope="col">Year</th>
+        <th scope="col">Semester</th>
+        <th scope="col">Grade</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">Biology</th>
+        <td>2014</td>
+        <td>1</td>
+        <td>100</td>
+      </tr>
+      <tr>
+        <th scope="row">Biology</th>
+        <td>2014</td>
+        <td>2</td>
+        <td>85</td>
+      </tr>
+      <tr>
+        <th scope="row">Chemistry</th>
+        <td colspan="1">2014</td>
+        <td>1</td>
+        <td>65</td>
+      </tr>
+    </tbody>
+  </table>
+  <br>
+  <h3>Math</h3>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">Course</th>
+        <th scope="col">Year</th>
+        <th scope="col">Semester</th>
+        <th scope="col">Grade</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">Geometry</th>
+        <td>2014</td>
+        <td>1</td>
+        <td>100</td>
+      </tr>
+      <tr>
+        <th scope="row">Trigonometry</th>
+        <td>2015</td>
+        <td>1</td>
+        <td>55</td>
+      </tr>
+      <tr>
+        <th scope="row">Pre-Calculus</th>
+        <td colspan="1">2016</td>
+        <td>1</td>
+        <td>99</td>
+      </tr>
+    </tbody>
+  </table>
+  <br>
+  <a href="student"><button type="button" class="btn-sm btn-light">Return to Dashboard</button></a>
+</div>
+
+
+
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "student_base.html" %}
+
+{% block title %}
+Course Selections
+{% endblock %}
+
+{% block content %}
+
+<div class = "row" style = "padding: 0cm 0cm 0cm 2cm;">
+<h1> Welcome {{name}} </h1>
+</div>
+<div style= "padding: 1cm 5cm 15cm 5cm;">
+  <!-- use jinja2 to cycle through a list/dictionary and put in as options -->
+  <h3> First Elective Choice </h3>
+  <select class="form-control form-control-sm" name="elective1">
+    <option>Human Diseases</option>
+    <option>Forensics</option>
+    <option>Nutritional Science</option>
+    <option>Medical Ethics</option>
+    <option>Geology</option>
+    <option>Human Reasoning</option>
+  </select>
+  <br>
+  <h3> Second Elective Choice </h3>
+  <select class="form-control form-control-sm" name="elective2">
+    <option>Human Diseases</option>
+    <option>Forensics</option>
+    <option>Nutritional Science</option>
+    <option>Medical Ethics</option>
+    <option>Geology</option>
+    <option>Human Reasoning</option>
+  </select>
+  <br>
+  <h3> Third Elective Choice </h3>
+  <select class="form-control form-control-sm" name="elective3">
+    <option>Human Diseases</option>
+    <option>Forensics</option>
+    <option>Nutritional Science</option>
+    <option>Medical Ethics</option>
+    <option>Geology</option>
+    <option>Human Reasoning</option>
+  </select>
+
+  <br><br>
+  <button type="submit" onclick="get_electives()" class="btn btn-primary">Submit</button>
+<br>
+<br>
+  <a href="student"><button type="button" class="btn-sm btn-light">Return to Dashboard</button></a>
+</div>
+
+
+
+
+<script src="/static/electives.js"></script>
+
+
+
+{% endblock %}

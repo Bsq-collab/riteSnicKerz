@@ -1,0 +1,52 @@
+https://www.tutorialspoint.com/flask/flask_sqlalchemy.htm
+
+USE THIS:
+$ pip install flask-sqlalchemy
+
+db.session.add(model object) − inserts a record into mapped table
+
+db.session.delete(model object) − deletes record from table
+
+model.query.all() - Select all
+
+HOW TO CHANGE A DATA POINT THING:
+admin = User.query.filter_by(username='admin').first()
+admin.email = 'my_new_email@example.com'
+db.session.commit()
+
+user = User.query.get(5)
+user.name = 'New Name'
+db.session.commit()
+
+
+Student Needed Data:
+id - int
+OSIS - int
+Fname - String
+Lname - String
+email - String
+SCHEDULE - Stringy JSON
+*ClassSelections - Stringy JSON - get data from frontend + priority order
+FilledPreReqs - "{Science:["bio","chem","phys"]}" - Stringy JSON
+FilledGradRequirements -  will be dealt with by py fxn?
+Overall Average - float
+Subject Averages - Stringy JSON
+
+Background info:
+Birthday - String
+Religion - String
+
+
+Class Needed Data:
+Course Code
+Section Numbers: Periods corresponding to those sections
+Maximum Class Size
+
+
+JSON THINGS IMPORTANTE
+dir  = '["a","3","5"]'
+ble = json.loads(dir)
+ble --> [u'a', u'3', u'5']
+
+json.dumps(['foo', {'bar': ('baz', None, 1.0, 2)}])
+'["foo", {"bar": ["baz", null, 1.0, 2]}]'

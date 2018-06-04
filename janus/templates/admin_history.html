@@ -1,0 +1,59 @@
+{% extends "admin_base.html" %}
+
+{% block title %}
+History
+{% endblock %}
+
+{% block content %}
+
+
+<div class = "row">
+<h1> Welcome {{name}}. </h1>
+</div>
+
+<div style= "padding: 1cm 5cm 15cm 5cm;">
+  <h3>John Doe</h3>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Code</th>
+        <th scope="col">Transcript</th>
+        <th scope="col">Placed?</th>
+        <th scope="col">Appeal?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">John Doe</th>
+        <td>D3JI123</td>
+          <td><a href="student_transcript"><button type="button" class="btn-sm btn-light">Show Transcript</button></a></td>
+          <td>Yes</td>
+          <td><a href="show_appeal"><button type="button" class="btn-sm btn-light">Appeal</button></a></td>
+      </tr>
+      <tr>
+        <th scope="row">Jane Doe</th>
+        <td>D3JI0D23</td>
+        <td><a href="student_transcript"><button type="button" class="btn-sm btn-light">Show Transcript</button></a></td>
+          <td>Yes</td>
+          <td>Appealed</td>
+      </tr>
+      <tr>
+        <th scope="row">Gilligan Lenard </th>
+        <td colspan="1">D3230I123</td>
+        <td><a href="student_transcript"><button type="button" class="btn-sm btn-light">Show Transcript</button></a></td>
+        <td>No</td>
+        <td>N/A</td>
+
+      </tr>
+    </tbody>
+  </table>
+  <br>
+
+  <br>
+  <a href="admin"><button type="button" class="btn-sm btn-light">Return to Dashboard</button></a>
+</div>
+
+
+
+{% endblock %}
