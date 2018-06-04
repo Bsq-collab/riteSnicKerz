@@ -63,8 +63,8 @@ class classes(db.Model):
 		print temp
 		self.sections = json.dumps(temp)
 
+	
 # ============================END OF SQLALCHEMY COURSE CLASS DEFINITION=============================
-# UNFINISHED
 def getClass(courseCode):
 	return classes.query.filter_by(course_code=courseCode).first()
 

@@ -9,6 +9,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
+#association table
 subs = db.Table('subs',
 	db.Column('user_id',db.Integer,db.ForeignKey('user.user_id')),
 	db.Column('channel_id',db.Integer,db.ForeignKey('channel.channel_id'))
