@@ -16,12 +16,16 @@ class students(db.Model):
 	fname = db.Column(db.String(20))
 	lname = db.Column(db.String(20))
 	pw = db.Column(db.String(20))
-
-	def __init__(self, osis, fname, lname, pow=''):
+	APcount = db.Column(db.Integer)
+	avg = db.Column(db.String(200))
+	#avg must be a json in the following format: {ovrAvg: ??, dept: [class1: avg, class2: avg]}
+	def __init__(self, osis, fname, lname, APcount, pow='', avg):
 		self.osis = osis
 		self.fname = fname
 		self.lname = lname
+		self.APcount = APcount
 		self.pw = str(hash(pow))
+		self.avg = avg
 
 	# def getStudent(self,od):
 	# 	return self.query.filter_by(osis=od).first()
@@ -38,6 +42,17 @@ def getStudent(osis):
 	st = students.query.filter_by(osis=osis).first()
 	# print st.fname
 	return st
+
+def getAPcount(osis):
+	st = getStudent(osis)
+	return st.APcount
+
+def setAPcount(osis, newAPcount):
+	st = getStudent(osis)
+	prev = st.APcount
+	st.APcount = newAPcount
+	db.commit()
+	return prev
 # ============================END OF ACCESSOR & MUTATORS FOR STUDENT CLASS=============================
 # ============================END OF SQLALCHEMY STUDENT CLASS DEFINITION=============================
 
@@ -63,7 +78,7 @@ class classes(db.Model):
 		print temp
 		self.sections = json.dumps(temp)
 
-	
+
 # ============================END OF SQLALCHEMY COURSE CLASS DEFINITION=============================
 def getClass(courseCode):
 	return classes.query.filter_by(course_code=courseCode).first()
@@ -89,6 +104,9 @@ def csvEater():
 		newClass.sections = json.dumps(sectionHolder)
 		db.session.add(newClass)
 		db.session.commit()
+# ============================START OF HELPER FUNCTIONS=============================
+# ============================END OF HELPER FUNCTIONS=============================
+
 # ============================START OF ROUTING=============================
 @app.route("/")
 def home():

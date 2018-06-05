@@ -13,32 +13,23 @@ Course Selections
   <!-- use jinja2 to cycle through a list/dictionary and put in as options -->
   <h3> First Elective Choice </h3>
   <select class="form-control form-control-sm" name="elective1">
-    <option>Human Diseases</option>
-    <option>Forensics</option>
-    <option>Nutritional Science</option>
-    <option>Medical Ethics</option>
-    <option>Geology</option>
-    <option>Human Reasoning</option>
+  {% for key, value in classes.items() %}
+    <option> {{key}}: {{value}} </option>
+  {% endfor %}
   </select>
   <br>
   <h3> Second Elective Choice </h3>
   <select class="form-control form-control-sm" name="elective2">
-    <option>Human Diseases</option>
-    <option>Forensics</option>
-    <option>Nutritional Science</option>
-    <option>Medical Ethics</option>
-    <option>Geology</option>
-    <option>Human Reasoning</option>
+    {% for key, value in classes.items() %}
+      <option> {{key}}: {{value}} </option>
+    {% endfor %}
   </select>
   <br>
   <h3> Third Elective Choice </h3>
   <select class="form-control form-control-sm" name="elective3">
-    <option>Human Diseases</option>
-    <option>Forensics</option>
-    <option>Nutritional Science</option>
-    <option>Medical Ethics</option>
-    <option>Geology</option>
-    <option>Human Reasoning</option>
+    {% for key, value in classes.items() %}
+      <option> {{key}}: {{value}} </option>
+    {% endfor %}
   </select>
 
   <br><br>
