@@ -9,6 +9,38 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data/school.sqlite3'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
+
+# ============================FLASK-SQLALCHEMY NEW CLASS DEFINTIONS=======================================
+studentclass = db.Table('ssa_table',
+	db.Column('section',db.Integer,db.ForeignKey('sections.section_id')),
+	db.Column('student_osis',db.Integer,db.ForeignKey('students.osis'))
+)
+
+class students(db.Model):
+	id = db.Column('useless_id',db.Integer,primary_key=True)
+	osis = db.Column(db.Integer())
+	#classSections - will give you list of class sections that student is in. Need to go up one more in order to access class itself.
+
+
+class sections(db.Model):
+	id = db.Column('sectionID',db.Integer,primary_key=True)
+	section_id = db.Column(db.Integer())
+	class_code = db.Column(db.String(10),db.ForeignKey("classes.class_code"))
+	roster = db.relationship('students',secondary=studentclass,backref=db.backref('classSections'))
+	#upperClass - Use this to access the umbrella class for the section.
+
+class classes(db.Model):
+	id = db.Column('classID',db.Integer,primary_key=True)
+	sections = db.relationship("sections",backref="upperClass",lazy = True)
+	max_students = db.Column(db.Integer())
+	class_code = db.Column(db.String(10))
+
+	def __init__(self,classCode):
+		self.class_code = classCode
+#===============================END OF NEW CLASS DEFINITIONS==============================================
+
+
+#
 # ============================START OF SQLALCHEMY STUDENT CLASS DEFINITION=============================
 class students(db.Model):
 	id = db.Column('useless_id',db.Integer,primary_key=True)
