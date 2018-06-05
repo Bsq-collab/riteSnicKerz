@@ -30,14 +30,14 @@ class students(db.Model):
 		self.avg = avg
 
 	# def getStudent(self,od):
-	# 	return self.query.filter_by(osis=od).first()
+	#   return self.query.filter_by(osis=od).first()
 
 	# #PW FXNS
 	# def getPW(self, os):
-	# 	return self.query.filter_bystr(self.pw)
+	#   return self.query.filter_bystr(self.pw)
 	#
 	# def modPW(self,unhash):
-	# 	self.pw = str(hash(unhash))
+	#   self.pw = str(hash(unhash))
 
 # ============================ACCESSOR & MUTATORS FOR STUDENT CLASS=============================
 def getStudent(osis):
@@ -46,8 +46,8 @@ def getStudent(osis):
 	return st
 
 # def getAPcount(osis):
-# 	st = getStudent(osis)
-# 	return st.APcount
+#   st = getStudent(osis)
+#   return st.APcount
 
 def setElectiveCount(osis, electiveCount):
 	st.getStudent(osis)
@@ -71,7 +71,7 @@ class classes(db.Model):
 	id = db.Column('classID',db.Integer,primary_key=True)
 	course_code = db.Column(db.String(20))
 	course_name = db.Column(db.String(20))
-	sections = 	db.Column(db.String(1000))
+	sections =  db.Column(db.String(1000))
 	#Organization of sections data: {*section#*: {teacher:---, room:---, roster:[---]}, ...}
 	max_students = db.Column(db.Integer())
 
@@ -149,7 +149,7 @@ def auth():
 	else:
 		print "failed login"
 		flash("Login failed") #does not yet flash
-        return redirect(url_for("home"))
+		return redirect(url_for("home"))
 
 @app.route("/student")
 def student_dash():
@@ -182,26 +182,26 @@ def student_dash():
 @app.route("/select_courses")
 def choose_courses():
 	cla = classList()
-    return render_template("course_selection.html", classes = cla)
+	return render_template("course_selection.html", classes = cla)
 
 # @app.route("/logout")
 # def logout():
 #     session.pop("username")
-# 	return render_template("home.html")
+#   return render_template("home.html")
 
 
 @app.route("/transcript")
 def show_grades():
-    return render_template("transcript.html")
+	return render_template("transcript.html")
 
 
 @app.route("/all_courses")
 def show_courses():
-    return render_template("courses.html")
+	return render_template("courses.html")
 
 @app.route("/student_settings")
 def student_settings():
-    return render_template("student_settings.html")
+	return render_template("student_settings.html")
 
 @app.route("/admin")
 def admin_dash():
