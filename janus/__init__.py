@@ -21,46 +21,54 @@ class students(db.Model):
 	id = db.Column('useless_id',db.Integer,primary_key=True)
 	osis = db.Column(db.Integer())
 	#classSections - will give you list of class sections that student is in. Need to go up one more in order to access class itself.
+	fname = db.Column(db.String(20))
+	lname = db.Column(db.String(20))
+	pw = db.Column(db.String(20))
+	APcount = db.Column(db.Integer)
+	electiveCount = db.Column(db.Integer)
+	#avg must be a json in the following format: {ovrAvg: ??, dept: [class1: avg, class2: avg]}
+	avg = db.Column(db.String(1000))
 
+	def __init__(self, osis, fname, lname, pow='', APcount = 0, electiveCount = 0, avg = ''):
+		self.osis = osis
+		self.fname = fname
+		self.lname = lname
+		self.pw = str(hash(pow))
+		self.APcount = APcount
+		self.electiveCount = electiveCount
+		self.avg = avg
 
 class sections(db.Model):
 	id = db.Column('sectionID',db.Integer,primary_key=True)
 	section_id = db.Column(db.Integer())
 	class_code = db.Column(db.String(10),db.ForeignKey("classes.class_code"))
+	teacher = db.Column(db.String(20))
 	roster = db.relationship('students',secondary=studentclass,backref=db.backref('classSections'))
 	#upperClass - Use this to access the umbrella class for the section.
+
+	def __init__(self, section_id, code, teach):
+		self.section_id = section_id
+		self.class_code = code
+		self.teacher = teach
 
 class classes(db.Model):
 	id = db.Column('classID',db.Integer,primary_key=True)
 	sections = db.relationship("sections",backref="upperClass",lazy = True)
 	max_students = db.Column(db.Integer())
 	class_code = db.Column(db.String(10))
+	class_name = db.Column(db.String(20))
+	description = db.Column(db.String(1000))
 
-	def __init__(self,classCode):
-		self.class_code = classCode
+	def __init__(self, studn, code, name, descri):
+		self.max_students = studn
+		self.class_code = code
+		self.class_name = name
+		self.description = descri
 #NEW ===============================END OF NEW CLASS DEFINITIONS============================================== NEW
 
 
 #
 # ============================START OF SQLALCHEMY STUDENT CLASS DEFINITION=============================
-class students(db.Model):
-	id = db.Column('useless_id',db.Integer,primary_key=True)
-	osis = db.Column(db.Integer)
-	fname = db.Column(db.String(20))
-	lname = db.Column(db.String(20))
-	pw = db.Column(db.String(20))
-	APcount = db.Column(db.Integer)
-	electiveCount = db.Column(db.Integer)
-	avg = db.Column(db.String(1000))
-	#avg must be a json in the following format: {ovrAvg: ??, dept: [class1: avg, class2: avg]}
-	def __init__(self, osis, fname, lname, APcount = 0, electiveCount = 0, pow='', avg = ''):
-		self.osis = osis
-		self.fname = fname
-		self.lname = lname
-		self.APcount = APcount
-		self.electiveCount = electiveCount
-		self.pw = str(hash(pow))
-		self.avg = avg
 
 	# def getStudent(self,od):
 	#   return self.query.filter_by(osis=od).first()
