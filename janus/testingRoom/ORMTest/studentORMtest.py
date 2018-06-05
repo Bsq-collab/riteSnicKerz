@@ -9,24 +9,29 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
+#classes.query.all()
+
 #association table
-stclAsso = db.Table('subs',
-	db.Column('user_id',db.Integer,db.ForeignKey('user.user_id')),
-	db.Column('channel_id',db.Integer,db.ForeignKey('channel.channel_id'))
+studentclass = db.Table('ssa_table',
+	db.Column('section',db.Integer,db.ForeignKey('sections')),
+	db.Column('student_osis',db.Integer,db.ForeignKey('students.osis'))
 )
 
 class students(db.Model):
 	id = db.Column('useless_id',db.Integer,primary_key=True)
-	osis = db.Column(db.Integer)
+	osis = db.Column(db.Integer())
+	#classSections - will give you list of class sections that student is in. Need to go up one more in order to access class itself.
 
 #Uhh.... new plan? make a classes db and sections db and then relate the two.
+
 class sections(db.Model):
 	id = db.Column('sectionID',db.Integer,primary_key=True)
+	section_id = db.Column(db.Integer())
+	roster = db.relationship('roster',secondary=studentclass,backref=db.backref('classSections'))
 
 
 class classes(db.Model):
 	id = db.Column('classID',db.Integer,primary_key=True)
-	sections = 	db.Column(db.String(1000))
-	#Organization of sections data: {*section#*: {teacher:---, room:---, roster:[---]}, ...}
+	sections = db.relationship("sections",backref="class")
 	max_students = db.Column(db.Integer())
 
