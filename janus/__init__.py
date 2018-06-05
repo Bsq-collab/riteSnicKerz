@@ -59,11 +59,11 @@ class classes(db.Model):
 	class_name = db.Column(db.String(20))
 	description = db.Column(db.String(1000))
 
-	def __init__(self, studn, code, name, descri):
+	def __init__(self, studn, code, name, descr=''):
 		self.max_students = studn
 		self.class_code = code
 		self.class_name = name
-		self.description = descri
+		self.description = descr
 #NEW ===============================END OF NEW CLASS DEFINITIONS============================================== NEW
 
 
@@ -108,25 +108,11 @@ def setAPcount(osis, newAPcount):
 
 # UNFINISHED
 # ============================START OF SQLALCHEMY COURSE CLASS DEFINITION=============================
-class classes(db.Model):
-	id = db.Column('classID',db.Integer,primary_key=True)
-	course_code = db.Column(db.String(20))
-	course_name = db.Column(db.String(20))
-	sections =  db.Column(db.String(1000))
-	#Organization of sections data: {*section#*: {teacher:---, room:---, roster:[---]}, ...}
-	max_students = db.Column(db.Integer())
-
-	def __init__(self,code,name,studn,sekshuns={}):
-		self.course_code = code
-		self.course_name = name
-		self.max_students = studn
-		self.sections = str(sekshuns)
-
-	def add_section(self,num,techer,rom,roost):
-		temp = json.loads(self.sections)
-		temp[str(num)] = {"teacher":techer,"room":rom,"roster":roost}
-		print temp
-		self.sections = json.dumps(temp)
+	# def add_section(self,num,techer,rom,roost):
+	# 	temp = json.loads(self.sections)
+	# 	temp[str(num)] = {"teacher":techer,"room":rom,"roster":roost}
+	# 	print temp
+	# 	self.sections = json.dumps(temp)
 
 
 # ============================END OF SQLALCHEMY COURSE CLASS DEFINITION=============================
@@ -284,5 +270,5 @@ if __name__ == "__main__":
 		db.session.commit()
 
 	print "Done."
-	csvEater()
+	# csvEater()
 	app.run(debug = True, use_reloader= True)
