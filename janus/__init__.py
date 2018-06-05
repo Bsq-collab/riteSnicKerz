@@ -153,7 +153,8 @@ def auth():
 
 @app.route("/student")
 def student_dash():
-	return render_template("student_dash.html")
+	cla = classList()
+	return render_template("student_dash.html", classes = cla)
 
 	#
 	# @app.route("/about")
