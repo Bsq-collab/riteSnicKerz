@@ -17,13 +17,15 @@ class students(db.Model):
 	lname = db.Column(db.String(20))
 	pw = db.Column(db.String(20))
 	APcount = db.Column(db.Integer)
+	electiveCount = db.Column(db.Integer)
 	avg = db.Column(db.String(200))
 	#avg must be a json in the following format: {ovrAvg: ??, dept: [class1: avg, class2: avg]}
-	def __init__(self, osis, fname, lname, APcount, pow='', avg):
+	def __init__(self, osis, fname, lname, APcount = 0, electiveCount = 0, pow='', avg = ''):
 		self.osis = osis
 		self.fname = fname
 		self.lname = lname
 		self.APcount = APcount
+		self.electiveCount = electiveCount
 		self.pw = str(hash(pow))
 		self.avg = avg
 
@@ -43,9 +45,16 @@ def getStudent(osis):
 	# print st.fname
 	return st
 
-def getAPcount(osis):
-	st = getStudent(osis)
-	return st.APcount
+# def getAPcount(osis):
+# 	st = getStudent(osis)
+# 	return st.APcount
+
+def setElectiveCount(osis, electiveCount):
+	st.getStudent(osis)
+	prev = st.electiveCount
+	st.electiveCount = electiveCount
+	db.commit()
+	return prev
 
 def setAPcount(osis, newAPcount):
 	st = getStudent(osis)
