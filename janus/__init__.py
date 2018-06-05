@@ -18,7 +18,7 @@ class students(db.Model):
 	pw = db.Column(db.String(20))
 	APcount = db.Column(db.Integer)
 	electiveCount = db.Column(db.Integer)
-	avg = db.Column(db.String(200))
+	avg = db.Column(db.String(1000))
 	#avg must be a json in the following format: {ovrAvg: ??, dept: [class1: avg, class2: avg]}
 	def __init__(self, osis, fname, lname, APcount = 0, electiveCount = 0, pow='', avg = ''):
 		self.osis = osis
@@ -91,6 +91,18 @@ class classes(db.Model):
 # ============================END OF SQLALCHEMY COURSE CLASS DEFINITION=============================
 def getClass(courseCode):
 	return classes.query.filter_by(course_code=courseCode).first()
+
+# returns a list of all class objects
+def getAllClasses():
+	return classes.query.all()
+
+def classList():
+	x = getAllClasses()
+	r = {}
+	for i in x:
+		r[i.course_code] = i.course_name
+	ret = json.dumps(r)
+	return ret
 
 def csvEater():
 	with open("data/Class-List1.csv") as csvfile:
@@ -169,7 +181,8 @@ def student_dash():
 
 @app.route("/select_courses")
 def choose_courses():
-    return render_template("course_selection.html")
+	cla = classList()
+    return render_template("course_selection.html", classes = cla)
 
 # @app.route("/logout")
 # def logout():

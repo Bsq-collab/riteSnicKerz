@@ -27,7 +27,7 @@ class students(db.Model):
 
 	#PW FXNS
 	def checkPW(self,unhash):
-		return self.pw == str(hash(unhash)) 
+		return self.pw == str(hash(unhash))
 	def modPW(self,unhash):
 		self.pw = str(hash(unhash))
 
@@ -36,9 +36,8 @@ class classes(db.Model):
 	course_code = db.Column(db.String(20))
 	course_name = db.Column(db.String(20))
 	sections = 	db.Column(db.String(1000))
-	
 	#Organization of sections data: {*section#*: {teacher:---, room:---, roster:[---]}, ...}
-	
+
 	max_students = db.Column(db.Integer())
 
 	def __init__(self,code,name,studn):
@@ -70,26 +69,41 @@ class teachers(db.Model):
 	teacherID = db.Column(db.Integer)
 
 	def __init__(self,ood):
-		self.teacherID = ood 
+		self.teacherID = ood
 '''
+def getAllClasses():
+	return classes.query.all()
+
+def classList():
+	x = getAllClasses()
+	r = {}
+	for i in x:
+		r[i.course_code] = i.course_name
+	ret = json.dumps(r)
+	return ret
+
+print "get class"
+print classList()
+print "============"
+
 def StoL(listring):
 	return json.loads(listring)
 
 if __name__ == '__main__':
 	db.create_all()
-	
+
 	newstudent = students(1234,'Brian','Leung')
 	if (newstudent.getStudent(1234) is not None):
 		print newstudent
 		print "Student already exists"
 	else:
-		db.session.add(newstudent)	
+		db.session.add(newstudent)
 		db.session.commit()
 	newcourse = classes('MKS22-',"Calculus AB",31)
 	newcourse.add_section(1,"Dr. Ku",1114,["Yuyang","Terry","Lil Pump"])
 	newcourse.add_student(1,"Thanos")
 	db.session.add(newcourse)
 	db.session.commit()
-	print "DONE"	
-	
+	print "DONE"
+
 	app.run(debug = True, use_reloader=False)
