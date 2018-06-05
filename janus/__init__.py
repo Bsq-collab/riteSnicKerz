@@ -210,7 +210,7 @@ def show_admin_courses():
 if __name__ == "__main__":
 	db.create_all()
 
-	newstudent = students(1111,'21','savage',"issa")
+	newstudent = students(1111,'21','savage',pow="issa")
 	if (getStudent(1111) is not None):
 		print "Student already exists. Not creating."
 	else:
