@@ -101,8 +101,7 @@ def classList():
 	r = {}
 	for i in x:
 		r[i.course_code] = i.course_name
-	ret = json.dumps(r)
-	return ret
+	return r
 
 def csvEater():
 	with open("data/Class-List1.csv") as csvfile:
@@ -204,6 +203,17 @@ def show_courses():
 def student_settings():
 	return render_template("student_settings.html")
 
+@app.route("/elecChoice", methods=["POST"])
+def elecChoice():
+	print request.form.keys()
+	a = {}
+	for key in request.form.keys():
+		st = request.form.get(key)
+		st = st.split(":")
+		a[ st[0] ] = st[1]
+	print a
+	return a
+
 @app.route("/admin")
 def admin_dash():
 	return render_template("admin_dash.html")
@@ -234,4 +244,4 @@ if __name__ == "__main__":
 
 	print "Done."
 	csvEater()
-	app.run(debug = True, use_reloader=False)
+	app.run(debug = True, use_reloader= True)

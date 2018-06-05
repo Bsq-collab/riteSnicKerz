@@ -124,3 +124,6 @@ Created more templates for history and appeal.
 leungB -- 2018-06-04 23:34:38
 started a new foundation for the class-section-student relational
 
+terryG -- 2018-06-05 09:53:46
+finished connected front end elective choice to flask
+

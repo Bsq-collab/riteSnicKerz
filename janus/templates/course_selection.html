@@ -6,43 +6,43 @@ Course Selections
 
 {% block content %}
 
-<div class = "row" style = "padding: 0cm 0cm 0cm 2cm;">
-<h1> Welcome {{name}} </h1>
+<div class = "container" style = "padding: 0cm 0cm 0cm 2cm;">
+  <h1> Welcome {{name}} </h1>
 </div>
-<div style= "padding: 1cm 5cm 15cm 5cm;">
+<div class = "container" style= "padding: 1cm 5cm 15cm 5cm;">
   <!-- use jinja2 to cycle through a list/dictionary and put in as options -->
-  <h3> First Elective Choice </h3>
-  <select class="form-control form-control-sm" name="elective1">
-  {% for key, value in classes.items() %}
-    <option> {{key}}: {{value}} </option>
-  {% endfor %}
-  </select>
-  <br>
-  <h3> Second Elective Choice </h3>
-  <select class="form-control form-control-sm" name="elective2">
-    {% for key, value in classes.items() %}
+  <form action="elecChoice" method="POST">
+    <h3> First Elective Choice </h3>
+    <select class="form-control form-control-sm" name="elective1">
+      {% for key, value in classes.items() %}
       <option> {{key}}: {{value}} </option>
-    {% endfor %}
-  </select>
-  <br>
-  <h3> Third Elective Choice </h3>
-  <select class="form-control form-control-sm" name="elective3">
-    {% for key, value in classes.items() %}
+      {% endfor %}
+    </select>
+    <br>
+    <h3> Second Elective Choice </h3>
+    <select class="form-control form-control-sm" name="elective2">
+      {% for key, value in classes.items() %}
       <option> {{key}}: {{value}} </option>
-    {% endfor %}
-  </select>
-
-  <br><br>
-  <button type="submit" onclick="get_electives()" class="btn btn-primary">Submit</button>
-<br>
-<br>
-  <a href="student"><button type="button" class="btn-sm btn-light">Return to Dashboard</button></a>
+      {% endfor %}
+    </select>
+    <br>
+    <h3> Third Elective Choice </h3>
+    <select class="form-control form-control-sm" name="elective3">
+      {% for key, value in classes.items() %}
+      <option> {{key}}: {{value}} </option>
+      {% endfor %}
+    </select>
+    <br>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+  <br>
+  <a href="student"><button type="button" class="btn btn-primary">Return to Dashboard</button></a>
 </div>
 
 
 
 
-<script src="/static/electives.js"></script>
+<!-- <script src="/static/electives.js"></script> -->
 
 
 
