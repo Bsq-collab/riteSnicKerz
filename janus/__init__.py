@@ -10,7 +10,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 
-# ============================FLASK-SQLALCHEMY NEW CLASS DEFINTIONS=======================================
+#NEW ============================FLASK-SQLALCHEMY NEW CLASS DEFINTIONS======================================= NEW
+#This is the association table, just dont touch it
 studentclass = db.Table('ssa_table',
 	db.Column('section',db.Integer,db.ForeignKey('sections.section_id')),
 	db.Column('student_osis',db.Integer,db.ForeignKey('students.osis'))
@@ -37,7 +38,7 @@ class classes(db.Model):
 
 	def __init__(self,classCode):
 		self.class_code = classCode
-#===============================END OF NEW CLASS DEFINITIONS==============================================
+#NEW ===============================END OF NEW CLASS DEFINITIONS============================================== NEW
 
 
 #
