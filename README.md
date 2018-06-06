@@ -2,11 +2,14 @@
 ## Project Janus
 Bayan Berri, Terry Guan, Brian Leung, Yuyang Zhang
 
-Welcome to Project Janus. Our project is a website to simplify the course selection. Users will be able to look at a course directory along with their transcript to streamline the selection process. There will also be a programming changing aspect to the website.
+## Brief Description
+Course selection has been known to be a chaotic and unpredictable process. Many mistakes are typically made in the process of selecting students: lack of a lunch period, core class, physical education class, automatic removal from a given spot in a class, and losing a spot in an AP to a student who is less qualified.  
+  
+Program changes are even more chaotic as students have to wait on lines that can stretch throughout the building, obtain signatures from multiple individuals, find students who want to swap periods, etc. Our project attempts to address this situation by building an all-in-one course selection and program changes website. We attempt to automate student selection into courses based on factors like overall average, subject average, recommendation, etc. By automating this process we remove many possibilities for human error. The online system will also diminish the need to be physically present at program changes.  
 
 proto0: [http://206.189.231.92/](http://206.189.231.92/)
 
-## Instruction to Run Website Locally?
+## Instructions to Run Website Locally
 
 ### Dependencies
 1. Python 2.7
@@ -29,7 +32,7 @@ proto0: [http://206.189.231.92/](http://206.189.231.92/)
    $ virtualenv <name>
    $ . <name>/bin/activate
    ```
-1. Install all the dependencies
+1. Install all the pip dependencies
    ```bash
    $ pip install flask flask_sqlalchemy
    ```
@@ -42,4 +45,4 @@ proto0: [http://206.189.231.92/](http://206.189.231.92/)
    ```bash
    $ python __init__.py
    ```
-4. Open a browser window and go to `http://localhost:5000`
+4. Open a browser window and go to [http://localhost:5000](http://localhost:5000)
