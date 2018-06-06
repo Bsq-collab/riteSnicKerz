@@ -130,3 +130,6 @@ finished connected front end elective choice to flask
 leungB -- 2018-06-05 12:44:47
 completed class-section-student db foundation. Now we can put more fancy things inside it :)
 
+bayanB -- 2018-06-05 22:00:56
+updated readme
+
