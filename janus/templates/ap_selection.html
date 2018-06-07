@@ -14,6 +14,7 @@ AP Selection
   <form action="apChoice" method="POST">
     <h3> First AP Choice </h3>
     <select class="form-control form-control-sm" name="elective1">
+      <option> N/A </option>
       {% for key, value in APs.items() %}
       <option> {{key}}: {{value}} </option>
       {% endfor %}
@@ -21,6 +22,7 @@ AP Selection
     <br>
     <h3> Second AP Choice </h3>
     <select class="form-control form-control-sm" name="elective2">
+      <option> N/A </option>
       {% for key, value in APs.items() %}
       <option> {{key}}: {{value}} </option>
       {% endfor %}
@@ -28,6 +30,7 @@ AP Selection
     <br>
     <h3> Third AP Choice </h3>
     <select class="form-control form-control-sm" name="elective3">
+      <option> N/A </option>
       {% for key, value in APs.items() %}
       <option> {{key}}: {{value}} </option>
       {% endfor %}

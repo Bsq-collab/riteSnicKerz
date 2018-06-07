@@ -38,19 +38,18 @@ class students(db.Model):
 		self.electiveCount = electiveCount
 		self.avg = avg
 
-def setElectiveCount(osis, electiveCount):
-	st.getStudent(osis)
-	prev = st.electiveCount
-	st.electiveCount = electiveCount
-	db.commit()
-	return prev
+	def setAPcount(self):
+		if self.avg >= 95.0:
+			self.APcount = 4
+		elif self.avg >= 93.0:
+			self.APcount = 3
+		elif self.avg >= 88.0:
+			self.APcount = 2
+		else:
+			self.APcount = 1
 
-def setAPcount(osis, newAPcount):
-	st = getStudent(osis)
-	prev = st.APcount
-	st.APcount = newAPcount
-	db.commit()
-	return prev
+	# def setElectiveCount(self): #10 - num of APs in - num core classes
+
 
 def getStudent(osis):
 	st = students.query.filter_by(osis=osis).first()
@@ -108,6 +107,7 @@ def classList():
 	return r
 
 # def __init__(self, code, name, max_students, descr=''):
+# need to fix csvEater to have relationship working
 def csvEater():
 	with open("data/Class-List1.csv") as csvfile:
 		reader = csv.reader(csvfile)
@@ -169,16 +169,6 @@ def student_dash():
 	cla = classList()
 	return render_template("student_dash.html", classes = cla)
 
-@app.route("/select_electives")
-def choose_courses():
-	cla = classList()
-	return render_template("course_selection.html", classes = cla)
-
-@app.route("/select_aps")
-def select_aps():
-	aps = getAPs()
-	return render_template("course_selection.html", APs = aps)
-
 @app.route("/transcript")
 def show_grades():
 	return render_template("transcript.html")
@@ -191,16 +181,40 @@ def show_courses():
 def student_settings():
 	return render_template("student_settings.html")
 
-@app.route("/elecChoice", methods=["POST"])
+@app.route("/select_electives")
+def choose_courses():
+	cla = classList()
+	return render_template("elective_selection.html", classes = cla)
 
+@app.route("/select_aps")
+def select_aps():
+	aps = getAPs()
+	return render_template("ap_selection.html", APs = aps)
+
+@app.route("/elecChoice", methods=["POST"])
 def elecChoice():
 	print request.form.keys()
 	a = {}
 	for key in request.form.keys():
 		st = request.form.get(key)
-		st = st.split(":")
-		a[ st[0] ] = st[1]
-	print a
+		if st != "N/A":
+			st = st.split(":")
+			a[ st[0] ] = st[1]
+	student = getStudent(session['username'])
+	i = student.APcount
+	# while (len(st) >= i):
+	#
+	return a
+
+@app.route("/apChoice", methods=["POST"])
+def apChoice():
+	print request.form.keys()
+	a = {}
+	for key in request.form.keys():
+		st = request.form.get(key)
+		if st != "N/A":
+			st = st.split(":")
+			a[ st[0] ] = st[1]
 	return a
 
 # ============================ADMIN ROUTES =============================
