@@ -83,12 +83,13 @@ class classes(db.Model):
 		self.class_code = code
 		self.class_name = name
 		self.description = descr
-#NEW ===============================END OF NEW CLASS DEFINITIONS==============================================
+
 def getClass(courseCode):
 	return classes.query.filter_by(course_code=courseCode).first()
 
 def getAPs():
 	cl = classes.query.all()
+	print cl
 	return cl
 # returns a list of all class objects
 def getAllClasses():
@@ -123,8 +124,7 @@ def csvEater():
 		db.session.add(newClass)
 		db.session.commit()
 
-# ============================START OF HELPER FUNCTIONS=============================
-# ============================END OF HELPER FUNCTIONS=============================
+# ===============================END OF NEW CLASS DEFINITIONS==============================================
 
 # ============================START OF ROUTING=============================
 @app.route("/")
@@ -132,7 +132,7 @@ def home():
 	if 'username' in session:
 		return render_template("student_dash.html")
 	else:
-		return render_template("login.html")
+		return redirect(url_for("student_dash"))
 
 @app.route("/auth", methods=["GET","POST"])
 def auth():
@@ -149,10 +149,66 @@ def auth():
 		flash("Login failed") #does not yet flash
 		return redirect(url_for("home"))
 
-@app.route("/student")
+@app.route("/student_dash")
 def student_dash():
 	cla = classList()
 	return render_template("student_dash.html", classes = cla)
+
+@app.route("/select_electives")
+def choose_courses():
+	cla = classList()
+	return render_template("course_selection.html", classes = cla)
+
+@app.route("/select_aps")
+def select_aps():
+	aps = getAPs()
+	return render_template("course_selection.html", APs = aps)
+
+@app.route("/transcript")
+def show_grades():
+	return render_template("transcript.html")
+
+@app.route("/all_courses")
+def show_courses():
+	return render_template("courses.html")
+
+@app.route("/student_settings")
+def student_settings():
+	return render_template("student_settings.html")
+
+@app.route("/elecChoice", methods=["POST"])
+
+def elecChoice():
+	print request.form.keys()
+	a = {}
+	for key in request.form.keys():
+		st = request.form.get(key)
+		st = st.split(":")
+		a[ st[0] ] = st[1]
+	print a
+	return a
+
+# ============================ADMIN ROUTES =============================
+@app.route("/admin")
+def admin_dash():
+	return render_template("admin_dash.html")
+
+@app.route("/student_selections")
+def student_selections():
+	return render_template("student_selections.html")
+
+@app.route("/admin_settings")
+def admin_settings():
+	return render_template("admin_settings.html")
+
+@app.route("/admin_all_courses")
+def show_admin_courses():
+	return render_template("admin_all_courses.html")
+
+# @app.route("/logout")
+# def logout():
+#     session.pop("username")
+#   return render_template("login.html")
 
 	#
 	# @app.route("/about")
@@ -177,56 +233,6 @@ def student_dash():
 	# @app.route("/<int:admin_id>/admindata")
 	# @app.route("/<int:admin_id>/admininbox")
 	#
-
-@app.route("/select_courses")
-def choose_courses():
-	cla = classList()
-	return render_template("course_selection.html", classes = cla)
-
-# @app.route("/logout")
-# def logout():
-#     session.pop("username")
-#   return render_template("login.html")
-
-
-@app.route("/transcript")
-def show_grades():
-	return render_template("transcript.html")
-
-@app.route("/all_courses")
-def show_courses():
-	return render_template("courses.html")
-
-@app.route("/student_settings")
-def student_settings():
-	return render_template("student_settings.html")
-
-@app.route("/elecChoice", methods=["POST"])
-def elecChoice():
-	print request.form.keys()
-	a = {}
-	for key in request.form.keys():
-		st = request.form.get(key)
-		st = st.split(":")
-		a[ st[0] ] = st[1]
-	print a
-	return a
-
-@app.route("/admin")
-def admin_dash():
-	return render_template("admin_dash.html")
-
-@app.route("/student_selections")
-def student_selections():
-	return render_template("student_selections.html")
-
-@app.route("/admin_settings")
-def admin_settings():
-	return render_template("admin_settings.html")
-
-@app.route("/admin_all_courses")
-def show_admin_courses():
-	return render_template("admin_all_courses.html")
 # ============================END OF ROUTING=============================
 
 if __name__ == "__main__":

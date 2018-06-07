@@ -12,21 +12,21 @@ Course Selections
 <div class = "container" style= "padding: 1cm 5cm 15cm 5cm;">
   <!-- use jinja2 to cycle through a list/dictionary and put in as options -->
   <form action="elecChoice" method="POST">
-    <h3> First Elective Choice </h3>
+    <h3> First AP Choice </h3>
     <select class="form-control form-control-sm" name="elective1">
       {% for key, value in classes.items() %}
       <option> {{key}}: {{value}} </option>
       {% endfor %}
     </select>
     <br>
-    <h3> Second Elective Choice </h3>
+    <h3> Second AP Choice </h3>
     <select class="form-control form-control-sm" name="elective2">
       {% for key, value in classes.items() %}
       <option> {{key}}: {{value}} </option>
       {% endfor %}
     </select>
     <br>
-    <h3> Third Elective Choice </h3>
+    <h3> Third AP Choice </h3>
     <select class="form-control form-control-sm" name="elective3">
       {% for key, value in classes.items() %}
       <option> {{key}}: {{value}} </option>
