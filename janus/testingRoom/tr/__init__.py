@@ -147,7 +147,7 @@ def home():
 	if 'username' in session:
 		return render_template("student_dash.html")
 	else:
-		return redirect(url_for("student_dash"))
+		return render_template("login.html")
 
 @app.route("/auth", methods=["GET","POST"])
 def auth():
@@ -164,11 +164,6 @@ def auth():
 		flash("Login failed") #does not yet flash
 		return redirect(url_for("home"))
 
-@app.route("/student_dash")
-def student_dash():
-	cla = classList()
-	return render_template("student_dash.html", classes = cla)
-
 @app.route("/transcript")
 def show_grades():
 	return render_template("transcript.html")
@@ -182,7 +177,7 @@ def student_settings():
 	return render_template("student_settings.html")
 
 @app.route("/select_electives")
-def choose_courses():
+def select_electives():
 	cla = classList()
 	return render_template("elective_selection.html", classes = cla)
 

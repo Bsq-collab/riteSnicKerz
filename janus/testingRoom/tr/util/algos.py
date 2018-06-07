@@ -5,6 +5,7 @@ def rank(ovrAvg, subAvg, tRec):
 # helper function for schedulize. Gets all possible periods for each class
 def getPds(classList):
     # needs to make DB calls
+    # sections.query.filter_by('class_code'=classCode, 'pd' = pd)
     # filter classes into periods
     return # 2D array where each index is an array of possible classes for that period
 
@@ -15,7 +16,7 @@ def optC(classList, classPds, currentPd):
     for i in classPds:
         for f in i:
             c[classList.indexOf(f)] += 1
-    return classList(c.indexOf(min(c)))
+    return c[c.indexOf(min(c))]
 
 def schedulize(classList, pd, schedule, currentPd):
     if currentPd == 10:
