@@ -108,6 +108,10 @@ class classes(db.Model):
 	class_name = db.Column(db.String(20))
 	description = db.Column(db.String(1000))
 
+	@staticmethod
+	def findClass(coode):
+		return classes.query.filter_by(class_code = coode).first()
+
 	#Applicant Pool
 	applicant_pool = db.relationship("students",secondary=applicantclass,backref=db.backref('applied_classes'),lazy=True)
 	
@@ -138,9 +142,6 @@ class classes(db.Model):
 	def get_sections(self):
 		return self.sections
 
-	@staticmethod
-	def findClass(coode):
-		return classes.query.filter_by(class_code == coode).first()
 
 	
 #NEW ===============================END OF NEW CLASS DEFINITIONS============================================== NEW
