@@ -80,7 +80,7 @@ class students(db.Model):
 		return self.APcount
 
 	def UpdateCoreCount(self):
-		if self.classYr = 4:
+		if self.classYr == 4:
 			self.coreClassCount = 4
 		else:
 			self.coreClassCount = 7
