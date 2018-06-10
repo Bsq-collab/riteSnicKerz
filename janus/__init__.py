@@ -89,9 +89,9 @@ class students(db.Model):
 		self.electiveCount = 10 - self.coreClassCount - self.APcount
 
 	def UpdateClassCount(self):
-		UpdateCoreCount()
-		UpdateAPcount()
-		UpdateElectiveCount()
+		self.UpdateCoreCount()
+		self.UpdateAPcount()
+		self.UpdateElectiveCount()
 
 	def setAvg(self, newAvg):
 		prev = self.avg
