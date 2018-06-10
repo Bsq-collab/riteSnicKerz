@@ -136,3 +136,6 @@ updated readme
 leungB -- 2018-06-10 09:51:26
 made the applicant_pool relation for the classes and students
 
+terryG -- 2018-06-10 13:00:14
+added function that  adds students to applicant pool for AP classes only
+
