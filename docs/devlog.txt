@@ -139,3 +139,6 @@ made the applicant_pool relation for the classes and students
 terryG -- 2018-06-10 13:00:14
 added function that  adds students to applicant pool for AP classes only
 
+terryG -- 2018-06-10 16:52:27
+added mutators and accessors preReqs subAvgs
+

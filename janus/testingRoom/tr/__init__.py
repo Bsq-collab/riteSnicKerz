@@ -1,5 +1,5 @@
 import os,csv,json
-from util import algos
+# from util import algos
 from flask import Flask, session, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 
@@ -56,6 +56,7 @@ class students(db.Model):
 	coreClassCount = db.Column(db.Integer)
 	#avg must be a json in the following format: {ovrAvg: ??, dept: [class1: avg, class2: avg]}
 	avg = db.Column(db.String(1000))
+	subAvgs = db.Column(db.String(1000))
 
 	def __init__(self, osis, fname, lname, classYr = 1, legitSchedule = '', pow='', APcount = 0, electiveCount = 0, avg = ''):
 		self.osis = osis
@@ -67,6 +68,7 @@ class students(db.Model):
 		self.APcount = APcount
 		self.electiveCount = electiveCount
 		self.avg = avg
+		self.subAvgs = ''
 
 	def UpdateAPcount(self):
 		if self.avg >= 95.0:
@@ -77,7 +79,6 @@ class students(db.Model):
 			self.APcount = 2
 		else:
 			self.APcount = 1
-		return self.APcount
 
 	def UpdateCoreCount(self):
 		if self.classYr == 4:
@@ -97,6 +98,21 @@ class students(db.Model):
 		prev = self.avg
 		self.avg = newAvg
 		return prev
+
+	#takes a dictionary in this format: {'courseCode': float(avg)}
+	def setSubAvg(self, subD):
+		prev = self.subAvgs
+		self.subAvgs = json.dumps(subD)
+		return json.loads(subD)
+
+	#returns a dictionary in above stated format
+	def getSubAvg(self):
+		return json.loads(self.subAvgs)
+
+	#get specific class avg
+	def getSpecSubAvg(self, cl):
+		n = self.getSubAvg()
+		return n[cl]
 
 	def setLegitSchedule(self, newLS):
 		prev = self.legitSchedule
@@ -133,13 +149,18 @@ class classes(db.Model):
 	class_code = db.Column(db.String(10))
 	class_name = db.Column(db.String(20))
 	description = db.Column(db.String(1000))
+	dept = db.Column(db.String(500))
 	applicant_pool = db.relationship("students",secondary=applicantclass,backref=db.backref('applied_classes'),lazy=True)
+	preReqs = db.Column(db.String(1000))
 
-	def __init__(self, code, name, studn =30, descr=''):
+	def __init__(self, code, name, dept = '', studnPC = 30, studn =100, descr='', preReqs = ''):
+		self.students_per_class = studnPC
 		self.max_students = studn
 		self.class_code = code
 		self.class_name = name
+		self.dept = dept
 		self.description = descr
+		self.preReqs = preReqs
 
 	@staticmethod
 	def getClass(coode):
@@ -154,6 +175,19 @@ class classes(db.Model):
 
 	def get_applicant_pool(self):
 		return self.applicant_pool
+
+	def setDept(self, dep):
+		prev = self.dept
+		self.dept = dep
+		return prev
+
+	def setPreReqs(self, preR):
+		prev = self.preReqs
+		self.preReqs = preR
+		return prev
+
+	def getPreReqs(self):
+		return self.preReqs
 
 	@staticmethod
 	def getAPs():
@@ -235,7 +269,6 @@ def auth():
 		return redirect(url_for("home"))
 	else:
 		print "failed login"
-		flash("Login failed") #does not yet flash
 		return redirect(url_for("home"))
 
 @app.route("/transcript")
@@ -313,8 +346,21 @@ def show_admin_courses():
 # def schedule():
 # 	allClasses = classes.getAllClasses()
 # 	for cl in allClasses:
-# 		for student in cl.applicant_pool:
-# 			rank
+# 		q = {}
+# 		for st in cl.applicant_pool:
+# 			q[rank(st.ovrAvg, st.getSpecSubAvg(cl.preReqs), 0 )] = st
+# 			r = q.keys()
+# 			r = r.sort(reverse=True) #sort applicant pool
+# 			a = []
+# 			for i in r:
+# 				a.append(r[i]) #creates a list of student objects sorted
+# 			cl.set_applicant_pool(a)
+# 		# done ranking students
+# 		appPool = cl.get_applicant_pool()
+# 		for i in range(cl.max_students):
+# 			currentStudent = appPool[i]
+# 			algos.schedule(currentStudent.legitSchedule, )
+#
 
 
 # @app.route("/logout")
