@@ -30,19 +30,19 @@ Class: MKS22-
 	]
 	students_per_class: 31
 
-	Section1: 
+	Section1:
 		Period: 3
 		Teacher: Dr Ku
 		Students:
-		  Brian - -- 
-		  Terry - - 
+		  Brian - --
+		  Terry - -
 		  Yuyang - --
-  
+
 '''
 class students(db.Model):
 	id = db.Column('useless_id',db.Integer,primary_key=True)
 	osis = db.Column(db.Integer())
-	
+
 	#schedule - will give you list of class sections that student is in. Need to go up one more in order to access class itself.
 	legitSchedule = db.Column(db.String(1000))
 	def make_legit_schedule(self):
@@ -59,14 +59,14 @@ class students(db.Model):
 	electiveCount = db.Column(db.Integer)
 	#avg must be a json in the following format: {ovrAvg: ??, dept: [class1: avg, class2: avg]}
 	avg = db.Column(db.String(1000))
-  
+
 	#graduation requirements
 	#Pre_Reqs
 
 	@staticmethod
 	def findStudent(os):
 		return students.query.filter_by(osis=os).first()
-	
+
 	#List of next year classes?
 	def __init__(self, osis, fname, lname, pow='', APcount = 0, electiveCount = 0, avg = ''):
 		self.osis = osis
@@ -99,9 +99,7 @@ class sections(db.Model):
 
 class classes(db.Model):
 	id = db.Column('classID',db.Integer,primary_key=True)
-
 	sections = db.relationship("sections",backref="upperClass",lazy = True)
-
 	students_per_class = db.Column(db.Integer())
 	max_students = db.Column(db.Integer())
 	class_code = db.Column(db.String(10))
@@ -114,17 +112,17 @@ class classes(db.Model):
 
 	#Applicant Pool
 	applicant_pool = db.relationship("students",secondary=applicantclass,backref=db.backref('applied_classes'),lazy=True)
-	
+
 	def append_to_applicant_pool(self,newStudent):
 		self.applicant_pool.append(students.findStudent(newStudent))
 
 	def set_applicant_pool(self,pool):
-		self.applicant_pool = pool 
+		self.applicant_pool = pool
 
 	def get_applicant_pool(self):
 		return self.applicant_pool
 
-	
+
 	#Appender/Adder for Applicant Pool
 	#Mutator/Sorter for Applicant Pool
 	#Need to get max number of students acceptable
@@ -136,14 +134,14 @@ class classes(db.Model):
 		self.description = descr
 		'''
 		if (self.students_per_class is not None):
-			self.max_students = self.students_per_class*len(sections)	
+			self.max_students = self.students_per_class*len(sections)
 		'''
 
 	def get_sections(self):
 		return self.sections
 
 
-	
+
 #NEW ===============================END OF NEW CLASS DEFINITIONS============================================== NEW
 
 db.create_all()
