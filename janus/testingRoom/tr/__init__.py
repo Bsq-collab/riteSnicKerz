@@ -1,4 +1,5 @@
-import os,csv, json
+import os,csv,json
+from util import algos
 from flask import Flask, session, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 
@@ -43,6 +44,7 @@ Class: MKS22-
 class students(db.Model):
 	id = db.Column('useless_id',db.Integer,primary_key=True)
 	osis = db.Column(db.Integer())
+	classYr = db.Column(db.Integer())
 	#classSections - will give you list of class sections that student is in. Need to go up one more in order to access class itself.
 	#schedule - will give you list of class sections that student is in. Need to go up one more in order to access class itself.
 	legitSchedule = db.Column(db.String(1000))
@@ -55,11 +57,12 @@ class students(db.Model):
 	#avg must be a json in the following format: {ovrAvg: ??, dept: [class1: avg, class2: avg]}
 	avg = db.Column(db.String(1000))
 
-	def __init__(self, osis, fname, lname, legitSchedule = '', pow='', APcount = 0, electiveCount = 0, avg = ''):
+	def __init__(self, osis, fname, lname, classYr = 1, legitSchedule = '', pow='', APcount = 0, electiveCount = 0, avg = ''):
 		self.osis = osis
 		self.fname = fname
 		self.lname = lname
 		self.pw = str(hash(pow))
+		self.classYr = classYr
 		self.legitSchedule = legitSchedule
 		self.APcount = APcount
 		self.electiveCount = electiveCount
@@ -76,14 +79,19 @@ class students(db.Model):
 			self.APcount = 1
 		return self.APcount
 
+	def UpdateCoreCount(self):
+		if self.classYr = 4:
+			self.coreClassCount = 4
+		else:
+			self.coreClassCount = 7
+
 	def UpdateElectiveCount(self):
 		self.electiveCount = 10 - self.coreClassCount - self.APcount
 
-	# def UpdateCoreCount(self):
-	# def UpdateClassCount(self):
-	# 	UpdateCoreCount()
-	# 	UpdateAPcount()
-	# 	UpdateElectiveCount()
+	def UpdateClassCount(self):
+		UpdateCoreCount()
+		UpdateAPcount()
+		UpdateElectiveCount()
 
 	def setAvg(self, newAvg):
 		prev = self.avg
@@ -223,7 +231,7 @@ def auth():
 	if str(osis) == str(st.osis) and str(hash(pwd)) == str(st.pw): # if inputed osis & pwd is same as in db
 		print "success"
 		session['username'] = osis
-		print session['username']
+		st.UpdateClassCount()
 		return redirect(url_for("home"))
 	else:
 		print "failed login"
@@ -255,16 +263,16 @@ def select_aps():
 @app.route("/elecChoice", methods=["POST"])
 def elecChoice():
 	c = students.getStudent(session['username'])
-	# ma = c.setElectiveCount()
-	# courseChoice(ma)
-	return a
+	ma = c.electiveCount
+	courseChoice(ma)
+	return redirect_url("/")
 
 @app.route("/apChoice", methods=["POST"])
 def apChoice():
 	c = students.getStudent(session['username'])
-	# ma = c.APcount
-	ma = 2
+	ma = c.APcount
 	courseChoice(ma)
+	return redirect_url("/")
 
 def courseChoice(maxx):
 		a = []
@@ -299,6 +307,15 @@ def admin_settings():
 @app.route("/admin_all_courses")
 def show_admin_courses():
 	return render_template("admin_all_courses.html")
+
+# goes through all classes and ranks and schedules all students
+# @app.route("/schedule")
+# def schedule():
+# 	allClasses = classes.getAllClasses()
+# 	for cl in allClasses:
+# 		for student in cl.applicant_pool:
+# 			rank
+
 
 # @app.route("/logout")
 # def logout():

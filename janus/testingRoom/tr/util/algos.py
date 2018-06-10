@@ -2,13 +2,6 @@
 def rank(ovrAvg, subAvg, tRec):
     return (float(ovrAvg) * .4 + float(subAvg) * .4 + float(tRec) * .2) * 100
 
-# helper function for schedulize. Gets all possible periods for each class
-def getPds(classList):
-    # needs to make DB calls
-    # sections.query.filter_by('class_code'=classCode, 'pd' = pd)
-    # filter classes into periods
-    return # 2D array where each index is an array of possible classes for that period
-
 # chooses the optimal class for each period that minimizes collateral damage (or minimizing the number of periods that lose a class)
 def optC(classList, classPds, currentPd):
     # given 2D array
@@ -42,9 +35,8 @@ def schedulize(classList, pd, schedule, currentPd):
                 i.remove(optC)
         return schedulize(classList, schedule, currentPd + 1)
 
-def schedule(classlist):
+def schedule(classlist, pds):
     schedule = ['' for i in range(10)]
-    pds = getPds(classList)
     schedulize(classList, pds, schedule, 1)
     t = reduce( (lambda x,y: len(x) + len(y)), pds)
     s = len( filter( (lambda x: x if x != ''), schedule) )

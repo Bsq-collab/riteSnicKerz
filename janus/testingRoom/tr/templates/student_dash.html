@@ -7,32 +7,12 @@ Home
 {% block content %}
 
 
-<!--
-<script language = "javascript" type = "text/javascript">
-xmlhttp = new XMLHttpRequest();
-function getScores(){
-xmlhttp.onreadystatechange = function(){
-  if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
-    document.getElementById('column').innerHTML = xmlhttp.responseText;
-  }
-  else{
-    document.getElementById('column').innerHTML = "<strong> Waiting for server response </strong>"
-  }
-}
-/* 0: Hasn't started
-1: Connected to server
-2: Sever recevied request
-3: Server processing
-4: Requst is finished and data is ready
-*/
-}
+<div class = "container">
+  {{msg}}
+</div>
 
-xmlhttp.open("GET", "/trasncript.html", true);
-xmlhttp.send();
-</script>
--->
 <div class = "row" >
-  <h1> Welcome {{name}}. </h1>
+  <h1> Welcome {{name}} </h1>
 </div>
 <div class = "column" style= "padding: 1cm 5cm 15cm 5cm;">
 
