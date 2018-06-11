@@ -39,7 +39,8 @@ def schedule(classlist, pds):
     schedule = ['' for i in range(10)]
     schedulize(classList, pds, schedule, 1)
     t = reduce( (lambda x,y: len(x) + len(y)), pds)
-    s = len( filter( (lambda x: x if x != ''), schedule) )
+    s = filter( (lambda x: x != ''), schedule)
+    s = len( s )
     if t != len(schedule): #schedule conflict
         return False
     else:

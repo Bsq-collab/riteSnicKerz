@@ -1,5 +1,5 @@
 import os,csv,json
-# from util import algos
+from util import algos
 from flask import Flask, session, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 
@@ -137,7 +137,7 @@ class sections(db.Model):
 		self.class_code = code
 		self.teacher = teach
 
-		#Mutator/Appender for roster
+	#Mutator/Appender for roster
   	def add_to_roster(self,osis):
   		self.roster.append(students.getStudent(osis))
 
@@ -188,6 +188,19 @@ class classes(db.Model):
 
 	def getPreReqs(self):
 		return self.preReqs
+
+	#takes a list of class codes
+	@staticmethod
+	def schedulePds(cls):
+		ret2D = []
+		for i in range(10):
+			ret2D.append([])
+		for i in cls:
+			a = getClass(i)
+			for sec in a.sections:
+				ret2D[sec.pd - 1].append(a)
+		return ret2D
+
 
 	@staticmethod
 	def getAPs():
@@ -359,38 +372,13 @@ def show_admin_courses():
 # 		appPool = cl.get_applicant_pool()
 # 		for i in range(cl.max_students):
 # 			currentStudent = appPool[i]
-# 			algos.schedule(currentStudent.legitSchedule, )
-#
+# 			algos.schedule(currentStudent.legitSchedule, classes.schedulePds(currentStudent.legitSchedule))
 
 
 # @app.route("/logout")
 # def logout():
 #     session.pop("username")
 #   return render_template("login.html")
-
-	#
-	# @app.route("/about")
-	#
-	# # <int:student_id>
-	# #the student dashboard
-	# @app.route("/<int:student_id>")
-	# @app.route("/<int:student_id>/pchange")
-	# @app.route("/<int:student_id>/cselect")
-	# @app.route("/<int:student_id>/transcript")
-	# @app.route("/<int:student_id>/reportcard")
-	# @app.route("/<int:student_id>/accountsettings")
-	# @app.route("/<int:student_id>/pw")
-	#
-	# #the admin dashboard
-	# @app.route("/<int:admin_id>/")
-	# #How much detail is needed for studentView?
-	# @app.route("/<int:admin_id>/studentView")
-	# @app.route("/<int:admin_id>/courseView")
-	# @app.route("/<int:admin_id>/adminsettings")
-	# @app.route("/<int:admin_id>/adminpw")
-	# @app.route("/<int:admin_id>/admindata")
-	# @app.route("/<int:admin_id>/admininbox")
-	#
 # ============================END OF ROUTING=============================
 
 if __name__ == "__main__":
