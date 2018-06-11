@@ -140,6 +140,11 @@ class classes(db.Model):
 	def get_sections(self):
 		return self.sections
 
+class admins(db.Model):
+	id = db.Column('adminID',db.Integer,primary_key=True)
+	pw = db.Column(db.String(20))
+	fName = db.Column(db.String(30))
+
 
 
 #NEW ===============================END OF NEW CLASS DEFINITIONS============================================== NEW
