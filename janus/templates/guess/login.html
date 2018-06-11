@@ -1,0 +1,56 @@
+{% extends "guess/guess_base.html" %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content %}
+
+
+<div class = "column" style="padding: 10cm 5cm 15cm 5cm;">
+  <center>
+    <h5>JANUS</h5>
+    <button type="button" class="btn btn-link">Click to learn more</button>
+    <h4>
+
+      Course selection has been known to be a chaotic and unpredictable process. Many mistakes are typically made in the process of selecting students: lack of a lunch period, core class, physical education class, automatic removal from a given spot in a class, and losing a spot in an AP to a student who is less qualified.
+<br>
+      Program changes are even more chaotic as students have to wait on lines that can stretch throughout the building, obtain signatures from multiple individuals, find students who want to swap periods, etc. Our project attempts to address this situation by building an all-in-one course selection and program changes website. We attempt to automate student selection into courses based on factors like overall average, subject average, recommendation, etc. By automating this process we remove many possibilities for human error. The online system will also diminish the need to be physically present at program changes.    </h4>
+  </center>
+</div>
+
+<div class = "column" style= "padding: 5cm 5cm 0cm 5cm;">
+  <h3>Login for Students</h3>
+  <form action="/auth" method="POST">
+    <div class="form-group">
+      <label for="osis">OSIS</label>
+      <input type="osis" class="form-control" id="osis" name="osis" placeholder="Enter OSIS">
+    </div>
+    <div class="form-group">
+      <label for="pwd">Password:</label>
+      <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Enter password">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+<br>
+<hr width=100% align=left>
+<br>
+<h3>Login for Admins </h3>
+<form action="/auth" method="POST">
+  <div class="form-group">
+    <label for="osis">Username</label>
+    <input type="username" class="form-control" id="username" name="username" placeholder="Enter username">
+  </div>
+  <div class="form-group">
+    <label for="pwd">Password:</label>
+    <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Enter password">
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+</div>
+
+
+
+
+
+{% endblock %}

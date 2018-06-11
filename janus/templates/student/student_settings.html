@@ -1,0 +1,33 @@
+{% extends "student_base.html" %}
+
+{% block title %}
+Settings
+{% endblock %}
+
+{% block content %}
+
+
+<div class = "row">
+<h1> Welcome {{name}}. </h1>
+<h3> Change Your Password </h3>
+</div>
+<div style= "padding: 1cm 5cm 15cm 5cm;">
+  <form>
+    <div class="form-group">
+      <label for="exampleInputEmail1">Email address</label>
+      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby= "emailHelp" placeholder="Enter email">
+    </div>
+    <div class="form-group">
+      <label for="exampleInputPassword1">Password</label>
+      <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Old Password">
+    </div>
+    <div class="form-group">
+      <input type="password" class="form-control" id="exampleInputPassword1" placeholder="New Password">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+  <br>
+  <a href="student"><button type="button" class="btn-sm btn-light">Return to Dashboard</button></a>
+  </div>
+
+{% endblock %}

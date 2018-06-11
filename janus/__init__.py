@@ -218,9 +218,9 @@ def debug():
 @app.route("/")
 def home():
 	if 'username' in session:
-		return render_template("student_dash.html")
+		return render_template("student/student_dash.html")
 	else:
-		return render_template("login.html")
+		return render_template("guess/login.html")
 
 @app.route("/auth", methods=["GET","POST"])
 def auth():
@@ -240,25 +240,25 @@ def auth():
 
 @app.route("/transcript")
 def show_grades():
-	return render_template("transcript.html")
+	return render_template("student/transcript.html")
 
 @app.route("/all_courses")
 def show_courses():
-	return render_template("courses.html")
+	return render_template("student/courses.html")
 
 @app.route("/student_settings")
 def student_settings():
-	return render_template("student_settings.html")
+	return render_template("student/student_settings.html")
 
 @app.route("/select_electives")
 def select_electives():
 	cla = classes.classList()
-	return render_template("elective_selection.html", classes = cla)
+	return render_template("student/elective_selection.html", classes = cla)
 
 @app.route("/select_aps")
 def select_aps():
 	aps = classes.getAPs()
-	return render_template("ap_selection.html", APs = aps)
+	return render_template("student/ap_selection.html", APs = aps)
 
 @app.route("/elecChoice", methods=["POST"])
 def elecChoice():
@@ -294,19 +294,19 @@ def courseChoice(maxx):
 # ============================ADMIN ROUTES =============================
 @app.route("/admin")
 def admin_dash():
-	return render_template("admin_dash.html")
+	return render_template("admin/admin_dash.html")
 
 @app.route("/student_selections")
 def student_selections():
-	return render_template("student_selections.html")
+	return render_template("admin/student_selections.html")
 
 @app.route("/admin_settings")
 def admin_settings():
-	return render_template("admin_settings.html")
+	return render_template("admin/admin_settings.html")
 
 @app.route("/admin_all_courses")
 def show_admin_courses():
-	return render_template("admin_all_courses.html")
+	return render_template("admin/admin_all_courses.html")
 
 # goes through all classes and ranks and schedules all students
 # @app.route("/schedule")
