@@ -181,16 +181,20 @@ class classes(db.Model):
 
 class admins(db.Model):
 	id = db.Column('adminID',db.Integer,primary_key=True)
+	admin_id = db.Column(db.String(20))
 	pw = db.Column(db.String(20))
 	fName = db.Column(db.String(30))
 	lName = db.Column(db.String(30))
 	position = db.Column(db.String(30))
-
-	def __init__(self,fName,lName,position,pw="admin"):
+	an_program_change = db.Column(db.Boolean())
+	def __init__(self,fName,lName,position,ballin,pw="admin"):
 		self.fName = fName
 		self.lName = lName
 		self.pw = hash(pw)
 		self.position = position
+		self.can_program_change = ballin
+		temp = fName[0]+lName
+		self.admin_id = temp.upper()
 		print("Admin %s has been created"%(lName))
 
 	def changePW(self,newpass):	
