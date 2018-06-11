@@ -121,9 +121,14 @@ added a csv parser function for the ClassList. It works.
 
 zhangY -- 2018-06-03 10:50:00
 Created more templates for history and appeal.
+
 leungB -- 2018-06-04 23:34:38
 started a new foundation for the class-section-student relational
 
+zhangY -- 2018-06-04 23:45:00
+Updated admin settings.
+  Admin can give admin-power to other accounts.
+  
 terryG -- 2018-06-05 09:53:46
 finished connected front end elective choice to flask
 
@@ -142,3 +147,9 @@ added function that  adds students to applicant pool for AP classes only
 terryG -- 2018-06-10 16:52:27
 added mutators and accessors preReqs subAvgs
 
+zhangY --  2018-06-10 17:00:00
+Reorganized HTML files to make directory neater.
+Removed appeal system due to lack of time.
+Updated admin for ability to trigger placing students.
+Fixed where buttons would link to.
+Begin jinja for admin side.
