@@ -21,19 +21,13 @@ History
       </tr>
     </thead>
     <tbody>
+      {% status in placement %}
       <tr>
 
-        <td>D3JI123</td>
-          <td>No</td>
+        <td>{{code}}</td>
+          <td>{{status}}</td>
       </tr>
-      <tr>
-        <td>D3JI0D23</td>
-          <td>No</td>
-      </tr>
-      <tr>
-        <td colspan="1">D3230I123</td>
-        <td>Yes</td>
-      </tr>
+{% endfor %}
     </tbody>
   </table>
   <br>
