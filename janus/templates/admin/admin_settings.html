@@ -34,10 +34,10 @@ Settings
   <form>
     <div class="form-group">
   <select>
-    <option value="volvo">John Doe</option>
-    <option value="saab">Jane Doe</option>
-    <option value="opel">Gilligan Lenard</option>
-    <option value="audi">Sherkey Wholmes</option>
+    <option> N/A </option>
+    {% for key, value in admins.items() %}
+    <option> {{key}}: {{value}} </option>
+    {% endfor %}
   </select>
   <br>
   <br>
