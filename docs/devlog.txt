@@ -153,3 +153,6 @@ Removed appeal system due to lack of time.
 Updated admin for ability to trigger placing students.
 Fixed where buttons would link to.
 Begin jinja for admin side.
+leungB -- 2018-06-11 13:19:37
+admin table created
+

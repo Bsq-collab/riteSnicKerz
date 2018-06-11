@@ -179,7 +179,22 @@ class classes(db.Model):
 			r[i.class_code] = i.class_name
 		return r
 
-# def __init__(self, code, name, max_students, descr=''):
+class admins(db.Model):
+	id = db.Column('adminID',db.Integer,primary_key=True)
+	pw = db.Column(db.String(20))
+	fName = db.Column(db.String(30))
+	lName = db.Column(db.String(30))
+
+	def __init__(self,fName,lName,pw="admin"):
+		self.fName = fName
+		self.lName = lName
+		self.pw = hash(pw)
+		print("Admin %s has been created"%(lName))
+
+	def changePW(self,newpass):	
+		self.pw = hash(newpass)
+
+
 # need to fix csvEater to have relationship working
 def csvEater():
 	with open("data/Class-List1.csv") as csvfile:
