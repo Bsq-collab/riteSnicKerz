@@ -19,18 +19,11 @@ Courses
       </tr>
     </thead>
     <tbody>
+      {% for class in classes %}
       <tr>
-        <th scope="row">  <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#demo">Biology</button></th>
-
+        <th scope="row">  <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#{{code}}">{{class}}</button></th>
       </tr>
-      <tr>
-        <th scope="row">  <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#demo2">Chemistry</button></th>
 
-      </tr>
-      <tr>
-        <th scope="row"><button type="button" class="btn btn-link" data-toggle="collapse" data-target="#demo3">English</button></th>
-
-      </tr>
     </tbody>
   </table>
   <a href="/"><button type="button" class="btn-sm btn-light">Return to Dashboard</button></a>
@@ -39,15 +32,8 @@ Courses
 
   <div class = "column" style= "padding: 1cm 5cm 15cm 5cm;">
 
-    <div id="demo" class="collapse">
-
-      I love biology.I love biology.I love biology.I love biology.I love biology.I love biology.I love biology.
-    </div>
-    <div id="demo2" class="collapse">
-    I love chemistry.I love chemistry.I love chemistry.I love chemistry.I love chemistry.I love chemistry.
-    </div>
-    <div id="demo3" class="collapse">
-      I love English.I love English.I love English.I love English.I love English.I love English.I love English.
+    <div id="{{code}}" class="collapse">
+      {{desciption}}
     </div>
 
 </div>
