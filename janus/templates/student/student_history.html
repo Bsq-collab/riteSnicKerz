@@ -12,7 +12,7 @@ History
 </div>
 
 <div style= "padding: 1cm 5cm 15cm 5cm;">
-  <h3>{{fname}} {{lname}}</h3>
+  <h3>Applied Courses</h3>
   <table class="table table-bordered">
     <thead>
       <tr>
@@ -21,7 +21,7 @@ History
       </tr>
     </thead>
     <tbody>
-      {% student in placement %}
+      {% for code in placement %}
       <tr>
 
         <td>{{code}}</td>
