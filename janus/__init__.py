@@ -184,15 +184,20 @@ class admins(db.Model):
 	pw = db.Column(db.String(20))
 	fName = db.Column(db.String(30))
 	lName = db.Column(db.String(30))
+	position = db.Column(db.String(30))
 
-	def __init__(self,fName,lName,pw="admin"):
+	def __init__(self,fName,lName,position,pw="admin"):
 		self.fName = fName
 		self.lName = lName
 		self.pw = hash(pw)
+		self.position = position
 		print("Admin %s has been created"%(lName))
 
 	def changePW(self,newpass):	
 		self.pw = hash(newpass)
+
+	def checkPW(self,password):
+		return hash(password)==self.pw
 
 
 # need to fix csvEater to have relationship working
