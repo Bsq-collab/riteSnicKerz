@@ -261,16 +261,15 @@ def csvEater():
 
 @app.route("/debug")
 def debug():
+	
 	newClass = classes("MKS22X","CALC AB")
 	
-	db.session.add(newClass)
+	db.session.add(newClass)	
 	
-	newstudent.apply_to_class(newClass)
-	
-	print newstudent.applied_classes
-	
-	print session['username']
 	currentStudent = students.getStudent(session['username'])
+	
+	currentStudent.apply_to_class(newClass)
+	
 	x = currentStudent.applied_classes
 	# x = classes.schedulePds(currentStudent.applied_classes
 	print "===========================================PRINT======================="
