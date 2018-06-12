@@ -135,7 +135,8 @@ class sections(db.Model):
 	class_code = db.Column(db.String(10),db.ForeignKey("classes.class_code"))
 	teacher = db.Column(db.String(20))
 	period = db.Column(db.Integer())
-	roster = db.relationship('students',secondary=studentclass,backref=db.backref('classSections'))
+	roster = db.relationship('students',secondary=studentclass,backref=db.backref('schedule'))
+	class_type = db.Column(db.String(10))
 	#upperClass - Use this to access the umbrella class for the section.
 
 	def __init__(self, section_id, code, teach):
@@ -158,8 +159,10 @@ class classes(db.Model):
 	dept = db.Column(db.String(500))
 	applicant_pool = db.relationship("students",secondary=applicantclass,backref=db.backref('applied_classes'),lazy=True)
 	preReqs = db.Column(db.String(1000))
+	class_type = db.Column(db.String(20))
 
-	def __init__(self, code, name, dept = '', studnPC = 30, studn =100, descr='', preReqs = ''):
+
+	def __init__(self, code, name, dept = '', studnPC = 30, studn =100, descr='', preReqs = '',class_type="normal"):
 		self.students_per_class = studnPC
 		self.max_students = studn
 		self.class_code = code
@@ -167,6 +170,7 @@ class classes(db.Model):
 		self.dept = dept
 		self.description = descr
 		self.preReqs = preReqs
+		self.class_type = class_type
 
 	@staticmethod
 	def getClass(coode):
@@ -233,26 +237,23 @@ class classes(db.Model):
 		return r
 
 # def __init__(self, code, name, max_students, descr=''):
-# need to fix csvEater to have relationship working
 def csvEater():
-	with open("data/Class-List1.csv") as csvfile:
+	with open("NewClassList.csv") as csvfile:
 		reader = csv.reader(csvfile)
 		prevClass = ''
-		sectionHolder = {}
-		newClass = classes('','',1)
+		#sectionHolder = sections(0,'','')
+		#newClass = classes('','',1)
 		for row in reader:
 			if row[0] == 'Course Code':
 				pass
 			else:
 				if prevClass != row[0]:
-					# newClass.sections = json.dumps(sectionHolder)
 					db.session.add(newClass)
-					sectionHolder = {}
 					newClass = classes(row[0], row[2])
 					prevClass = row[0]
 				else:
-					sectionHolder[row[1]] = {"teacher":row[3],"room":'',"roster":[]}
-		# newClass.sections = json.dumps(sectionHolder)
+					sectionHolder = sections(row[1],row[0],row[3])
+					newClass.sections.append(sectionHolder)
 		db.session.add(newClass)
 		db.session.commit()
 

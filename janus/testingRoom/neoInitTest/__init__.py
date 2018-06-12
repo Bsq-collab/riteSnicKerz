@@ -105,7 +105,7 @@ class classes(db.Model):
 	class_code = db.Column(db.String(10))
 	class_name = db.Column(db.String(20))
 	description = db.Column(db.String(1000))
-
+	
 	@staticmethod
 	def findClass(coode):
 		return classes.query.filter_by(class_code = coode).first()
