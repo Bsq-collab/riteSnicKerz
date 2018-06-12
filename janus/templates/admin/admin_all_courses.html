@@ -19,10 +19,12 @@ Courses
       </tr>
     </thead>
     <tbody>
-      {% for class in classes %}
+      {% for classes in class %}
+      {% for key, value in class %}
       <tr>
-        <th scope="row">  <button type="button" class="btn btn-link" data-toggle="collapse" data-target=#{{code}}>{{class}}</button></th>
+        <th scope="row">  <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#{{value["code"]}}">{{value["name"]}}</button></th>
       </tr>
+{% endfor %}
 {% endfor %}
     </tbody>
   </table>
@@ -31,14 +33,12 @@ Courses
   </div>
 
   <div class = "column" style= "padding: 1cm 5cm 15cm 5cm;">
-{% for class in classes %}
-    <div id={{code}} class="collapse">
-      {{desciption}}
+  {% for classes in class %}
+  {% for key, value in class %}
+    <div id="{{value["code"]}}" class="collapse">
+      {{value["description"]}}
     </div>
-{% endfor %}
+    {% endfor %}
+    {% endfor %}
 </div>
-
-
-
-
 {% endblock %}
