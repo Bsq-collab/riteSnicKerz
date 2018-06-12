@@ -119,6 +119,10 @@ class students(db.Model):
 		self.legitSchedule = newLS
 		return prev
 
+	def apply_to_class(self,newClass):
+		self.applied_classes.append(newClass)
+
+
 	@staticmethod
 	def getStudent(os):
 		return students.query.filter_by(osis=os).first()
@@ -392,7 +396,8 @@ if __name__ == "__main__":
 		db.session.add(newstudent)
 		print "Student %s created"%(newstudent.fname)
 		db.session.commit()
-
+	newClass = classes("MKS22X","CALC AB")
+	newstudent.apply_to_class(newClass)
+	print newstudent.applied_classes 
 	print "Done."
-	csvEater()
 	app.run(debug = True, use_reloader= True)
