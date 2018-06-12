@@ -1,5 +1,5 @@
 import os,csv,json
-# from util import algos
+from util import algos
 from flask import Flask, session, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 
@@ -189,6 +189,19 @@ class classes(db.Model):
 	def getPreReqs(self):
 		return self.preReqs
 
+	#takes a list of class codes
+	@staticmethod
+	def schedulePds(cls):
+		ret2D = []
+		for i in range(10):
+			ret2D.append([])
+		for i in cls:
+			a = getClass(i)
+			for sec in a.sections:
+				ret2D[sec.pd - 1].append(a)
+		return ret2D
+
+
 	@staticmethod
 	def getAPs():
 		cl = classes.query.all()
@@ -359,8 +372,7 @@ def show_admin_courses():
 # 		appPool = cl.get_applicant_pool()
 # 		for i in range(cl.max_students):
 # 			currentStudent = appPool[i]
-# 			algos.schedule(currentStudent.legitSchedule, )
-#
+# 			algos.schedule(currentStudent.legitSchedule, classes.schedulePds(currentStudent.legitSchedule))
 
 
 # @app.route("/logout")
