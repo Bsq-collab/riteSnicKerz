@@ -402,7 +402,7 @@ def show_admin_courses():
 	clas = []
 	for cl in a:
 		clas.append( {"code": cl.class_code, "name": cl.class_name, "description": cl.description})
-	return render_template("admin/admin_all_courses.html")
+	return render_template("admin/admin_all_courses.html", classs = clas)
 
 # goes through all classes and ranks and schedules all students
 # @app.route("/schedule")
