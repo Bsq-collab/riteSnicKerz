@@ -1,5 +1,5 @@
 import os,csv,json
-from util import algos
+#from util import algos
 from flask import Flask, session, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 
@@ -309,9 +309,9 @@ def debug():
 @app.route("/")
 def home():
 	if 'username' in session:
-		return render_template("student_dash.html")
+		return render_template("student/student_dash.html")
 	else:
-		return render_template("login.html")
+		return render_template("guess/login.html")
 
 @app.route("/auth", methods=["GET","POST"])
 def auth():
@@ -330,25 +330,25 @@ def auth():
 
 @app.route("/transcript")
 def show_grades():
-	return render_template("transcript.html")
+	return render_template("student/transcript.html")
 
 @app.route("/all_courses")
 def show_courses():
-	return render_template("courses.html")
+	return render_template("student/courses.html")
 
 @app.route("/student_settings")
 def student_settings():
-	return render_template("student_settings.html")
+	return render_template("student/student_settings.html")
 
 @app.route("/select_electives")
 def select_electives():
 	cla = classes.classList()
-	return render_template("elective_selection.html", classes = cla)
+	return render_template("student/elective_selection.html", classes = cla)
 
 @app.route("/select_aps")
 def select_aps():
 	aps = classes.getAPs()
-	return render_template("ap_selection.html", APs = aps)
+	return render_template("student/ap_selection.html", APs = aps)
 
 @app.route("/elecChoice", methods=["POST"])
 def elecChoice():
@@ -386,15 +386,15 @@ def courseChoice(maxx):
 # ============================ADMIN ROUTES =============================
 @app.route("/admin")
 def admin_dash():
-	return render_template("admin_dash.html")
+	return render_template("admin/admin_dash.html")
 
 @app.route("/student_selections")
 def student_selections():
-	return render_template("student_selections.html")
+	return render_template("admin/student_selections.html")
 
 @app.route("/admin_settings")
 def admin_settings():
-	return render_template("admin_settings.html")
+	return render_template("admin/admin_settings.html")
 
 @app.route("/admin_all_courses")
 def show_admin_courses():
@@ -402,32 +402,32 @@ def show_admin_courses():
 	clas = []
 	for cl in a:
 		clas.append( {"code": cl.class_code, "name": cl.class_name, "description": cl.description})
-	return render_template("admin_all_courses.html")
+	return render_template("admin/admin_all_courses.html")
 
 # goes through all classes and ranks and schedules all students
-@app.route("/schedule")
-def schedule():
-	allClasses = classes.getAllClasses()
-	for cl in allClasses:
-		q = {}
-		for st in cl.applicant_pool:
-			q[rank(st.ovrAvg, st.getSpecSubAvg(cl.preReqs), 0 )] = st
-			r = q.keys()
-			r = r.sort(reverse=True) #sort applicant pool
-			a = []
-			for i in r:
-				a.append(r[i]) #creates a list of student objects sorted
-			cl.set_applicant_pool(a)
-		# done ranking students
-		appPool = cl.get_applicant_pool()
-		for i in range(cl.max_students):
-			currentStudent = appPool[i]
-			s = algos.schedule(currentStudent.applied_classes, classes.schedulePds(currentStudent.applied_classes))
-			print "============================================================"
-			print s
-			print "============================================================"
-	return "hi"
-
+# @app.route("/schedule")
+# def schedule():
+# 	allClasses = classes.getAllClasses()
+# 	for cl in allClasses:
+# 		q = {}
+# 		for st in cl.applicant_pool:
+# 			q[rank(st.ovrAvg, st.getSpecSubAvg(cl.preReqs), 0 )] = st
+# 			r = q.keys()
+# 			r = r.sort(reverse=True) #sort applicant pool
+# 			a = []
+# 			for i in r:
+# 				a.append(r[i]) #creates a list of student objects sorted
+# 			cl.set_applicant_pool(a)
+# 		# done ranking students
+# 		appPool = cl.get_applicant_pool()
+# 		for i in range(cl.max_students):
+# 			currentStudent = appPool[i]
+# 			s = algos.schedule(currentStudent.applied_classes, classes.schedulePds(currentStudent.applied_classes))
+# 			print "============================================================"
+# 			print s
+# 			print "============================================================"
+# 	return "hi"
+#
 # @app.route("/logout")
 # def logout():
 #     session.pop("username")
