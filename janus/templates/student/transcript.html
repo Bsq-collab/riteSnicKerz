@@ -12,9 +12,8 @@ Transcript
 </div>
 
 <div style= "padding: 1cm 5cm 15cm 5cm;">
-{% for subjects in grades %}
-{% for key, value in subjects.items() %}
-  <h3>{{value["subject"]}}</h3>
+{% for grade in grades %}
+  <h3>{{grade["subject"]}}</h3>
   <table class="table table-bordered">
     <thead>
       <tr>
@@ -25,18 +24,16 @@ Transcript
       </tr>
     </thead>
     <tbody>
-      {% for subjects in grades %}
-      {% for key, value in subjects.items() %}
+      {% for grade in grades %}
       <tr>
-        <th scope="row">{{value["name"]}}</th>
-        <td>{{value["year"]}}</td>
-        <td>{{value["semester"]}}</td>
-        <td>{{value["grade"]}}</td>
+        <th scope="row">{{grade["name"]}}</th>
+        <td>{{grade["year"]}}</td>
+        <td>{{grade["semester"]}}</td>
+        <td>{{grade["grade"]}}</td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
-  {% endfor %}
   {% endfor %}
   <br>
   <br>
