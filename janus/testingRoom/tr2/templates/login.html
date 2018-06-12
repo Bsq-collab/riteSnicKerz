@@ -1,0 +1,38 @@
+{% extends "guess_base.html" %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content %}
+
+
+<div class = "column" style="padding: 10cm 5cm 15cm 5cm;">
+  <center>
+    <h5>JANUS</h5>
+    <button type="button" class="btn btn-link">Click to learn more</button>
+    <h4>
+      Stuff Stuff stuff stuff.Stuff Stuff stuff stuff.Stuff Stuff stuff stuff.Stuff Stuff stuff stuff.Stuff Stuff stuff stuff.Stuff Stuff stuff stuff.Stuff Stuff stuff stuff.Stuff Stuff stuff stuff.Stuff Stuff stuff stuff.Stuff Stuff stuff stuff.Stuff Stuff stuff stuff.Stuff Stuff stuff stuff.Stuff Stuff stuff stuff.Stuff Stuff stuff stuff.Stuff Stuff stuff stuff.Stuff Stuff stuff stuff.
+    </h4>
+  </center>
+</div>
+
+<div class = "column" style= "padding: 10cm 5cm 15cm 5cm;">
+  <form action="/auth" method="POST">
+    <div class="form-group">
+      <label for="osis">OSIS</label>
+      <input type="osis" class="form-control" id="osis" name="osis" placeholder="Enter OSIS">
+    </div>
+    <div class="form-group">
+      <label for="pwd">Password:</label>
+      <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Enter password">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+
+
+
+
+
+{% endblock %}
