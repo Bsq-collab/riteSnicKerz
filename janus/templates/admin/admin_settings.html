@@ -35,8 +35,10 @@ Settings
     <div class="form-group">
   <select>
     <option> N/A </option>
+    {% for admins in admin %}
     {% for key, value in admins.items() %}
-    <option> {{key}}: {{value}} </option>
+    <option> {{value["lname"]}}, {{value['fname']}} </option>
+    {% endfor %}
     {% endfor %}
   </select>
   <br>
