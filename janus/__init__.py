@@ -197,7 +197,7 @@ class admins(db.Model):
 		self.admin_id = temp.upper()
 		print("Admin %s has been created"%(lName))
 
-	def changePW(self,newpass):	
+	def changePW(self,newpass):
 		self.pw = hash(newpass)
 
 	def checkPW(self,password):
@@ -333,7 +333,12 @@ def admin_settings():
 
 @app.route("/admin_all_courses")
 def show_admin_courses():
-	return render_template("admin/admin_all_courses.html")
+	a = classes.getAllClasses()
+	clas = []
+	for cl in a:
+		clas.append( {"code": cl.class_code, "name": cl.class_name, "description": cl.description})
+	print clas[0]
+	return render_template("admin/admin_all_courses.html", classs = clas)
 
 # goes through all classes and ranks and schedules all students
 # @app.route("/schedule")
