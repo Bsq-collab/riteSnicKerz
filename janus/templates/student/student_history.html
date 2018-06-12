@@ -8,11 +8,11 @@ History
 
 
 <div class = "row">
-<h1> Welcome {{name}}. </h1>
+<h1> Welcome {{fname}}. </h1>
 </div>
 
 <div style= "padding: 1cm 5cm 15cm 5cm;">
-  <h3>John Doe</h3>
+  <h3>Applied Courses</h3>
   <table class="table table-bordered">
     <thead>
       <tr>
@@ -21,19 +21,13 @@ History
       </tr>
     </thead>
     <tbody>
+      {% for code in placement %}
       <tr>
 
-        <td>D3JI123</td>
-          <td>No</td>
+        <td>{{code}}</td>
+          <td>{{status}}</td>
       </tr>
-      <tr>
-        <td>D3JI0D23</td>
-          <td>No</td>
-      </tr>
-      <tr>
-        <td colspan="1">D3230I123</td>
-        <td>Yes</td>
-      </tr>
+{% endfor %}
     </tbody>
   </table>
   <br>
