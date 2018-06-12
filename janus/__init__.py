@@ -340,6 +340,10 @@ def show_courses():
 def student_settings():
 	return render_template("student/student_settings.html")
 
+@app.route("/select_classes")
+def select_class():
+	return render_template("student/student_selection.html")
+
 @app.route("/select_electives")
 def select_electives():
 	cla = classes.classList()
@@ -388,9 +392,9 @@ def courseChoice(maxx):
 def admin_dash():
 	return render_template("admin/admin_dash.html")
 
-@app.route("/student_selections")
-def student_selections():
-	return render_template("admin/student_selections.html")
+@app.route("/admin_selections")
+def admin_selections():
+	return render_template("admin/admin_selections.html")
 
 @app.route("/admin_settings")
 def admin_settings():
