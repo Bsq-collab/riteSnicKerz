@@ -93,6 +93,7 @@ class students(db.Model):
 		self.UpdateCoreCount()
 		self.UpdateAPcount()
 		self.UpdateElectiveCount()
+		db.session.commit()
 
 	def setAvg(self, newAvg):
 		prev = self.avg
@@ -255,28 +256,54 @@ def csvEater():
 		db.session.add(newClass)
 		db.session.commit()
 
+
+class admins(db.Model):
+	id = db.Column('adminID',db.Integer,primary_key=True)
+	admin_id = db.Column(db.String(20))
+	pw = db.Column(db.String(20))
+	fName = db.Column(db.String(30))
+	lName = db.Column(db.String(30))
+	position = db.Column(db.String(30))
+	an_program_change = db.Column(db.Boolean())
+	def __init__(self,fName,lName,position,ballin,pw="admin"):
+		self.fName = fName
+		self.lName = lName
+		self.pw = hash(pw)
+		self.position = position
+		self.can_program_change = ballin
+		temp = fName[0]+lName
+		self.admin_id = temp.upper()
+		print("Admin %s has been created"%(lName))
+
+	def changePW(self,newpass):
+		self.pw = hash(newpass)
+
+	def checkPW(self,password):
+		return hash(password)==self.pw
+
 # ===============================END OF NEW CLASS DEFINITIONS==============================================
 
 # ============================START OF ROUTING=============================
 
 @app.route("/debug")
 def debug():
-	
-	newClass = classes("MKS22X","CALC AB")
-	
-	db.session.add(newClass)	
-	
+
+	# newClass = classes("MKS22X","CALC AB")
+	#
+	# db.session.add(newClass)
+	#
 	currentStudent = students.getStudent(session['username'])
-	
-	currentStudent.apply_to_class(newClass)
-	
+	#
+	# currentStudent.apply_to_class(newClass)
+	#
 	x = currentStudent.applied_classes
 	# x = classes.schedulePds(currentStudent.applied_classes
 	print "===========================================PRINT======================="
-	for i in x:
-		print i.class_code
+	print x
+	# for i in x:
+	# 	print i.class_code
 	print "===========================================PRINT======================="
-	db.session.commit()
+	# db.session.commit()
 	return "Hello"
 
 @app.route("/")
@@ -351,7 +378,8 @@ def courseChoice(maxx):
 		for i in range(len(a)):
 			c = classes.getClass(a[i])
 			c.append_to_applicant_pool(student)
-			student.apply_to_class(c)
+			db.session.commit()
+			# student.apply_to_class(c)
 			print c.get_applicant_pool()
 
 
@@ -370,6 +398,10 @@ def admin_settings():
 
 @app.route("/admin_all_courses")
 def show_admin_courses():
+	a = classes.getAllClasses()
+	clas = []
+	for cl in a:
+		clas.append( {"code": cl.class_code, "name": cl.class_name, "description": cl.description})
 	return render_template("admin_all_courses.html")
 
 # goes through all classes and ranks and schedules all students
@@ -405,7 +437,7 @@ def schedule():
 
 if __name__ == "__main__":
 	db.create_all()
-
+	csvEater()
 	newstudent = students(1111,'21','savage',pow="issa", APcount = 3)
 	if (students.getStudent(1111) is not None):
 		print "Student already exists. Not creating."
@@ -414,4 +446,4 @@ if __name__ == "__main__":
 		print "Student %s created"%(newstudent.fname)
 	db.session.commit()
 	print "Done."
-	app.run(debug = True, use_reloader= True)
+	app.run(debug = True, use_reloader= False)
