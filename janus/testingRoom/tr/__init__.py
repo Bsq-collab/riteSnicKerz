@@ -122,6 +122,7 @@ class students(db.Model):
 	#applied_classes - classes applied to
 	def apply_to_class(self,newClass):
 		self.applied_classes.append(newClass)
+		db.session.commit()
 
 	@staticmethod
 	def getStudent(os):
@@ -260,13 +261,24 @@ def csvEater():
 
 @app.route("/debug")
 def debug():
+	newClass = classes("MKS22X","CALC AB")
+	
+	db.session.add(newClass)
+	
+	newstudent.apply_to_class(newClass)
+	
+	print newstudent.applied_classes
+	
+	print session['username']
 	currentStudent = students.getStudent(session['username'])
 	x = currentStudent.applied_classes
 	# x = classes.schedulePds(currentStudent.applied_classes
 	print "===========================================PRINT======================="
-	print x
+	for i in x:
+		print i.class_code
 	print "===========================================PRINT======================="
-	return json.dumps(x)
+	db.session.commit()
+	return "Hello"
 
 @app.route("/")
 def home():
@@ -401,9 +413,6 @@ if __name__ == "__main__":
 	else:
 		db.session.add(newstudent)
 		print "Student %s created"%(newstudent.fname)
-		db.session.commit()
-	newClass = classes("MKS22X","CALC AB")
-	newstudent.apply_to_class(newClass)
-	print newstudent.applied_classes
+	db.session.commit()
 	print "Done."
 	app.run(debug = True, use_reloader= True)
