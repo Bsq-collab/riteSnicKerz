@@ -36,8 +36,7 @@ Settings
   <select>
     <option> N/A </option>
     {% for admins in admin %}
-    {% for key, value in admins.items() %}
-    <option> {{value["lname"]}}, {{value['fname']}} </option>
+    <option> {{admins["lname"]}}, {{admins['fname']}} </option>
     {% endfor %}
     {% endfor %}
   </select>
