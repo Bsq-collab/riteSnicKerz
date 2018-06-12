@@ -53,10 +53,33 @@ xmlhttp.send();
 </center>
 </div>
 
-<div style= "padding: 1cm 5cm 15cm 5cm;">
+<div class = "column" style= "padding: 1cm 5cm 15cm 5cm;">
 <center>
+    <h3>Current Schedule</h3>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">Period</th>
+          <th scope="col">Class</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for class in schedule %}
+        <tr>
+          <th scope="row">{{class['period']}}</th>
+          <td>{{class['class']}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+  </center>
+  </div>
+
+
+
 <!--  <button type = "button" class="btn-lg btn-light" onclick = "getScores()">Work </button> -->
-</center>
+
 </div>
 
 
