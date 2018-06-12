@@ -1,5 +1,5 @@
 import os,csv,json
-# from util import algos
+from util import algos
 from flask import Flask, session, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 
@@ -119,6 +119,11 @@ class students(db.Model):
 		self.legitSchedule = newLS
 		return prev
 
+	#applied_classes - classes applied to
+	def apply_to_class(self,newClass):
+		self.applied_classes.append(newClass)
+		db.session.commit()
+
 	@staticmethod
 	def getStudent(os):
 		return students.query.filter_by(osis=os).first()
@@ -137,7 +142,7 @@ class sections(db.Model):
 		self.class_code = code
 		self.teacher = teach
 
-		#Mutator/Appender for roster
+	#Mutator/Appender for roster
   	def add_to_roster(self,osis):
   		self.roster.append(students.getStudent(osis))
 
@@ -188,6 +193,19 @@ class classes(db.Model):
 
 	def getPreReqs(self):
 		return self.preReqs
+
+	#takes a list of class codes
+	@staticmethod
+	def schedulePds(cls):
+		ret2D = []
+		for i in range(10):
+			ret2D.append([])
+		for i in cls:
+			a = getClass(i)
+			for sec in a.sections:
+				ret2D[sec.pd - 1].append(a)
+		return ret2D
+
 
 	@staticmethod
 	def getAPs():
@@ -243,11 +261,23 @@ def csvEater():
 
 @app.route("/debug")
 def debug():
-	x = getAPs()
+	
+	newClass = classes("MKS22X","CALC AB")
+	
+	db.session.add(newClass)	
+	
+	currentStudent = students.getStudent(session['username'])
+	
+	currentStudent.apply_to_class(newClass)
+	
+	x = currentStudent.applied_classes
+	# x = classes.schedulePds(currentStudent.applied_classes
 	print "===========================================PRINT======================="
-	print x
+	for i in x:
+		print i.class_code
 	print "===========================================PRINT======================="
-	return json.dumps(x)
+	db.session.commit()
+	return "Hello"
 
 @app.route("/")
 def home():
@@ -298,14 +328,14 @@ def elecChoice():
 	c = students.getStudent(session['username'])
 	ma = c.electiveCount
 	courseChoice(ma)
-	return redirect_url("/")
+	redirect(url_for("home"))
 
 @app.route("/apChoice", methods=["POST"])
 def apChoice():
 	c = students.getStudent(session['username'])
 	ma = c.APcount
 	courseChoice(ma)
-	return redirect_url("/")
+	return redirect(url_for("home"))
 
 def courseChoice(maxx):
 		a = []
@@ -316,11 +346,12 @@ def courseChoice(maxx):
 				if st[0] not in a:
 					a.append(st[0])
 		a = a[:maxx]
-		print a
+		# print a
 		student = students.getStudent(session['username'])
 		for i in range(len(a)):
 			c = classes.getClass(a[i])
 			c.append_to_applicant_pool(student)
+			student.apply_to_class(c)
 			print c.get_applicant_pool()
 
 
@@ -342,68 +373,45 @@ def show_admin_courses():
 	return render_template("admin_all_courses.html")
 
 # goes through all classes and ranks and schedules all students
-# @app.route("/schedule")
-# def schedule():
-# 	allClasses = classes.getAllClasses()
-# 	for cl in allClasses:
-# 		q = {}
-# 		for st in cl.applicant_pool:
-# 			q[rank(st.ovrAvg, st.getSpecSubAvg(cl.preReqs), 0 )] = st
-# 			r = q.keys()
-# 			r = r.sort(reverse=True) #sort applicant pool
-# 			a = []
-# 			for i in r:
-# 				a.append(r[i]) #creates a list of student objects sorted
-# 			cl.set_applicant_pool(a)
-# 		# done ranking students
-# 		appPool = cl.get_applicant_pool()
-# 		for i in range(cl.max_students):
-# 			currentStudent = appPool[i]
-# 			algos.schedule(currentStudent.legitSchedule, )
-#
-
+@app.route("/schedule")
+def schedule():
+	allClasses = classes.getAllClasses()
+	for cl in allClasses:
+		q = {}
+		for st in cl.applicant_pool:
+			q[rank(st.ovrAvg, st.getSpecSubAvg(cl.preReqs), 0 )] = st
+			r = q.keys()
+			r = r.sort(reverse=True) #sort applicant pool
+			a = []
+			for i in r:
+				a.append(r[i]) #creates a list of student objects sorted
+			cl.set_applicant_pool(a)
+		# done ranking students
+		appPool = cl.get_applicant_pool()
+		for i in range(cl.max_students):
+			currentStudent = appPool[i]
+			s = algos.schedule(currentStudent.applied_classes, classes.schedulePds(currentStudent.applied_classes))
+			print "============================================================"
+			print s
+			print "============================================================"
+	return "hi"
 
 # @app.route("/logout")
 # def logout():
 #     session.pop("username")
 #   return render_template("login.html")
 
-	#
-	# @app.route("/about")
-	#
-	# # <int:student_id>
-	# #the student dashboard
-	# @app.route("/<int:student_id>")
-	# @app.route("/<int:student_id>/pchange")
-	# @app.route("/<int:student_id>/cselect")
-	# @app.route("/<int:student_id>/transcript")
-	# @app.route("/<int:student_id>/reportcard")
-	# @app.route("/<int:student_id>/accountsettings")
-	# @app.route("/<int:student_id>/pw")
-	#
-	# #the admin dashboard
-	# @app.route("/<int:admin_id>/")
-	# #How much detail is needed for studentView?
-	# @app.route("/<int:admin_id>/studentView")
-	# @app.route("/<int:admin_id>/courseView")
-	# @app.route("/<int:admin_id>/adminsettings")
-	# @app.route("/<int:admin_id>/adminpw")
-	# @app.route("/<int:admin_id>/admindata")
-	# @app.route("/<int:admin_id>/admininbox")
-	#
 # ============================END OF ROUTING=============================
 
 if __name__ == "__main__":
 	db.create_all()
 
-	newstudent = students(1111,'21','savage',pow="issa")
+	newstudent = students(1111,'21','savage',pow="issa", APcount = 3)
 	if (students.getStudent(1111) is not None):
 		print "Student already exists. Not creating."
 	else:
 		db.session.add(newstudent)
 		print "Student %s created"%(newstudent.fname)
-		db.session.commit()
-
+	db.session.commit()
 	print "Done."
-	csvEater()
 	app.run(debug = True, use_reloader= True)
