@@ -21,7 +21,7 @@ Courses
     <tbody>
       {% for class in classes %}
       <tr>
-        <th scope="row">  <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#{{code}}">{{class}}</button></th>
+        <th scope="row">  <button type="button" class="btn btn-link" data-toggle="collapse" data-target=#{{code}}>{{class}}</button></th>
       </tr>
 {% endfor %}
     </tbody>
@@ -32,7 +32,7 @@ Courses
 
   <div class = "column" style= "padding: 1cm 5cm 15cm 5cm;">
 {% for class in classes %}
-    <div id="{{code}}" class="collapse">
+    <div id={{code}} class="collapse">
       {{desciption}}
     </div>
 {% endfor %}
