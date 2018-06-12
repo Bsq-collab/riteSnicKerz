@@ -137,7 +137,7 @@ class sections(db.Model):
 		self.class_code = code
 		self.teacher = teach
 
-		#Mutator/Appender for roster
+	#Mutator/Appender for roster
   	def add_to_roster(self,osis):
   		self.roster.append(students.getStudent(osis))
 
@@ -368,29 +368,6 @@ def show_admin_courses():
 #     session.pop("username")
 #   return render_template("login.html")
 
-	#
-	# @app.route("/about")
-	#
-	# # <int:student_id>
-	# #the student dashboard
-	# @app.route("/<int:student_id>")
-	# @app.route("/<int:student_id>/pchange")
-	# @app.route("/<int:student_id>/cselect")
-	# @app.route("/<int:student_id>/transcript")
-	# @app.route("/<int:student_id>/reportcard")
-	# @app.route("/<int:student_id>/accountsettings")
-	# @app.route("/<int:student_id>/pw")
-	#
-	# #the admin dashboard
-	# @app.route("/<int:admin_id>/")
-	# #How much detail is needed for studentView?
-	# @app.route("/<int:admin_id>/studentView")
-	# @app.route("/<int:admin_id>/courseView")
-	# @app.route("/<int:admin_id>/adminsettings")
-	# @app.route("/<int:admin_id>/adminpw")
-	# @app.route("/<int:admin_id>/admindata")
-	# @app.route("/<int:admin_id>/admininbox")
-	#
 # ============================END OF ROUTING=============================
 
 if __name__ == "__main__":
