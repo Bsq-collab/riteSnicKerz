@@ -430,41 +430,62 @@ def show_admin_courses():
 
 # goes through all classes and ranks and schedules all students
 # goes through all classes and ranks and schedules all students
-# @app.route("/schedule")
-# def schedule():
-# 	allClasses = classes.getAllClasses()
-# 	for cl in allClasses:
-# 		q = {}
-# 		print "============================================================"
-# 		print cl.applicant_pool
-# 		print "============================================================"
-# 		a = []
-# 		if len(cl.applicant_pool) != 0:
-# 			for st in cl.applicant_pool:
-# 				q[algos.rank(st.avg, st.getSpecSubAvg(cl.preReqs), 0 )] = st
-# 			r = q.keys()
-# 			r = r.sort(reverse=True) #sort applicant pool
-# 			for i in r:
-# 				a.append(r[i]) #creates a list of student objects sorted
-# 			cl.set_applicant_pool(a)
-# 		# # done ranking students
-# 		appPool = cl.get_applicant_pool()
-# 		print appPool
-# 		for i in range( min(cl.max_students, len(cl.applicant_pool)) ):
-# 			currentStudent = appPool[i]
-# 			bc = currentStudent.applied_classes
-# 			print "============================================================"
-# 			# print bc
-# 			print "============================================================"
-#
-# 			# ac = [i.class_code for i in bc]
-# 			# cc = classes.schedulePds(currentStudent.applied_classes)
-# 			# s = algos.schedule(ac, cc)
-# 			print "============================================================"
-# 			# print ac
-# 			print "============================================================"
-#
-# 	return json.loads(ac)
+@app.route("/schedule")
+def schedule():
+	allClasses = classes.getAllClasses()
+	for cl in allClasses:
+		q = {}
+		print "============================================================"
+		print cl.applicant_pool
+		print "============================================================"
+		a = []
+		if len(cl.applicant_pool) != 0:
+			for st in cl.applicant_pool:
+				q[algos.rank(st.avg, st.getSpecSubAvg(cl.preReqs), 0 )] = st
+			r = q.keys()
+			r = r.sort(reverse=True) #sort applicant pool
+			for i in r:
+				a.append(r[i]) #creates a list of student objects sorted
+			cl.set_applicant_pool(a)
+		# # done ranking students
+		appPool = cl.get_applicant_pool()
+		print appPool
+		s = []
+		for i in range( min(cl.max_students, len(cl.applicant_pool)) ):
+			currentStudent = appPool[i]
+			bc = currentStudent.applied_classes
+			ac = [i.class_code for i in bc]
+			cc = classes.schedulePds(ac)
+			print "============================================================"
+			print bc
+			print "============================================================"
+			print "==============================applied classes=============================="
+			print ac
+			print "=================================================================="
+			print "================================pds schedule============================"
+			print cc
+			print "=================================================================="
+			print "================================schedule============================"
+			s = algos.schedule(ac, cc)
+			print s
+			print "=================================================================="
+		for clcode in s:
+			c = classes.getClass(clcode)
+			currentStudent.appendSchedule(c)
+		currentStudent.legitSchedule = json.dumps(s)
+		db.sessions.commit()
+		return "IT WORKED"
+
+	# print x
+	# for i in x:
+	# 	print i.class_code
+	# # for i in x:
+	# # 	print i.class_code
+	print "===========================================PRINT======================="
+	# db.session.commit()
+	return "Hello"
+
+	return json.loads(ac)
 
 # @app.route("/logout")
 # def logout():
