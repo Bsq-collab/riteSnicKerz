@@ -195,6 +195,13 @@ class classes(db.Model):
 		self.dept = dep
 		return prev
 
+	def getSection(self,num):
+		for i in self.sections:
+			if i.period == num:
+				return i
+		print "AAAAAAAAAAAAAAHHH - get Section"
+		return None
+
 	def setPreReqs(self, preR):
 		prev = self.preReqs
 		self.preReqs = preR
@@ -457,30 +464,39 @@ def schedule():
 			bc = currentStudent.applied_classes
 			ac = [i.class_code for i in bc]
 			cc = classes.schedulePds(ac)
-			# print "============================================================"
-			# print bc
-			# print "============================================================"
-			# print "==============================applied classes=============================="
-			# print ac
-			# print "=================================================================="
-			# print "================================pds schedule============================"
-			# print cc
-			# print "=================================================================="
-			# print "================================schedule============================"
-			s = algos.schedule(ac, cc)
-			# print s
-			# print "=================================================================="
+			print "============================================================"
+			print bc	
+			print "============================================================"	
+			print "==============================applied classes=============================="	
+			print ac	
+			print "=================================================================="	
+			print "================================pds schedule============================"	
+			print cc	
+			print "=================================================================="	
+			print "================================schedule============================"	
+			s = algos.schedule(ac, cc)		
+			print "=================================================================="
+
 		if (s != False):
+			counter = 0
 			for clcode in s:
-				c = classes.getClass(clcode)
-				currentStudent.appendSchedule(c)
+				if clcode=='' or clcode==[]:
+					counter+=1
+					pass
+				else:
+					c = classes.getClass(clcode)
+					sec = c.getSection(counter+1)
+					print counter+1
+					counter+=1
+					currentStudent.appendSchedule(sec)
+
 				# print "curreijaowdi", currentStudent.schedule
 				# currentStudent.legitSchedule = json.dumps(s)
-				# print currentStudent.legitSchedule
 		else:
 			print "schedule conflict"
 			# print s
 	db.session.commit()
+	#print students.getStudent(1111).schedule
 	return "IT WORKED"
 
 # @app.route("/logout")
@@ -507,4 +523,4 @@ if __name__ == "__main__":
 	# print bloop.sections
 	db.session.commit()
 	print "Done."
-	app.run(debug = True, use_reloader= True)
+	app.run(debug = True, use_reloader= False)
