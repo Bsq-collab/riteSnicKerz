@@ -439,15 +439,15 @@ def show_admin_courses():
 
 # ============================END OF ROUTING=============================
 
-if __name__ == "__main__":
-	db.create_all()
-	csvEater()
-	newstudent = students(1111,'21','savage',pow="issa", APcount = 3)
-	if (students.getStudent(1111) is not None):
-		print "Student already exists. Not creating."
-	else:
-		db.session.add(newstudent)
-		print "Student %s created"%(newstudent.fname)
-	db.session.commit()
-	print "Done."
-	app.run(debug = True, use_reloader= False)
+# if __name__ == "__main__":
+db.create_all()
+csvEater()
+newstudent = students(1111,'21','savage',pow="issa", APcount = 3)
+if (students.getStudent(1111) is not None):
+	print "Student already exists. Not creating."
+else:
+	db.session.add(newstudent)
+	print "Student %s created"%(newstudent.fname)
+db.session.commit()
+print "Done."
+	# app.run(debug = True, use_reloader= False)
