@@ -8,7 +8,8 @@ def optC(classList, classPds, currentPd):
     c = [0 for i in range(len(classList))]
     for i in classPds:
         for f in i:
-            c[classList.index(f)] += 1
+            if f in c:
+                c[classList.index(f)] += 1
     return classList[c.index(min(c))]
 
 def schedulize(classList, pd, schedule, currentPd):
