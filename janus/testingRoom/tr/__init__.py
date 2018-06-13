@@ -55,10 +55,10 @@ class students(db.Model):
 	electiveCount = db.Column(db.Integer)
 	coreClassCount = db.Column(db.Integer)
 	#avg must be a json in the following format: {ovrAvg: ??, dept: [class1: avg, class2: avg]}
-	avg = db.Column(db.String(1000))
+	avg = db.Column(db.Float(100))
 	subAvgs = db.Column(db.String(1000))
 
-	def __init__(self, osis, fname, lname, classYr = 1, legitSchedule = '', pow='', APcount = 0, electiveCount = 0, avg = ''):
+	def __init__(self, osis, fname, lname, classYr = 1, legitSchedule = '', pow='', APcount = 0, electiveCount = 0, avg = 90):
 		self.osis = osis
 		self.fname = fname
 		self.lname = lname
@@ -68,7 +68,7 @@ class students(db.Model):
 		self.APcount = APcount
 		self.electiveCount = electiveCount
 		self.avg = avg
-		self.subAvgs = ''
+		self.subAvgs = 'MPS22: 90'
 
 	def UpdateAPcount(self):
 		if self.avg >= 95.0:
@@ -211,11 +211,11 @@ class classes(db.Model):
 			ret2D.append([])
 		for i in cls:
 			a = classes.getClass(i)
-			print "printing sections"
+			# print "printing sections"
 			# print a.sections
 			for sec in a.sections:
-				print "printing sec"
-				print sec.period
+				# print "printing sec"
+				# print sec.period
 				ret2D[sec.period - 1].append(a.class_code)
 		return ret2D
 
@@ -429,65 +429,59 @@ def show_admin_courses():
 	return render_template("admin_all_courses.html", classs = clas)
 
 # goes through all classes and ranks and schedules all students
-# goes through all classes and ranks and schedules all students
 @app.route("/schedule")
 def schedule():
 	allClasses = classes.getAllClasses()
 	for cl in allClasses:
-		print cl
 		q = {}
-		print "================applicant pool============================================"
-		print cl.applicant_pool
-		print "============================================================"
+		# print "================applicant pool============================================"
+		# print cl.applicant_pool
+		# print "============================================================"
 		a = []
 		if len(cl.applicant_pool) != 0:
+			print "cl", cl.applicant_pool
 			for st in cl.applicant_pool:
-				q[algos.rank(st.avg, st.getSpecSubAvg(cl.preReqs), 0 )] = st
+				q[algos.rank(st.avg, 90, 0 )] = st
 			r = q.keys()
-			r = r.sort(reverse=True) #sort applicant pool
+			r.sort(reverse=True) #sort applicant pool
+			# print r
 			for i in r:
-				a.append(r[i]) #creates a list of student objects sorted
+				a.append(q[i]) #creates a list of student objects sorted
 			cl.set_applicant_pool(a)
+		db.session.commit()
 		# # done ranking students
 		appPool = cl.get_applicant_pool()
-		print appPool
 		s = []
 		for i in range( min(cl.max_students, len(cl.applicant_pool)) ):
 			currentStudent = appPool[i]
 			bc = currentStudent.applied_classes
 			ac = [i.class_code for i in bc]
 			cc = classes.schedulePds(ac)
-			print "============================================================"
-			print bc
-			print "============================================================"
-			print "==============================applied classes=============================="
-			print ac
-			print "=================================================================="
-			print "================================pds schedule============================"
-			print cc
-			print "=================================================================="
-			print "================================schedule============================"
+			# print "============================================================"
+			# print bc
+			# print "============================================================"
+			# print "==============================applied classes=============================="
+			# print ac
+			# print "=================================================================="
+			# print "================================pds schedule============================"
+			# print cc
+			# print "=================================================================="
+			# print "================================schedule============================"
 			s = algos.schedule(ac, cc)
-			print s
-			print "=================================================================="
-		for clcode in s:
-			c = classes.getClass(clcode)
-			currentStudent.appendSchedule(c)
-			currentStudent.legitSchedule = json.dumps(s)
-			print currentStudent.legitSchedule
-		db.session.commit()
-		return "IT WORKED"
-
-	# print x
-	# for i in x:
-	# 	print i.class_code
-	# # for i in x:
-	# # 	print i.class_code
-	print "===========================================PRINT======================="
-	# db.session.commit()
-	return "Hello"
-
-	return json.loads(ac)
+			# print s
+			# print "=================================================================="
+		if (s != False):
+			for clcode in s:
+				c = classes.getClass(clcode)
+				currentStudent.appendSchedule(c)
+				# print "curreijaowdi", currentStudent.schedule
+				# currentStudent.legitSchedule = json.dumps(s)
+				# print currentStudent.legitSchedule
+		else:
+			print "schedule conflict"
+			# print s
+	db.session.commit()
+	return "IT WORKED"
 
 # @app.route("/logout")
 # def logout():

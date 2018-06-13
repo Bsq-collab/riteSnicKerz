@@ -8,8 +8,8 @@ def optC(classList, classPds, currentPd):
     c = [0 for i in range(len(classList))]
     for i in classPds:
         for f in i:
-            c[classList.indexOf(f)] += 1
-    return c[c.indexOf(min(c))]
+            c[classList.index(f)] += 1
+    return classList[c.index(min(c))]
 
 def schedulize(classList, pd, schedule, currentPd):
     if currentPd == 10:
@@ -21,27 +21,50 @@ def schedulize(classList, pd, schedule, currentPd):
         r = [] # array of classes that can only be in one period
         for i in pd: # performs check for classes that can only be in one period
             if len(i) == 1:
-                schedule[pd.indexOf(i)] = i[0] # puts the class into the period
+                schedule[pd.index(i)] = i[0] # puts the class into the period
                 r.append(i[0])
+                if i[0] in classList:
+                    classList.remove(i[0])
         # removes all classes that can only be in one period
+        # print "r", r
+        # print "classList", classList
         for i in pd:
             for f in r:
                 if f in i:
                     i.remove(f)
-        # optC = optC(classList, pd, currentPd)
+        if len(classList) == 0:
+            # print "algo pd", pd
+            return
+        optc = optC(classList, pd, currentPd)
+        # print "optc", optc
+        # print "schedule", schedule
         # remove optC from all lists
         for i in pd:
-            if optC in i:
-                i.remove(optC)
-        return schedulize(classList, schedule, currentPd + 1)
+            # print i
+            if optc in i:
+                # print "i", i
+                i.remove(optc)
+        classList.remove(optc)
+        schedule[currentPd] = optc
+        return schedulize(classList, pd, schedule, currentPd + 1)
 
-def schedule(classlist, pds):
+def schedule(classList, pds):
     schedule = ['' for i in range(10)]
+    # print "pds", pds
     schedulize(classList, pds, schedule, 1)
-    t = reduce( (lambda x,y: len(x) + len(y)), pds)
-    s = filter( (lambda x: x != ''), schedule)
+    # print pds
+    # t = reduce( (lambda x,y: x + y), pds)
+    t = 0
+    for p in pds:
+        t += len(p)
+    # s = filter( (lambda x: x != ''), schedule)
+    s =  [i for i in schedule if i != '']
     s = len( s )
-    if t != len(schedule): #schedule conflict
+    print 't', t
+    # print 's', s
+    # print schedule
+    # print "pds after", pds
+    if t != 0: #schedule conflict
         return False
     else:
         return schedule
