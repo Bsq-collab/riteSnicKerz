@@ -526,8 +526,8 @@ def schedule():
 
 @app.route("/logout")
 def logout():
-    session.pop("username")
-  return render_template("login.html")
+	session.pop("username")
+	return render_template("guess/login.html")
 
 # ============================END OF ROUTING=============================
 
