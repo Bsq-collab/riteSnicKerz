@@ -162,7 +162,7 @@ class classes(db.Model):
 	class_type = db.Column(db.String(20))
 
 
-	def __init__(self, code, name, dept = '', studnPC = 30, studn =100, descr='', preReqs = '',class_type="normal"):
+	def __init__(self, code, name, descr='',class_type="normal", dept = '', studnPC = 30, studn =100, preReqs = ''):
 		self.students_per_class = studnPC
 		self.max_students = studn
 		self.class_code = code
@@ -238,18 +238,18 @@ class classes(db.Model):
 
 # def __init__(self, code, name, max_students, descr=''):
 def csvEater():
-	with open("NewClassList.csv") as csvfile:
+	with open("data/NewClassList.csv") as csvfile:
 		reader = csv.reader(csvfile)
 		prevClass = ''
-		#sectionHolder = sections(0,'','')
-		#newClass = classes('','',1)
+		sectionHolder = sections(0,'','')
+		newClass = classes('','',1)
 		for row in reader:
 			if row[0] == 'Course Code':
 				pass
 			else:
 				if prevClass != row[0]:
 					db.session.add(newClass)
-					newClass = classes(row[0], row[2])
+					newClass = classes(row[0], row[2], row[4], row[5])
 					prevClass = row[0]
 				else:
 					sectionHolder = sections(row[1],row[0],row[3])
