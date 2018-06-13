@@ -311,11 +311,7 @@ def home():
 	if 'username' in session:
 		return render_template("student/student_dash.html")
 	else:
-		return render_template("guess/meme.html")
-
-@app.route("/login")
-def login():
-	return render_template("guess/login.html")
+		return render_template("guess/login.html")
 
 @app.route("/auth", methods=["GET","POST"])
 def auth():
