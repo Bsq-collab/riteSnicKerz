@@ -524,10 +524,10 @@ def schedule():
 	#print students.getStudent(1111).schedule
 	return redirect(url_for("home"))
 
-# @app.route("/logout")
-# def logout():
-#     session.pop("username")
-#   return render_template("login.html")
+@app.route("/logout")
+def logout():
+    session.pop("username")
+  return render_template("login.html")
 
 # ============================END OF ROUTING=============================
 
