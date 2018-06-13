@@ -156,3 +156,7 @@ Begin jinja for admin side.
 leungB -- 2018-06-11 13:19:37
 admin table created
 
+leungB -- 2018-06-12 21:05:47
+csv properly parsed now:
+
+

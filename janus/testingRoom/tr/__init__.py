@@ -139,10 +139,11 @@ class sections(db.Model):
 	class_type = db.Column(db.String(10))
 	#upperClass - Use this to access the umbrella class for the section.
 
-	def __init__(self, section_id, code, teach):
+	def __init__(self, section_id, teach, pd):
 		self.section_id = section_id
-		self.class_code = code
+		#self.class_code = code
 		self.teacher = teach
+		self.period = pd
 
 	#Mutator/Appender for roster
   	def add_to_roster(self,osis):
@@ -162,13 +163,13 @@ class classes(db.Model):
 	class_type = db.Column(db.String(20))
 
 
-	def __init__(self, code, name, descr='',class_type="normal", dept = '', studnPC = 30, studn =100, preReqs = ''):
+	def __init__(self, code, name,class_type="normal", dept = '', studnPC = 30, studn =100, preReqs = ''):
 		self.students_per_class = studnPC
 		self.max_students = studn
 		self.class_code = code
 		self.class_name = name
 		self.dept = dept
-		self.description = descr
+		#self.description = descr
 		self.preReqs = preReqs
 		self.class_type = class_type
 
@@ -241,7 +242,7 @@ def csvEater():
 	with open("data/NewClassList.csv") as csvfile:
 		reader = csv.reader(csvfile)
 		prevClass = ''
-		sectionHolder = sections(0,'','')
+		sectionHolder = sections(0,'',0)
 		newClass = classes('','',1)
 		for row in reader:
 			if row[0] == 'Course Code':
@@ -249,14 +250,15 @@ def csvEater():
 			else:
 				if prevClass != row[0]:
 					db.session.add(newClass)
-					newClass = classes(row[0], row[2], row[4], row[5])
+					newClass = classes(row[0], row[2], row[5])
+					sectionHolder = sections(row[1],row[3],row[6])
+					newClass.sections.append(sectionHolder)
 					prevClass = row[0]
 				else:
-					sectionHolder = sections(row[1],row[0],row[3])
+					sectionHolder = sections(row[1],row[3],row[6])
 					newClass.sections.append(sectionHolder)
 		db.session.add(newClass)
 		db.session.commit()
-
 
 class admins(db.Model):
 	id = db.Column('adminID',db.Integer,primary_key=True)
@@ -445,6 +447,7 @@ if __name__ == "__main__":
 	else:
 		db.session.add(newstudent)
 		print "Student %s created"%(newstudent.fname)
-	db.session.commit()
+	bloop = classes.getClass("FMS62")
+	print bloop.sections
 	print "Done."
 	app.run(debug = True, use_reloader= False)
