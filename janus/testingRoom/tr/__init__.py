@@ -212,7 +212,7 @@ class classes(db.Model):
 		for i in cls:
 			a = classes.getClass(i)
 			print "printing sections"
-			print a.sections
+			# print a.sections
 			for sec in a.sections:
 				print "printing sec"
 				print sec.period
@@ -226,7 +226,7 @@ class classes(db.Model):
 		# print "cl", cl
 		r = {}
 		for i in cl:
-			print i.class_name
+			# print i.class_name
 			if 'X' in i.class_code:
 				r[i.class_code] = i.class_name
 		return r
@@ -403,7 +403,7 @@ def courseChoice(maxx):
 		c = classes.getClass(a[i])
 		c.append_to_applicant_pool(student)
 		# student.apply_to_class(c)
-		print c.get_applicant_pool()
+		# print c.get_applicant_pool()
 	return len(a)
 
 
@@ -434,8 +434,9 @@ def show_admin_courses():
 def schedule():
 	allClasses = classes.getAllClasses()
 	for cl in allClasses:
+		print cl
 		q = {}
-		print "============================================================"
+		print "================applicant pool============================================"
 		print cl.applicant_pool
 		print "============================================================"
 		a = []
@@ -510,5 +511,6 @@ if __name__ == "__main__":
 		print "Student %s created"%(newstudent.fname)
 	# bloop = classes.getClass("FMS62")
 	# print bloop.sections
+	db.session.commit()
 	print "Done."
 	app.run(debug = True, use_reloader= True)
