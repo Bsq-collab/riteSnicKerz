@@ -5,16 +5,34 @@ Period 7
 ------------------------------------------
 OBSTACLES OVERCOME
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+We needed a csv with all the classes, but programming didn't help us with that as we had hoped. We ended up getting a file from a guidance counselor instead (Thanks Mr. Wu!!)
+
+We learned how SQLalchemy works.
+
+It's been a while since we used Jinja so it was nice to brush up on it.
+
+
 UNRESOLVED ISSUES
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-blah blah pesky bug...
+
 
 COOL STUFF LEARNED
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+We learned how to use SQLAlchemy.
+
 MID-DEVELOPMENT DESIGN CHANGES
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+We had initially aimed to include both course selections and program changes. However, we realized half way through the project that doing both in about 3 weeks time is too much. So we settled for only course selections.
+
+
 LESSONS LEARNED
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The programming office is not reliable.
+We should keep in mind that second term seniors aren't as motivated, and shoudl plan accordingly. We over estimated ourselves when we planned on doing both program changes and course selections.
+
+As we stated in our design doc, however, program changes is a post post MVP.
+
+
 
 
 ||||||||||||||||||||||||||||||||||||||||||
@@ -35,16 +53,16 @@ added brief description and outline to design doc
 terryG, yuyangZ, brianL, bayanB -- 2018-05-14 21:06:55
 collectively worked on the design doc: Terry: added database schema and component map; Bayan: added outline; Yuyang and Brian: finished site map
 
-leungB -- 2018-05-17 13:19:14
+brianL -- 2018-05-17 13:19:14
 Made initial flask app stuffs
 
-zhangY -- 2018-05-17 10:00:00
+yuyangZ -- 2018-05-17 10:00:00
 Created home HTML files.
   - Created a base file all others files to inherit.
   - Currently has home page up.
 
 
-zhangY -- 2018-05-18 10:00:00
+yuyangZ -- 2018-05-18 10:00:00
 Updated home HTML files.
   - Updated to fit the project of Janus.
   - Fixed CSS and divs.
@@ -52,93 +70,93 @@ Updated home HTML files.
 terryG -- 2018-05-18 01:12:53
 obtained droplet and deployed deploytest. Updated Readme with link to server
 
-leungB -- 2018-05-21 12:32:25
+brianL -- 2018-05-21 12:32:25
 Made some initial test code for Flask-SQLAlchemy in testingRoom/
 
-zhangY -- 2018-05-21 10:00:00
+yuyangZ -- 2018-05-21 10:00:00
 Attempted AJAX.
   - Created 2 divs.
     - Left div will always hold the buttons.
     - Right div will refresh and update when buttons are clicked.
 
-zhangY -- 2018-05-22 10:00:00
+yuyangZ -- 2018-05-22 10:00:00
 Created mockups of student dashboard and student related pages on keys.
 Will share mockups to group ASAP.
 
 bayanB -- 2018-05-24 13:14:59
 Created the select courses route
 
-zhangY —- 2018-05-24 23:00:00
+yuyangZ —- 2018-05-24 23:00:00
 Fixed forms.
 	- Form inputs are no longer super small.
 Attempted to connect JS lists to JSON.
 
-leungB -- 2018-05-25 12:58:55
+brianL -- 2018-05-25 12:58:55
 added some database creation code to the __init__
 
-leungB -- 2018-05-26 18:24:44
+brianL -- 2018-05-26 18:24:44
 I fiddled around with the flask-sqlalchemy row duplication bug some more and it isn't cooperating. I can either use a unique tag and try-catch statements, or have a constant watchdog for duplicates.
 
-leungB -- 2018-05-26 19:10:48
+brianL -- 2018-05-26 19:10:48
 Resolved row duplication bug, apparently flask runs twice when initializing in debug mode. setting use_reloader==False solves it.
 
-zhangY —- 2018-05-26 23:00:00
+yuyangZ —- 2018-05-26 23:00:00
 Created templates for files.
 	Did not push.
 
-leungB -- 2018-05-27 12:05:16
+brianL -- 2018-05-27 12:05:16
 started moving working stuff from dataTest to the __init__
 
 terryG -- 2018-05-27 19:00:23
 cleaned up code and integrated js, flask, and db to have login work
 
-zhangY —- 2018-05-28 20:00:00
+yuyangZ —- 2018-05-28 20:00:00
 Finished creating templates for transcript, course directory, setting and updated course selection.
 	Connected all these pages together.
 
-zhangY -- 2018-05-28 20:00:00
+yuyangZ -- 2018-05-28 20:00:00
 Updated divs to fit gradients.
   Divs now work as containers.
 
-zhangY -- 2018-05-30 20:00:00
+yuyangZ -- 2018-05-30 20:00:00
 Updated settings for students.
 
-leungB -- 2018-06-01 12:45:44
+brianL -- 2018-06-01 12:45:44
 added csv of classList
 
 bayanB -- 2018-06-01 12:48:25
 Procured a csv from the guidance office that contains class names, sections, teachers, and course code
 
-zhangY -- 2018-06-01 12:50:00
+yuyangZ -- 2018-06-01 12:50:00
 Created pages for admin.
 Fixed navbar.
 
 terryG -- 2018-06-03 09:16:04
 preliminary algorithm created
 
-leungB -- 2018-06-03 10:49:27
+brianL -- 2018-06-03 10:49:27
 added a csv parser function for the ClassList. It works.
 
-zhangY -- 2018-06-03 10:50:00
+yuyangZ -- 2018-06-03 10:50:00
 Created more templates for history and appeal.
 
-leungB -- 2018-06-04 23:34:38
+brianL -- 2018-06-04 23:34:38
 started a new foundation for the class-section-student relational
 
-zhangY -- 2018-06-04 23:45:00
+yuyangZ -- 2018-06-04 23:45:00
 Updated admin settings.
   Admin can give admin-power to other accounts.
   
 terryG -- 2018-06-05 09:53:46
 finished connected front end elective choice to flask
 
-leungB -- 2018-06-05 12:44:47
+brianL -- 2018-06-05 12:44:47
 completed class-section-student db foundation. Now we can put more fancy things inside it :)
 
 bayanB -- 2018-06-05 22:00:56
 updated readme
 
-leungB -- 2018-06-10 09:51:26
+brianL -- 2018-06-10 09:51:26
 made the applicant_pool relation for the classes and students
 
 terryG -- 2018-06-10 13:00:14
@@ -147,16 +165,17 @@ added function that  adds students to applicant pool for AP classes only
 terryG -- 2018-06-10 16:52:27
 added mutators and accessors preReqs subAvgs
 
-zhangY --  2018-06-10 17:00:00
+bayanB -- 2018-10-10 3:00:00
+I added course descriptions and sorted through the class list and labeled courses as electives, post APs, APs, and required courses. All in the CSV.
+
+brianL --  2018-06-10 17:00:00
 Reorganized HTML files to make directory neater.
 Removed appeal system due to lack of time.
 Updated admin for ability to trigger placing students.
 Fixed where buttons would link to.
 Begin jinja for admin side.
-leungB -- 2018-06-11 13:19:37
+brianL -- 2018-06-11 13:19:37
 admin table created
 
-leungB -- 2018-06-12 21:05:47
+brianL -- 2018-06-12 21:05:47
 csv properly parsed now:
-
-
