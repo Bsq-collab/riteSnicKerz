@@ -235,7 +235,9 @@ class classes(db.Model):
 # def __init__(self, code, name, max_students, descr=''):
 # need to fix csvEater to have relationship working
 def csvEater():
-	with open("data/Class-List1.csv") as csvfile:
+	pat = os.path.abspath("data/Class-List1.csv")
+	print pat
+	with open(pat) as csvfile:
 		reader = csv.reader(csvfile)
 		prevClass = ''
 		sectionHolder = {}
@@ -265,15 +267,20 @@ class admins(db.Model):
 	lName = db.Column(db.String(30))
 	position = db.Column(db.String(30))
 	an_program_change = db.Column(db.Boolean())
-	def __init__(self,fName,lName,position,ballin,pw="admin"):
+	def __init__(self,fName,lName,position, admin_id, ballin, pw="admin"):
 		self.fName = fName
 		self.lName = lName
 		self.pw = hash(pw)
 		self.position = position
 		self.can_program_change = ballin
-		temp = fName[0]+lName
-		self.admin_id = temp.upper()
+		self.admin_id = admin_id
+		# temp = fName[0]+lName
+		# self.admin_id = temp.upper()
 		print("Admin %s has been created"%(lName))
+
+	@staticmethod
+	def getAdmin(iid):
+		return admins.query.filter_by(admin_id=iid).first()
 
 	def changePW(self,newpass):
 		self.pw = hash(newpass)
@@ -308,8 +315,10 @@ def debug():
 
 @app.route("/")
 def home():
-	if 'username' in session:
+	if 'username' in session and session['pwr'] == 'student':
 		return render_template("student/student_dash.html")
+	elif 'username' in session and session['pwr'] == 'admin':
+		return render_template("admin/admin_dash.html")
 	else:
 		return render_template("guess/login.html")
 
@@ -322,6 +331,7 @@ def auth():
 	if str(osis) == str(st.osis) and str(hash(pwd)) == str(st.pw): # if inputed osis & pwd is same as in db
 		print "success"
 		session['username'] = osis
+		session['pwr'] = 'student'
 		st.UpdateClassCount()
 		return redirect(url_for("home"))
 	else:
@@ -392,6 +402,21 @@ def courseChoice(maxx):
 def admin_dash():
 	return render_template("admin/admin_dash.html")
 
+@app.route("/authAdmin", methods=["GET","POST"])
+def authAdmin():
+	print request.form
+	usr = request.form.get("usr")
+	pwd = request.form.get("pwd")
+	st = admins.getAdmin(usr)
+	if str(usr) == str(st.admin_id) and str(hash(pwd)) == str(st.pw): # if inputed osis & pwd is same as in db
+		print "success"
+		session['username'] = usr
+		session['pwr'] = 'admin'
+		return redirect(url_for("home"))
+	else:
+		print "failed login"
+		return redirect(url_for("home"))
+
 @app.route("/admin_selections")
 def admin_selections():
 	return render_template("admin/admin_selections.html")
@@ -439,15 +464,24 @@ def show_admin_courses():
 
 # ============================END OF ROUTING=============================
 
-# if __name__ == "__main__":
-db.create_all()
-csvEater()
-newstudent = students(1111,'21','savage',pow="issa", APcount = 3)
-if (students.getStudent(1111) is not None):
-	print "Student already exists. Not creating."
-else:
-	db.session.add(newstudent)
-	print "Student %s created"%(newstudent.fname)
-db.session.commit()
-print "Done."
-	# app.run(debug = True, use_reloader= False)
+if __name__ == "__main__":
+	db.create_all()
+	csvEater()
+	newstudent = students(1111,'21','savage',pow="issa", APcount = 3)
+	newadmin = admins("terry","guan","AP", "tguan", True, pw="tgtg")
+	if (students.getStudent(1111) is not None):
+		print "Student already exists. Not creating."
+	else:
+		db.session.add(newstudent)
+		print "Student %s created"%(newstudent.fname)
+	# def __init__(self,fName,lName,position,ballin,pw="admin"):
+	if (admins.getAdmin("tguan") is not None):
+		print "Admin already exists. Not creating."
+	else:
+		db.session.add(newadmin)
+		print "Admin %s created"%(newadmin.admin_id)
+
+	db.session.commit()
+	print "Done."
+	# app.run()
+	app.run(debug = True, use_reloader= False)
