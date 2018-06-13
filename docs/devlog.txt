@@ -168,7 +168,7 @@ added mutators and accessors preReqs subAvgs
 bayanB -- 2018-10-10 3:00:00
 I added course descriptions and sorted through the class list and labeled courses as electives, post APs, APs, and required courses. All in the CSV.
 
-brianL --  2018-06-10 17:00:00
+zhangY --  2018-06-10 17:00:00
 Reorganized HTML files to make directory neater.
 Removed appeal system due to lack of time.
 Updated admin for ability to trigger placing students.
@@ -178,8 +178,13 @@ Begin jinja for admin side.
 brianL -- 2018-06-11 13:19:37
 admin table created
 
-brianL -- 2018-06-12 21:05:47
-csv properly parsed now:
+zhangY -- 2018-06-11 15:00:00
+Began jinja for student side.
+Updated templates.
+  Fixed buttons and routes that link between pages.
+  Updated history pages.
+Updated admin jinja.
+
 
 terryG -- 2018-06-11 3 PM - 2 AM
 merged tr2/__init__.py, tr/__init__.py, janus/__init__.py manually
@@ -187,3 +192,11 @@ finished and debug algos.py
 Added admin login and accounts for admin
 Fixed apache2 server issues w/ droplet
 Added logout
+
+brianL -- 2018-06-12 21:05:47
+csv properly parsed now:
+
+zhangY -- 2018-06-12 22:00:00
+Finalized jinja for app.
+Added lines for HTML to make pages look neater.
+Editted video.
