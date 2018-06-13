@@ -9,7 +9,7 @@ We attempt to automate student selection into courses based on factors like over
 
 [YouTube Demo](https://youtu.be/FAwlwlkdyhY)
 
-DO DROPLET Example: [http://206.189.231.92/](http://206.189.231.92/)
+DO DROPLET Example: [http://206.189.228.202/](http://206.189.228.202/)
 Domain server: [janus.stuycs.org](janus.stuycs.org)
 LocalHost:
 
