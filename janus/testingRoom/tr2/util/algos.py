@@ -38,10 +38,16 @@ def schedulize(classList, pd, schedule, currentPd):
 def schedule(classList, pds):
     schedule = ['' for i in range(10)]
     schedulize(classList, pds, schedule, 1)
-    t = reduce( (lambda x,y: len(x) + len(y)), pds)
-    s = filter( (lambda x: x != ''), schedule)
+    print pds
+    # t = reduce( (lambda x,y: x + y), pds)
+    t = 0
+    for p in pds:
+        t += len(p)
+    # s = filter( (lambda x: x != ''), schedule)
+    s =  [i for i in schedule if i != '']
     s = len( s )
-    if t != len(schedule): #schedule conflict
+    if t != s: #schedule conflict
+        print "schedule conflict"
         return False
     else:
         return schedule
