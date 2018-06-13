@@ -1,5 +1,5 @@
-import os,csv,json
-#from util import algos
+import os,csv,json, random
+from util import algos
 from flask import Flask, session, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 
@@ -55,10 +55,10 @@ class students(db.Model):
 	electiveCount = db.Column(db.Integer)
 	coreClassCount = db.Column(db.Integer)
 	#avg must be a json in the following format: {ovrAvg: ??, dept: [class1: avg, class2: avg]}
-	avg = db.Column(db.String(1000))
+	avg = db.Column(db.Float(100))
 	subAvgs = db.Column(db.String(1000))
 
-	def __init__(self, osis, fname, lname, classYr = 1, legitSchedule = '', pow='', APcount = 0, electiveCount = 0, avg = ''):
+	def __init__(self, osis, fname, lname, classYr = 1, legitSchedule = '', pow='', APcount = 0, electiveCount = 0, avg = 90):
 		self.osis = osis
 		self.fname = fname
 		self.lname = lname
@@ -68,7 +68,7 @@ class students(db.Model):
 		self.APcount = APcount
 		self.electiveCount = electiveCount
 		self.avg = avg
-		self.subAvgs = ''
+		self.subAvgs = 'MPS22: 90'
 
 	def UpdateAPcount(self):
 		if self.avg >= 95.0:
@@ -120,6 +120,9 @@ class students(db.Model):
 		self.legitSchedule = newLS
 		return prev
 
+	def appendSchedule(self, cla):
+		self.schedule.append(cla)
+
 	#applied_classes - classes applied to
 	def apply_to_class(self,newClass):
 		self.applied_classes.append(newClass)
@@ -135,13 +138,15 @@ class sections(db.Model):
 	class_code = db.Column(db.String(10),db.ForeignKey("classes.class_code"))
 	teacher = db.Column(db.String(20))
 	period = db.Column(db.Integer())
-	roster = db.relationship('students',secondary=studentclass,backref=db.backref('classSections'))
+	roster = db.relationship('students',secondary=studentclass,backref=db.backref('schedule'))
+	class_type = db.Column(db.String(10))
 	#upperClass - Use this to access the umbrella class for the section.
 
-	def __init__(self, section_id, code, teach):
+	def __init__(self, section_id, teach, pd):
 		self.section_id = section_id
-		self.class_code = code
+		#self.class_code = code
 		self.teacher = teach
+		self.period = pd
 
 	#Mutator/Appender for roster
   	def add_to_roster(self,osis):
@@ -158,15 +163,18 @@ class classes(db.Model):
 	dept = db.Column(db.String(500))
 	applicant_pool = db.relationship("students",secondary=applicantclass,backref=db.backref('applied_classes'),lazy=True)
 	preReqs = db.Column(db.String(1000))
+	class_type = db.Column(db.String(20))
 
-	def __init__(self, code, name, dept = '', studnPC = 30, studn =100, descr='', preReqs = ''):
+
+	def __init__(self, code, name,class_type="normal", dept = '', studnPC = 30, studn =100, preReqs = ''):
 		self.students_per_class = studnPC
 		self.max_students = studn
 		self.class_code = code
 		self.class_name = name
 		self.dept = dept
-		self.description = descr
+		#self.description = descr
 		self.preReqs = preReqs
+		self.class_type = class_type
 
 	@staticmethod
 	def getClass(coode):
@@ -187,6 +195,13 @@ class classes(db.Model):
 		self.dept = dep
 		return prev
 
+	def getSection(self,num):
+		for i in self.sections:
+			if i.period == num:
+				return i
+		print "AAAAAAAAAAAAAAHHH - get Section"
+		return None
+
 	def setPreReqs(self, preR):
 		prev = self.preReqs
 		self.preReqs = preR
@@ -202,9 +217,13 @@ class classes(db.Model):
 		for i in range(10):
 			ret2D.append([])
 		for i in cls:
-			a = getClass(i)
+			a = classes.getClass(i)
+			print "printing sections"
+			# print a.sections
 			for sec in a.sections:
-				ret2D[sec.pd - 1].append(a)
+				# print "printing sec"
+				# print sec.period
+				ret2D[sec.period - 1].append(a.class_code)
 		return ret2D
 
 
@@ -214,7 +233,7 @@ class classes(db.Model):
 		# print "cl", cl
 		r = {}
 		for i in cl:
-			print i.class_name
+			# print i.class_name
 			if 'X' in i.class_code:
 				r[i.class_code] = i.class_name
 		return r
@@ -233,31 +252,27 @@ class classes(db.Model):
 		return r
 
 # def __init__(self, code, name, max_students, descr=''):
-# need to fix csvEater to have relationship working
 def csvEater():
-	pat = os.path.abspath("data/Class-List1.csv")
-	print pat
-	with open(pat) as csvfile:
+	with open("data/NewClassList.csv") as csvfile:
 		reader = csv.reader(csvfile)
 		prevClass = ''
-		sectionHolder = {}
+		sectionHolder = sections(0,'',0)
 		newClass = classes('','',1)
 		for row in reader:
 			if row[0] == 'Course Code':
 				pass
 			else:
 				if prevClass != row[0]:
-					# newClass.sections = json.dumps(sectionHolder)
 					db.session.add(newClass)
-					sectionHolder = {}
-					newClass = classes(row[0], row[2])
+					newClass = classes(row[0], row[2], row[5])
+					sectionHolder = sections(row[1],row[3],row[6])
+					newClass.sections.append(sectionHolder)
 					prevClass = row[0]
 				else:
-					sectionHolder[row[1]] = {"teacher":row[3],"room":'',"roster":[]}
-		# newClass.sections = json.dumps(sectionHolder)
+					sectionHolder = sections(row[1],row[3],row[6])
+					newClass.sections.append(sectionHolder)
 		db.session.add(newClass)
 		db.session.commit()
-
 
 class admins(db.Model):
 	id = db.Column('adminID',db.Integer,primary_key=True)
@@ -288,27 +303,36 @@ class admins(db.Model):
 	def checkPW(self,password):
 		return hash(password)==self.pw
 
+
 # ===============================END OF NEW CLASS DEFINITIONS==============================================
 
 # ============================START OF ROUTING=============================
 
 @app.route("/debug")
 def debug():
-
-	# newClass = classes("MKS22X","CALC AB")
-	#
-	# db.session.add(newClass)
-	#
-	currentStudent = students.getStudent(session['username'])
-	#
-	# currentStudent.apply_to_class(newClass)
-	#
+	currentStudent = students.getStudent(1111)
 	x = currentStudent.applied_classes
-	# x = classes.schedulePds(currentStudent.applied_classes
-	print "===========================================PRINT======================="
-	print x
+	bc = currentStudent.applied_classes
+	print "============================================================"
+	print bc
+	print "============================================================"
+	ac = [i.class_code for i in bc]
+	print "==============================applied classes=============================="
+	print ac
+	print "=================================================================="
+	cc = classes.schedulePds(ac)
+	print "================================pds schedule============================"
+	print cc
+	print "=================================================================="
+	s = algos.schedule(ac, cc)
+	print "================================schedule============================"
+	print s
+	print "=================================================================="
+	# print x
 	# for i in x:
 	# 	print i.class_code
+	# # for i in x:
+	# # 	print i.class_code
 	print "===========================================PRINT======================="
 	# db.session.commit()
 	return "Hello"
@@ -316,7 +340,8 @@ def debug():
 @app.route("/")
 def home():
 	if 'username' in session and session['pwr'] == 'student':
-		return render_template("student/student_dash.html")
+		st = students.getStudent(session['username'])
+		return render_template("student/student_dash.html", schedule = json.dumps(st.schedule))
 	elif 'username' in session and session['pwr'] == 'admin':
 		return render_template("admin/admin_dash.html")
 	else:
@@ -350,10 +375,6 @@ def show_courses():
 def student_settings():
 	return render_template("student/student_settings.html")
 
-@app.route("/select_classes")
-def select_class():
-	return render_template("student/student_selection.html")
-
 @app.route("/select_electives")
 def select_electives():
 	cla = classes.classList()
@@ -368,39 +389,49 @@ def select_aps():
 def elecChoice():
 	c = students.getStudent(session['username'])
 	ma = c.electiveCount
-	courseChoice(ma)
+	l = courseChoice(ma)
+	c.electiveCount = c.electiveCount - l
+	db.session.commit()
 	redirect(url_for("home"))
 
 @app.route("/apChoice", methods=["POST"])
 def apChoice():
 	c = students.getStudent(session['username'])
 	ma = c.APcount
-	courseChoice(ma)
+	l = courseChoice(ma)
+	c.APcount = c.APcount - l
+	db.session.commit()
 	return redirect(url_for("home"))
 
 def courseChoice(maxx):
-		a = []
-		for key in request.form.keys():
-			st = request.form.get(key)
-			if st != "N/A":
-				st = st.split(":")
-				if st[0] not in a:
-					a.append(st[0])
-		a = a[:maxx]
-		# print a
-		student = students.getStudent(session['username'])
-		for i in range(len(a)):
-			c = classes.getClass(a[i])
-			c.append_to_applicant_pool(student)
-			db.session.commit()
-			# student.apply_to_class(c)
-			print c.get_applicant_pool()
+	if maxx <= 0:
+		return 0
+	a = []
+	for key in request.form.keys():
+		st = request.form.get(key)
+		if st != "N/A":
+			st = st.split(":")
+			if st[0] not in a:
+				a.append(st[0])
+	a = a[:maxx]
+	# print a
+	student = students.getStudent(session['username'])
+	for i in range(len(a)):
+		c = classes.getClass(a[i])
+		c.append_to_applicant_pool(student)
+		# student.apply_to_class(c)
+		# print c.get_applicant_pool()
+	return len(a)
 
 
 # ============================ADMIN ROUTES =============================
 @app.route("/admin")
 def admin_dash():
 	return render_template("admin/admin_dash.html")
+
+@app.route("/admin_selections")
+def student_selections():
+	return render_template("admin/admin_selections.html")
 
 @app.route("/authAdmin", methods=["GET","POST"])
 def authAdmin():
@@ -417,10 +448,6 @@ def authAdmin():
 		print "failed login"
 		return redirect(url_for("home"))
 
-@app.route("/admin_selections")
-def admin_selections():
-	return render_template("admin/admin_selections.html")
-
 @app.route("/admin_settings")
 def admin_settings():
 	return render_template("admin/admin_settings.html")
@@ -434,29 +461,69 @@ def show_admin_courses():
 	return render_template("admin/admin_all_courses.html", classs = clas)
 
 # goes through all classes and ranks and schedules all students
-# @app.route("/schedule")
-# def schedule():
-# 	allClasses = classes.getAllClasses()
-# 	for cl in allClasses:
-# 		q = {}
-# 		for st in cl.applicant_pool:
-# 			q[rank(st.ovrAvg, st.getSpecSubAvg(cl.preReqs), 0 )] = st
-# 			r = q.keys()
-# 			r = r.sort(reverse=True) #sort applicant pool
-# 			a = []
-# 			for i in r:
-# 				a.append(r[i]) #creates a list of student objects sorted
-# 			cl.set_applicant_pool(a)
-# 		# done ranking students
-# 		appPool = cl.get_applicant_pool()
-# 		for i in range(cl.max_students):
-# 			currentStudent = appPool[i]
-# 			s = algos.schedule(currentStudent.applied_classes, classes.schedulePds(currentStudent.applied_classes))
-# 			print "============================================================"
-# 			print s
-# 			print "============================================================"
-# 	return "hi"
-#
+@app.route("/schedule")
+def schedule():
+	allClasses = classes.getAllClasses()
+	for cl in allClasses:
+		q = {}
+		# print "================applicant pool============================================"
+		# print cl.applicant_pool
+		# print "============================================================"
+		a = []
+		if len(cl.applicant_pool) != 0:
+			print "cl", cl.applicant_pool
+			for st in cl.applicant_pool:
+				q[algos.rank(st.avg, 90, 0 )] = st
+			r = q.keys()
+			r.sort(reverse=True) #sort applicant pool
+			# print r
+			for i in r:
+				a.append(q[i]) #creates a list of student objects sorted
+			cl.set_applicant_pool(a)
+		db.session.commit()
+		# # done ranking students
+		appPool = cl.get_applicant_pool()
+		s = []
+		for i in range( min(cl.max_students, len(cl.applicant_pool)) ):
+			currentStudent = appPool[i]
+			bc = currentStudent.applied_classes
+			ac = [i.class_code for i in bc]
+			cc = classes.schedulePds(ac)
+			print "============================================================"
+			print bc
+			print "============================================================"
+			print "==============================applied classes=============================="
+			print ac
+			print "=================================================================="
+			print "================================pds schedule============================"
+			print cc
+			print "=================================================================="
+			print "================================schedule============================"
+			s = algos.schedule(ac, cc)
+			print "=================================================================="
+
+		if (s != False):
+			counter = 0
+			for clcode in s:
+				if clcode=='' or clcode==[]:
+					counter+=1
+					pass
+				else:
+					c = classes.getClass(clcode)
+					sec = c.getSection(counter+1)
+					print counter+1
+					counter+=1
+					currentStudent.appendSchedule(sec)
+
+				# print "curreijaowdi", currentStudent.schedule
+				# currentStudent.legitSchedule = json.dumps(s)
+		else:
+			print "schedule conflict"
+			# print s
+	db.session.commit()
+	#print students.getStudent(1111).schedule
+	return redirect(url_for("home"))
+
 # @app.route("/logout")
 # def logout():
 #     session.pop("username")

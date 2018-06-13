@@ -218,7 +218,7 @@ class classes(db.Model):
 			ret2D.append([])
 		for i in cls:
 			a = classes.getClass(i)
-			# print "printing sections"
+			print "printing sections"
 			# print a.sections
 			for sec in a.sections:
 				# print "printing sec"
@@ -282,21 +282,27 @@ class admins(db.Model):
 	lName = db.Column(db.String(30))
 	position = db.Column(db.String(30))
 	an_program_change = db.Column(db.Boolean())
-	def __init__(self,fName,lName,position,ballin,pw="admin"):
+	def __init__(self,fName,lName,position, admin_id, ballin, pw="admin"):
 		self.fName = fName
 		self.lName = lName
 		self.pw = hash(pw)
 		self.position = position
 		self.can_program_change = ballin
-		temp = fName[0]+lName
-		self.admin_id = temp.upper()
+		self.admin_id = admin_id
+		# temp = fName[0]+lName
+		# self.admin_id = temp.upper()
 		print("Admin %s has been created"%(lName))
+
+	@staticmethod
+	def getAdmin(iid):
+		return admins.query.filter_by(admin_id=iid).first()
 
 	def changePW(self,newpass):
 		self.pw = hash(newpass)
 
 	def checkPW(self,password):
 		return hash(password)==self.pw
+
 
 # ===============================END OF NEW CLASS DEFINITIONS==============================================
 
@@ -334,11 +340,12 @@ def debug():
 @app.route("/")
 def home():
 	if 'username' in session and session['pwr'] == 'student':
-		return render_template("student_dash.html")
-	# elif 'username' in session and session['pwr'] == 'admin':
-		# return render_template("admin_dash.html")
+		st = students.getStudent(session['username'])
+		return render_template("student/student_dash.html", schedule = json.dumps(st.schedule))
+	elif 'username' in session and session['pwr'] == 'admin':
+		return render_template("admin/admin_dash.html")
 	else:
-		return render_template("login.html")
+		return render_template("guess/login.html")
 
 @app.route("/auth", methods=["GET","POST"])
 def auth():
@@ -358,25 +365,25 @@ def auth():
 
 @app.route("/transcript")
 def show_grades():
-	return render_template("transcript.html")
+	return render_template("student/transcript.html")
 
 @app.route("/all_courses")
 def show_courses():
-	return render_template("courses.html")
+	return render_template("student/courses.html")
 
 @app.route("/student_settings")
 def student_settings():
-	return render_template("student_settings.html")
+	return render_template("student/student_settings.html")
 
 @app.route("/select_electives")
 def select_electives():
 	cla = classes.classList()
-	return render_template("elective_selection.html", classes = cla)
+	return render_template("student/elective_selection.html", classes = cla)
 
 @app.route("/select_aps")
 def select_aps():
 	aps = classes.getAPs()
-	return render_template("ap_selection.html", APs = aps)
+	return render_template("student/ap_selection.html", APs = aps)
 
 @app.route("/elecChoice", methods=["POST"])
 def elecChoice():
@@ -420,21 +427,21 @@ def courseChoice(maxx):
 # ============================ADMIN ROUTES =============================
 @app.route("/admin")
 def admin_dash():
-	return render_template("admin_dash.html")
+	return render_template("admin/admin_dash.html")
 
 @app.route("/student_selections")
 def student_selections():
-	return render_template("student_selections.html")
+	return render_template("admin/student_selections.html")
 
 @app.route("/authAdmin", methods=["GET","POST"])
 def authAdmin():
 	print request.form
 	usr = request.form.get("usr")
 	pwd = request.form.get("pwd")
-	st = students.getStudent(usr)
+	st = admins.getAdmin(usr)
 	if str(usr) == str(st.admin_id) and str(hash(pwd)) == str(st.pw): # if inputed osis & pwd is same as in db
 		print "success"
-		session['username'] = osis
+		session['username'] = usr
 		session['pwr'] = 'admin'
 		return redirect(url_for("home"))
 	else:
@@ -443,7 +450,7 @@ def authAdmin():
 
 @app.route("/admin_settings")
 def admin_settings():
-	return render_template("admin_settings.html")
+	return render_template("admin/admin_settings.html")
 
 @app.route("/admin_all_courses")
 def show_admin_courses():
@@ -451,7 +458,7 @@ def show_admin_courses():
 	clas = []
 	for cl in a:
 		clas.append( {"code": cl.class_code, "name": cl.class_name, "description": cl.description})
-	return render_template("admin_all_courses.html", classs = clas)
+	return render_template("admin/admin_all_courses.html", classs = clas)
 
 # goes through all classes and ranks and schedules all students
 @app.route("/schedule")
@@ -483,16 +490,16 @@ def schedule():
 			ac = [i.class_code for i in bc]
 			cc = classes.schedulePds(ac)
 			print "============================================================"
-			print bc	
-			print "============================================================"	
-			print "==============================applied classes=============================="	
-			print ac	
-			print "=================================================================="	
-			print "================================pds schedule============================"	
-			print cc	
-			print "=================================================================="	
-			print "================================schedule============================"	
-			s = algos.schedule(ac, cc)		
+			print bc
+			print "============================================================"
+			print "==============================applied classes=============================="
+			print ac
+			print "=================================================================="
+			print "================================pds schedule============================"
+			print cc
+			print "=================================================================="
+			print "================================schedule============================"
+			s = algos.schedule(ac, cc)
 			print "=================================================================="
 
 		if (s != False):
