@@ -146,7 +146,7 @@ started a new foundation for the class-section-student relational
 yuyangZ -- 2018-06-04 23:45:00
 Updated admin settings.
   Admin can give admin-power to other accounts.
-  
+
 terryG -- 2018-06-05 09:53:46
 finished connected front end elective choice to flask
 
@@ -174,8 +174,16 @@ Removed appeal system due to lack of time.
 Updated admin for ability to trigger placing students.
 Fixed where buttons would link to.
 Begin jinja for admin side.
+
 brianL -- 2018-06-11 13:19:37
 admin table created
 
 brianL -- 2018-06-12 21:05:47
 csv properly parsed now:
+
+terryG -- 2018-06-11 3 PM - 2 AM
+merged tr2/__init__.py, tr/__init__.py, janus/__init__.py manually
+finished and debug algos.py
+Added admin login and accounts for admin
+Fixed apache2 server issues w/ droplet
+Added logout
