@@ -472,8 +472,9 @@ def schedule():
 		for clcode in s:
 			c = classes.getClass(clcode)
 			currentStudent.appendSchedule(c)
-		currentStudent.legitSchedule = json.dumps(s)
-		db.sessions.commit()
+			currentStudent.legitSchedule = json.dumps(s)
+			print currentStudent.legitSchedule
+		db.session.commit()
 		return "IT WORKED"
 
 	# print x
@@ -507,7 +508,7 @@ if __name__ == "__main__":
 	else:
 		db.session.add(newstudent)
 		print "Student %s created"%(newstudent.fname)
-	bloop = classes.getClass("FMS62")
-	print bloop.sections
+	# bloop = classes.getClass("FMS62")
+	# print bloop.sections
 	print "Done."
 	app.run(debug = True, use_reloader= True)
