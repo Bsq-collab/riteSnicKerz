@@ -32,7 +32,7 @@ xmlhttp.send();
 </script>
 -->
 <div class = "row" >
-  <h1> Welcome {{name}}. </h1>
+  <h1> Welcome {{name}} </h1>
 </div>
 <div class = "column" style= "padding: 1cm 5cm 15cm 5cm;">
 
@@ -58,31 +58,6 @@ xmlhttp.send();
 <!--  <button type = "button" class="btn-lg btn-light" onclick = "getScores()">Work </button> -->
 </center>
 </div>
-
-
-
-
-<script>
-var electives = ["Soft Dev", "Human Reasoning"];
-
-var myJSON = JSON.stringify(electives);
-
-document.getElementById("demo").innerHTML = myJSON;
-</script>
-
-<script>
-function loadDoc() {
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      document.getElementById("demo").innerHTML =
-      this.responseText;
-    }
-  };
-  xhttp.open("GET", "ajax_info.txt", true);
-  xhttp.send();
-}
-</script>
 
 
 

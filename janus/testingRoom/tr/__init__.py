@@ -333,8 +333,10 @@ def debug():
 
 @app.route("/")
 def home():
-	if 'username' in session:
+	if 'username' in session and session['pwr'] == 'student':
 		return render_template("student_dash.html")
+	# elif 'username' in session and session['pwr'] == 'admin':
+		# return render_template("admin_dash.html")
 	else:
 		return render_template("login.html")
 
@@ -347,6 +349,7 @@ def auth():
 	if str(osis) == str(st.osis) and str(hash(pwd)) == str(st.pw): # if inputed osis & pwd is same as in db
 		print "success"
 		session['username'] = osis
+		session['pwr'] = 'student'
 		st.UpdateClassCount()
 		return redirect(url_for("home"))
 	else:
@@ -422,6 +425,21 @@ def admin_dash():
 @app.route("/student_selections")
 def student_selections():
 	return render_template("student_selections.html")
+
+@app.route("/authAdmin", methods=["GET","POST"])
+def authAdmin():
+	print request.form
+	usr = request.form.get("usr")
+	pwd = request.form.get("pwd")
+	st = students.getStudent(usr)
+	if str(usr) == str(st.admin_id) and str(hash(pwd)) == str(st.pw): # if inputed osis & pwd is same as in db
+		print "success"
+		session['username'] = osis
+		session['pwr'] = 'admin'
+		return redirect(url_for("home"))
+	else:
+		print "failed login"
+		return redirect(url_for("home"))
 
 @app.route("/admin_settings")
 def admin_settings():
