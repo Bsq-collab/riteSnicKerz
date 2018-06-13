@@ -7,6 +7,8 @@ Course selection has been known to be a chaotic and unpredictable process. Many 
 
 We attempt to automate student selection into courses based on factors like overall average, subject average, recommendation, etc. By automating this process we remove many possibilities for human error. The online system will also diminish the need to be physically present at program changes.  
 
+[YouTube Demo](https://youtu.be/FAwlwlkdyhY)
+
 DO DROPLET Example: [http://206.189.231.92/](http://206.189.231.92/)
 Domain server: [janus.stuycs.org](janus.stuycs.org)
 LocalHost:
